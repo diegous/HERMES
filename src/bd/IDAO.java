@@ -1,10 +1,12 @@
 package bd;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 public interface IDAO<T> {
-	public List<T> getList();
-	public void save(T t);
-	public void delete(T t);
-	public void modify(T t);
+	public List<T> getList() throws SQLException, ParseException;
+	public Boolean save(T t);
+	public Boolean delete(T t);
+	public Boolean modify(T t);
 }

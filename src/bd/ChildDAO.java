@@ -1,42 +1,59 @@
 package bd;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ChildDAO implements IDAO<Child> {
-
-	public List<Child> getList() {
-		// TODO Auto-generated method stub
-		return null;
+public class ChildDAO extends AbstractDAO<Child> {
+	public ChildDAO(){
+		this.tableName = "child";
 	}
 
-	public void save(Child t) {
-		// TODO Auto-generated method stub
-		Conector conector = new Conector();
-		conector.connect();
+	public List<Child> getList() throws SQLException, ParseException {
+		ResultSet result = super.getAll();
+		List<Child> resultList = new ArrayList<Child>();
 		
-		PreparedStatement query;
-		try {
-			query = conector.connect.prepareStatement("INSERT INTO child(dni, name, lastname, birthday)"
-					+ " VALUES (" + t.getDni()+ ","+t.getName()+", "+t.getName()+","+ t.getBirthday().toString()+");");
-		
-			query.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(result.next()){
+			resultList.add(new Child(result));
 		}
-		
+			
+		return resultList;
 	}
 
-	public void delete(Child t) {
-		// TODO Auto-generated method stub
+	public Boolean save(Child t) {
+		String[] parameterNames = {
+				"dni",
+				"name",
+				"lastname",
+				"birthday",
+		};
 		
+		Boolean success = super.save(t, parameterNames);
+		return success;
+	}
+	
+	public PreparedStatement putSaveParametersOnQuery(PreparedStatement query, Child child) throws SQLException{
+		query.setString(1, child.getDni());
+		query.setString(2, child.getName());
+		query.setString(3, child.getLastname());
+		query.setDate(4, new Date(child.getBirthday().getTime()));
+		
+		return query;
 	}
 
-	public void modify(Child t) {
+
+	public Boolean delete(Child t) {
 		// TODO Auto-generated method stub
-		
+		return false;		
+	}
+
+	public Boolean modify(Child t) {
+		// TODO Auto-generated method stub
+		return false;		
 	}
 
 }
