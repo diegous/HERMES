@@ -1,11 +1,13 @@
 package bd;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class AbstractDAO<T> implements IDAO<T> {
 	protected String tableName;
+	protected String idName;
 
 	protected ResultSet getAll() {
 		DBConector conector = new DBConector();
@@ -28,31 +30,42 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 		conector.close();
 		return result;
 	}
-
-	public Boolean save(T t, String[] parameterNames) {
+	
+	public ResultSet getByID(int id){
 		DBConector conector = new DBConector();
 		conector.connect();
+		
+		ResultSet result = null;
 
-		String parametersString="", values="";
-		
-		for(Object parameter : parameterNames){
-			parametersString = parametersString.concat(parameter.toString()+",");
-			values = values.concat("?,");
+		try {
+			String query = "SELECT * FROM "+tableName+" WHERE "+idName+"='?'";
+
+			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			
+			
+			result = preparedStatement.executeQuery();
+
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conector.close();
 		}
-		
-		// Getting rid of extra ","
-		parametersString = parametersString.substring(0, parametersString.length()-1);
-		values = values.substring(0, values.length()-1);
+
+		conector.close();
+		return result;
+	}
+
+	
+	public Boolean save(T t) {
+		DBConector conector = new DBConector();
+		conector.connect();
 		
 		Boolean success = false;
 		
 		try {
-			String sql = "INSERT INTO "+tableName+" ("+parametersString+") VALUES ("+values+");";
-
-			PreparedStatement query = conector.getConnection().prepareStatement(sql);
-			query = putSaveParametersOnQuery(query, t);
-
-			success = query.execute();
+			PreparedStatement preparedStatement = prepareSaveStatement(conector.getConnection(), t);
+			success = preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			conector.close();
@@ -62,10 +75,28 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 		return success;
 	}
 	
-	public abstract PreparedStatement putSaveParametersOnQuery(PreparedStatement query, T t) throws SQLException;
+	protected abstract PreparedStatement prepareSaveStatement(Connection con, T t)throws SQLException;
 
-	public Boolean delete(T t) {
-		return null;
+	public Boolean delete(int id) {
+		DBConector conector = new DBConector();
+		conector.connect();
+		
+		Boolean success = false;
+		
+		try {
+			String query = "DELETE FROM "+tableName+" WHERE "+idName+"='?'";
+
+			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			
+			success = preparedStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conector.close();
+		}
+
+		conector.close();
+		return success;
 	}
 
 	public Boolean modify(T t) {

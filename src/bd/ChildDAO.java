@@ -1,5 +1,6 @@
 package bd;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.util.List;
 public class ChildDAO extends AbstractDAO<Child> {
 	public ChildDAO(){
 		this.tableName = "child";
+		this.idName = "id_child";
 	}
 
 	public List<Child> getList() throws SQLException, ParseException {
@@ -24,25 +26,20 @@ public class ChildDAO extends AbstractDAO<Child> {
 		return resultList;
 	}
 
-	public Boolean save(Child t) {
-		String[] parameterNames = {
-				"dni",
-				"name",
-				"lastname",
-				"birthday",
-		};
-		
-		Boolean success = super.save(t, parameterNames);
-		return success;
+	public Boolean save(Child t) {		
+		return super.save(t);
 	}
 	
-	public PreparedStatement putSaveParametersOnQuery(PreparedStatement query, Child child) throws SQLException{
-		query.setString(1, child.getDni());
-		query.setString(2, child.getName());
-		query.setString(3, child.getLastname());
-		query.setDate(4, new Date(child.getBirthday().getTime()));
+	public PreparedStatement prepareSaveStatement(Connection con, Child child) throws SQLException{
+		String query = "INSERT INTO "+tableName+" (dni, name, lastname, birthday) VALUES (?,?,?,?);";
+
+		PreparedStatement preparedStatement = con.prepareStatement(query);
+		preparedStatement.setString(1, child.getDni());
+		preparedStatement.setString(2, child.getName());
+		preparedStatement.setString(3, child.getLastname());
+		preparedStatement.setDate(4, new Date(child.getBirthday().getTime()));
 		
-		return query;
+		return preparedStatement;
 	}
 
 
@@ -54,6 +51,11 @@ public class ChildDAO extends AbstractDAO<Child> {
 	public Boolean modify(Child t) {
 		// TODO Auto-generated method stub
 		return false;		
+	}
+
+	@Override
+	public Child getById(int id) throws SQLException, ParseException {
+		return new Child(super.getByID(id));
 	}
 
 }

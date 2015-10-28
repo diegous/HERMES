@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
-public class Child {
+public class Child{
 	private int id;
 	private String name, lastname, dni;
 	private Date birthday;
