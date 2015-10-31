@@ -19,16 +19,20 @@ public class Test {
 		// Esto genera un DNI entre 39.000.000 y 45.000.000
 //		String dni = String.valueOf(randomGenerator.nextInt(6000000)+39000000);
 		
-////		Child child = new Child("name", "lastname", dni, birthday);
+		Child child = new Child("name");
 //
-//		ChildDAO dao = new ChildDAO();
+		ChildDAO dao = new ChildDAO();
 //		
-//		dao.save(child);
+		dao.save(child);
 //
-//		for (Child aChild : dao.getList()) {
-//			System.out.println(aChild.toString());
-//		}
-		String json = "{\"child\": \"pepito\", \"context\":\"Pista\", \"category\":\"Emociones\", \"sent\":1111111111111111111, \"tag\":\"infeliz\", \"content\":\"Alegre\"}";
+	for (Child aChild : dao.getList()) {
+		System.out.println(aChild.toString());
+	}
+		
+	
+	
+	
+	/*String json = "{\"child\": \"pepito\", \"context\":\"Pista\", \"category\":\"Emociones\", \"sent\":1111111111111111111, \"tag\":\"infeliz\", \"content\":\"Alegre\"}";
 		
 		JSONParser parser = new JSONParser();
 		
@@ -41,7 +45,7 @@ public class Test {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+*/
 //		JsonElement jelement = new JsonParser().parse(json);
 //		JsonObject jobject = jelement.getAsJsonObject();
 //		jobject = jobject.getAsJsonObject("child");
