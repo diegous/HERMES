@@ -26,20 +26,25 @@ public class ChildDAO extends AbstractDAO<Child> {
 		return resultList;
 	}
 
-	public Boolean save(Child t) {		
+	public ResultSet save(Child t) {		
 		return super.save(t);
 	}
 	
 	public PreparedStatement prepareSaveStatement(Connection con, Child child) throws SQLException{
-		String query = "INSERT INTO "+tableName+" (dni, name, lastname, birthday) VALUES (?,?,?,?);";
-
-		PreparedStatement preparedStatement = con.prepareStatement(query);
-		preparedStatement.setString(1, child.getDni());
-		preparedStatement.setString(2, child.getName());
-		preparedStatement.setString(3, child.getLastname());
-		preparedStatement.setDate(4, new Date(child.getBirthday().getTime()));
-		
-		return preparedStatement;
+//		String query = "INSERT INTO "+tableName+" (dni, name, lastname, birthday) VALUES (?,?,?,?);";
+//
+//		PreparedStatement preparedStatement = con.prepareStatement(query);
+//		preparedStatement.setString(1, child.getDni());
+//		preparedStatement.setString(2, child.getName());
+//		preparedStatement.setString(3, child.getLastname());
+//		preparedStatement.setDate(4, new Date(child.getBirthday().getTime()));
+//		
+//		return preparedStatement;
+		return null;
+	}
+	
+	public Child getOrSave(String text) throws SQLException, ParseException{
+		return new Child(super.getOrSave(new Child(text), text, "name"));
 	}
 
 
@@ -56,6 +61,10 @@ public class ChildDAO extends AbstractDAO<Child> {
 	@Override
 	public Child getById(int id) throws SQLException, ParseException {
 		return new Child(super.getByID(id));
+	}
+	
+	public Child getByText(String text) throws SQLException, ParseException {
+		return new Child(super.getByText(text, "name"));
 	}
 
 }
