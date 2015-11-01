@@ -60,4 +60,10 @@ public class CategoryDAO extends AbstractDAO<Category> {
 	public Category getByText(String text) throws SQLException, ParseException {
 		return new Category(super.getByText(text, "description"));
 	}
+
+	@Override
+	public Category getOrSave(Category t) throws SQLException, ParseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

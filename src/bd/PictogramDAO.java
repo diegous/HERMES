@@ -59,4 +59,10 @@ public class PictogramDAO extends AbstractDAO<Pictogram> {
 	public Pictogram getByText(String text) throws SQLException, ParseException {
 		return new Pictogram(super.getByText(text, "content"));
 	}
+
+	@Override
+	public Pictogram getOrSave(Pictogram t) throws SQLException, ParseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

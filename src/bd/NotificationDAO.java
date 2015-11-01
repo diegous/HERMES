@@ -64,4 +64,10 @@ public class NotificationDAO extends AbstractDAO<Notification> {
 //		return new Notification(super.getByText(text, "description"));
 		return null;
 	}
+
+	@Override
+	public Notification getOrSave(Notification t) throws SQLException, ParseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

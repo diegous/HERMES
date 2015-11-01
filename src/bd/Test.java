@@ -24,13 +24,15 @@ public class Test {
 		
 		Child child = new Child("name");
 
-		ChildDAO dao = new ChildDAO();
+		IDAO<Child> dao = FactoriaDAO.getChildDAO();
 	
 		dao.getOrSave(child);
+		
+		
 
-	for (Child aChild : dao.getList()) {
+	/*for (Child aChild : dao.getList()) {
 		System.out.println(aChild.toString());
-	}
+	}*/
 		
 	
 	

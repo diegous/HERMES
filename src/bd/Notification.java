@@ -17,7 +17,7 @@ public class Notification {
 	public Notification(int id_notification, int id_child, int id_context, int id_category, int id_tag, int id_pictogram, long sent, long recieved) throws SQLException, ParseException {
 		this.id = id_notification;
 		
-		this.child     = new ChildDAO().getById(id_child);
+		this.child     = FactoriaDAO.getChildDAO().getById(id_child);
 		this.context   = new ContextDAO().getById(id_context);
 		this.category  = new CategoryDAO().getById(id_category);
 		this.tag       = new TagDAO().getById(id_tag);

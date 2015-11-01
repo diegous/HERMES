@@ -9,9 +9,6 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 	protected String tableName;
 	protected String idName;
 
-	
-	
-	
 	protected ResultSet getAll() {
 		DBConector conector = new DBConector();
 		conector.connect();
@@ -70,8 +67,9 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 		return result;
 	}
 	
-	public ResultSet getOrSave(T t, String text, String fieldName){
+	public ResultSet getOrSave(T t, String text, String fieldName) throws SQLException{
 		ResultSet result = this.getByText(text, fieldName);
+		System.out.println(result.getFetchSize());
 		try {
 			if(result.getFetchSize() == 0){
 				this.save(t);

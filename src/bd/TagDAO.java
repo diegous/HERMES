@@ -61,4 +61,10 @@ public class TagDAO extends AbstractDAO<Tag> {
 	public Tag getByText(String text) throws SQLException, ParseException {
 		return new Tag(super.getByText(text, "description"));
 	}
+
+	@Override
+	public Tag getOrSave(Tag t) throws SQLException, ParseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

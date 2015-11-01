@@ -9,11 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChildDAO extends AbstractDAO<Child> {
-	public ChildDAO(){
+	
+	//SINGLETON 
+	private static ChildDAO childDAO = null;
+	
+	private ChildDAO(){
 		this.tableName = "child";
 		this.idName = "id_child";
 	}
-
+	
+	public static ChildDAO getChildDAO(){
+		if(childDAO ==  null){childDAO = new ChildDAO();}
+		return childDAO;
+	}
+	
+	//METHODS
 	public List<Child> getList() throws SQLException, ParseException {
 		ResultSet result = super.getAll();
 		List<Child> resultList = new ArrayList<Child>();

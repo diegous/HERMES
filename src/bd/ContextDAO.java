@@ -61,4 +61,10 @@ public class ContextDAO extends AbstractDAO<Context> {
 	public Context getByText(String text) throws SQLException, ParseException {
 		return new Context(super.getByText(text, "description"));
 	}
+
+	@Override
+	public Context getOrSave(Context t) throws SQLException, ParseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

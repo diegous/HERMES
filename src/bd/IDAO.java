@@ -1,6 +1,5 @@
 package bd;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
@@ -12,4 +11,5 @@ public interface IDAO<T> {
 	public void save(T t);
 	public Boolean delete(T t);
 	public Boolean modify(T t);
+	public T getOrSave(T t) throws SQLException, ParseException;
 }
