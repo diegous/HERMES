@@ -25,9 +25,7 @@ public class PictogramDAO extends AbstractDAO<Pictogram> {
 		return resultList;
 	}
 
-	public ResultSet save(Pictogram t) {		
-		return super.save(t);
-	}
+	public void save(Pictogram t) {super.save(t);}
 	
 	public PreparedStatement prepareSaveStatement(Connection con, Pictogram t) throws SQLException{
 		String query = "INSERT INTO "+tableName+" (description) VALUES (?);";

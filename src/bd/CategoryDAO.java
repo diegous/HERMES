@@ -25,8 +25,8 @@ public class CategoryDAO extends AbstractDAO<Category> {
 		return resultList;
 	}
 
-	public ResultSet save(Category t) {		
-		return super.save(t);
+	public void save(Category t) {		
+		super.save(t);
 	}
 	
 	public PreparedStatement prepareSaveStatement(Connection con, Category t) throws SQLException{

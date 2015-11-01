@@ -19,12 +19,15 @@ public class Test {
 		// Esto genera un DNI entre 39.000.000 y 45.000.000
 //		String dni = String.valueOf(randomGenerator.nextInt(6000000)+39000000);
 		
+		
+		
+		
 		Child child = new Child("name");
-//
+
 		ChildDAO dao = new ChildDAO();
-//		
-		dao.save(child);
-//
+	
+		dao.getOrSave(child);
+
 	for (Child aChild : dao.getList()) {
 		System.out.println(aChild.toString());
 	}

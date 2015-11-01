@@ -1,7 +1,6 @@
 package bd;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,33 +17,23 @@ public class ChildDAO extends AbstractDAO<Child> {
 	public List<Child> getList() throws SQLException, ParseException {
 		ResultSet result = super.getAll();
 		List<Child> resultList = new ArrayList<Child>();
-		
 		while(result.next()){
 			resultList.add(new Child(result));
 		}
-			
 		return resultList;
 	}
 
-	public ResultSet save(Child t) {		
-		return super.save(t);
-	}
+	public void save(Child t) {super.save(t);}
 	
 	public PreparedStatement prepareSaveStatement(Connection con, Child child) throws SQLException{
-//		String query = "INSERT INTO "+tableName+" (dni, name, lastname, birthday) VALUES (?,?,?,?);";
-//
-//		PreparedStatement preparedStatement = con.prepareStatement(query);
-//		preparedStatement.setString(1, child.getDni());
-//		preparedStatement.setString(2, child.getName());
-//		preparedStatement.setString(3, child.getLastname());
-//		preparedStatement.setDate(4, new Date(child.getBirthday().getTime()));
-//		
-//		return preparedStatement;
-		return null;
+		String query = "INSERT INTO "+tableName+" (name) VALUES (?);";
+		PreparedStatement preparedStatement = con.prepareStatement(query);
+		preparedStatement.setString(1, child.getName());
+		return preparedStatement;
 	}
 	
-	public Child getOrSave(String text) throws SQLException, ParseException{
-		return new Child(super.getOrSave(new Child(text), text, "name"));
+	public Child getOrSave(Child t) throws SQLException, ParseException{
+		return new Child(super.getOrSave(t, t.getName(), "name"));
 	}
 
 

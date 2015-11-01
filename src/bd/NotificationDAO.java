@@ -25,8 +25,8 @@ public class NotificationDAO extends AbstractDAO<Notification> {
 		return resultList;
 	}
 
-	public ResultSet save(Notification t) {		
-		return super.save(t);
+	public void save(Notification t) {		
+		super.save(t);
 	}
 	
 	public PreparedStatement prepareSaveStatement(Connection con, Notification t) throws SQLException{

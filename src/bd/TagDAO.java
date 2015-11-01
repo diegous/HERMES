@@ -25,8 +25,8 @@ public class TagDAO extends AbstractDAO<Tag> {
 		return resultList;
 	}
 
-	public ResultSet save(Tag t) {		
-		return super.save(t);
+	public void save(Tag t) {		
+		super.save(t);
 	}
 	
 	public PreparedStatement prepareSaveStatement(Connection con, Tag tag) throws SQLException{

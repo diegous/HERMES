@@ -10,7 +10,7 @@ import org.json.simple.parser.ParseException;
 import bd.*;
 
 public class Controller {
-	
+	/*
 	public void processIncomingJson(String json){
 		JSONParser parser = new JSONParser();
 		
@@ -55,5 +55,5 @@ public class Controller {
 		
 		//Notification notification = processJson(json);
 		
-	}
+	}*/
 }

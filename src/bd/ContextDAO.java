@@ -25,8 +25,8 @@ public class ContextDAO extends AbstractDAO<Context> {
 		return resultList;
 	}
 
-	public ResultSet save(Context t) {		
-		return super.save(t);
+	public void save(Context t) {		
+		super.save(t);
 	}
 	
 	public PreparedStatement prepareSaveStatement(Connection con, Context t) throws SQLException{
