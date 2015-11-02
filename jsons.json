@@ -1,5 +1,5 @@
-{"child":"pepito", "context":"Pista","category":"Emociones","sent":1111111100011111,  "tag":"infeliz","content":"Triste"}
-{"child":"pepito2","context":"Casa" ,"category":"Emociones","sent":111111111111881111,"tag":"wiii",   "content":"Triste"}
-{"child":"pepito", "context":"Pista","category":"Emociones","sent":1111111111111111,  "tag":"infeliz","content":"Alegre"}
-{"child":"pepito3","context":"Casa" ,"category":"Emociones","sent":1111111231111111,  "tag":"infeliz","content":"Alegre"}
-{"child":"pepito2","context":"Pista","category":"Emociones","sent":11111111111112341, "tag":"ooo",    "content":"Triste"}
+{"child":"pepito", "context":"Pista","category":"Emociones","sent":1111111100011111,  "tag":"infeliz","pictogram":"Triste"}
+{"child":"pepito2","context":"Casa" ,"category":"Emociones","sent":111111111111881111,"tag":"wiii",   "pictogram":"Triste"}
+{"child":"pepito", "context":"Pista","category":"Emociones","sent":1111111111111111,  "tag":"infeliz","pictogram":"Alegre"}
+{"child":"pepito3","context":"Casa" ,"category":"Emociones","sent":1111111231111111,  "tag":"infeliz","pictogram":"Alegre"}
+{"child":"pepito2","context":"Pista","category":"Emociones","sent":11111111111112341, "tag":"ooo",    "pictogram":"Triste"}
