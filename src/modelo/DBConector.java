@@ -19,7 +19,7 @@ public class DBConector {
 	}
 
 	public void close() {
-		try {this.connection.close(); System.out.println("DB connection closed");} 
+		try {this.connection.close();} 
 		catch (SQLException ex) {System.err.println(ex);}
 	}
 

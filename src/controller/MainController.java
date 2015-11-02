@@ -16,7 +16,7 @@ public class MainController {
 				+ "\"category\":\"Emociones\", "
 				+ "\"sent\":1111111111111111111, "
 				+ "\"tag\":\"infeliz\", "
-				+ "\"content\":\"Alegre\"}";
+				+ "\"pictogram\":\"Alegre\"}";
 		
 		Controller controller = new Controller();
 		controller.processIncomingJson(json);

@@ -1,8 +1,6 @@
 package controller;
 
 import java.util.Date;
-import java.sql.SQLException;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -27,6 +25,7 @@ public class Controller {
 			long
 				jsent      = (Long) jArray.get("sent");
 
+			
 			Child child = FactoriaDAO.getChildDAO().getByText(jchild);
 			if (child == null){
 				FactoriaDAO.getChildDAO().save(new Child(-1, jchild));
@@ -53,8 +52,10 @@ public class Controller {
 
 			Pictogram pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
 			if (pictogram == null){
+				System.out.println(jpictogram);
 				FactoriaDAO.getPictogramDAO().save(new Pictogram(-1, jpictogram));
 				pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
+			
 			}
 			
 			Date sent = new Date(jsent);

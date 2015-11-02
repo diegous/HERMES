@@ -49,7 +49,7 @@ public class PictogramDAO implements IDAO<Pictogram> {
 		DBConector conector = new DBConector();
 		conector.connect();
 		try {
-			String sql = "INSERT INTO pictograma (content) VALUES (?);";
+			String sql = "INSERT INTO pictogram (content) VALUES (?);";
 			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
 			preparedStatement.setString(1, p.getContent());
 			preparedStatement.executeUpdate();
