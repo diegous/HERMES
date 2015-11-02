@@ -27,21 +27,13 @@ public class ChildDAO implements IDAO<Child> {
 				String sql = "SELECT * FROM child";
 				PreparedStatement query = conector.getConnection().prepareStatement(sql);
 				ResultSet result = query.executeQuery();
-				while(result.next()){resultList.add(new Child(result.getInt("id_child"), result.getString("name")));}
+				while(result.next()){resultList.add(new Child(result.getInt("id_context"), result.getString("description")));}
+				query.close();
+				result.close();
 				return resultList;
 			} 
 			catch (SQLException e) {e.printStackTrace(); return resultList;}
 			finally{conector.close();}
-		
-	}
-	
-	public Child getChild(Child c) {
-		Child child = this.getByText(c.getName());
-		if(child == null){
-			this.save(c);
-			child=this.getByText(c.getName());
-		}
-		return child;
 	}
 	
 	public void save(Child c) {
@@ -52,6 +44,7 @@ public class ChildDAO implements IDAO<Child> {
 			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
 			preparedStatement.setString(1, c.getName());
 			preparedStatement.executeUpdate();
+			preparedStatement.close();
 		} 
 		catch (SQLException e) {e.printStackTrace();}
 		finally{conector.close();}
@@ -67,6 +60,8 @@ public class ChildDAO implements IDAO<Child> {
 			preparedStatement.setString(1, text);
 			ResultSet result = preparedStatement.executeQuery();
 			if(result.next()){child = new Child(result.getInt("id_child"), result.getString("name"));}	
+			preparedStatement.close();
+			result.close();
 			return child;		
 		} 
 		catch (SQLException e) {
