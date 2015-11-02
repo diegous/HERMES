@@ -11,7 +11,7 @@ public class MainController {
 	public static void main(String[] args){
 		
 		String json = "{"
-				+ "\"child\": \"pepito\", "
+				+ "\"child\": \"pepito2\", "
 				+ "\"context\":\"Pista\", "
 				+ "\"category\":\"Emociones\", "
 				+ "\"sent\":1111111111111111111, "

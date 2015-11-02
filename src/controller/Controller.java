@@ -1,6 +1,6 @@
 package controller;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.SQLException;
 
 import org.json.simple.JSONObject;
@@ -29,32 +29,44 @@ public class Controller {
 
 			Child child = FactoriaDAO.getChildDAO().getByText(jchild);
 			if (child == null){
-				System.out.println("entra al if");
 				FactoriaDAO.getChildDAO().save(new Child(-1, jchild));
 				child = FactoriaDAO.getChildDAO().getByText(jchild);
 			}
+
+			Context context = FactoriaDAO.getContextDAO().getByText(jcontext);
+			if (context == null){
+				FactoriaDAO.getContextDAO().save(new Context(-1, jcontext));
+				context = FactoriaDAO.getContextDAO().getByText(jcontext);
+			}
+
+			Category category = FactoriaDAO.getCategoryDAO().getByText(jcategory);
+			if (category == null){
+				FactoriaDAO.getCategoryDAO().save(new Category(-1, jcategory));
+				category = FactoriaDAO.getCategoryDAO().getByText(jcategory);
+			}
+
+			Tag tag = FactoriaDAO.getTagDAO().getByText(jtag);
+			if (tag == null){
+				FactoriaDAO.getTagDAO().save(new Tag(-1, jtag));
+				tag = FactoriaDAO.getTagDAO().getByText(jtag);
+			}
+
+			Pictogram pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
+			if (pictogram == null){
+				FactoriaDAO.getPictogramDAO().save(new Pictogram(-1, jpictogram));
+				pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
+			}
 			
-			System.out.println(child);
-//			Context context = new ContextDAO().getOrSave(jcontext);
-//			Category category = new CategoryDAO().getOrSave(jcategory);
-//			Tag tag = new TagDAO().getOrSave(jtag);
-//			Pictogram pictogram = new PictogramDAO().getOrSave(jpictogram);
-//			Date sent = new Date(jsent);
-//			Date recieved = new Date(jrecieved);
+			Date sent = new Date(jsent);
+			Date recieved = new Date();
 			
+			Notification notification = new Notification(-1,child,context,category,tag,pictogram,sent,recieved);
 			
-//			Notification notification = new Notification(child, context, category, tag, pictogram, sent, recieved);
+			FactoriaDAO.getNotificationDAO().save(notification);
 			
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (java.text.ParseException e) {
-//			System.err.println("Malformed JSON");
-//			e.printStackTrace();
 		}
 		
 		

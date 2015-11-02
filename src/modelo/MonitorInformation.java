@@ -44,8 +44,5 @@ public class MonitorInformation {
 	
 	public List<Notification> getNotification() {return notification;}
 	
-	public void setNotification(Notification notification) {this.notification.add(notification);}
-	
-	
-	
+	public void setNotification(Notification notification) {this.notification.add(notification);}	
 }
