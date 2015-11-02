@@ -22,7 +22,7 @@ public class Test {
 		
 		
 		
-		Child child = new Child("name");
+		Child child = new Child("jjj");
 
 		IDAO<Child> dao = FactoriaDAO.getChildDAO();
 	

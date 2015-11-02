@@ -1,19 +1,15 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -24,51 +20,32 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.List;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
+import modelo.Child;
+
 import javax.swing.JTextField;
-import javax.swing.border.MatteBorder;
-import javax.swing.JScrollBar;
+
 
 public class HermesView extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
+	private List<Child> viewInfo;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HermesView frame = new HermesView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public HermesView() {
+	
+	public HermesView(List<Child> list) {
+		viewInfo=list;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 50, 900, 600);
 		setTitle("Hermes Monitor");
@@ -133,8 +110,8 @@ public class HermesView extends JFrame {
 		gbc_contenido.gridy = 1;
 		Filtros.add(contenido, gbc_contenido);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Entusiasmado", "Alegre", "Molesto"}));
+		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Entusiasmado", "Alegre", "Molesto"}));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
@@ -201,8 +178,8 @@ public class HermesView extends JFrame {
 		gbc_contexto.gridy = 2;
 		Filtros.add(contexto, gbc_contexto);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "Pista", "Establo-Terapia", "Hogar"}));
+		JComboBox<String> comboBox_1 = new JComboBox<String>();
+		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Pista", "Establo-Terapia", "Hogar"}));
 		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
 		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
@@ -221,8 +198,8 @@ public class HermesView extends JFrame {
 		gbc_categoria.gridy = 3;
 		Filtros.add(categoria, gbc_categoria);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"", "Emociones", "Alimentos", "Actividades y paseo", "<Predeterminada>"}));
+		JComboBox<String> comboBox_2 = new JComboBox<String>();
+		comboBox_2.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Emociones", "Alimentos", "Actividades y paseo", "<Predeterminada>"}));
 		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
 		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
@@ -243,8 +220,14 @@ public class HermesView extends JFrame {
 		gbc_nino.gridy = 4;
 		Filtros.add(nino, gbc_nino);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"", "Luis", "Mariela", "Carola", "Diego", "Juan"}));
+		JComboBox<String> comboBox_3 = new JComboBox<String>();
+		
+		comboBox_3.addItem(" ");
+		for (Child temp : viewInfo) {
+			comboBox_3.addItem(temp.getName());
+		}
+		
+		
 		GridBagConstraints gbc_comboBox_3 = new GridBagConstraints();
 		gbc_comboBox_3.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_3.fill = GridBagConstraints.HORIZONTAL;
@@ -266,8 +249,8 @@ public class HermesView extends JFrame {
 		gbc_Etiqueta.gridy = 5;
 		Filtros.add(Etiqueta, gbc_Etiqueta);
 		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"", "Importante", "CharlarConPadres"}));
+		JComboBox<String> comboBox_4 = new JComboBox<String>();
+		comboBox_4.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Importante", "CharlarConPadres"}));
 		GridBagConstraints gbc_comboBox_4 = new GridBagConstraints();
 		gbc_comboBox_4.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_4.fill = GridBagConstraints.HORIZONTAL;
@@ -375,7 +358,7 @@ public class HermesView extends JFrame {
 		gbc_lblNewLabel_1.gridy = 3;
 		Etiquetas.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		JComboBox comboBox_5 = new JComboBox();
+		JComboBox<String> comboBox_5 = new JComboBox<String>();
 		GridBagConstraints gbc_comboBox_5 = new GridBagConstraints();
 		gbc_comboBox_5.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_5.insets = new Insets(0, 0, 5, 5);
@@ -412,7 +395,7 @@ public class HermesView extends JFrame {
 		gbc_lblNewLabel_2.gridy = 5;
 		Etiquetas.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		JComboBox comboBox_6 = new JComboBox();
+		JComboBox<String> comboBox_6 = new JComboBox<String>();
 		GridBagConstraints gbc_comboBox_6 = new GridBagConstraints();
 		gbc_comboBox_6.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_6.insets = new Insets(0, 0, 5, 5);
@@ -450,7 +433,7 @@ public class HermesView extends JFrame {
 		gbc_lblRenombrarEtiqueta.gridy = 7;
 		Etiquetas.add(lblRenombrarEtiqueta, gbc_lblRenombrarEtiqueta);
 		
-		JComboBox comboBox_7 = new JComboBox();
+		JComboBox<String> comboBox_7 = new JComboBox<String>();
 		GridBagConstraints gbc_comboBox_7 = new GridBagConstraints();
 		gbc_comboBox_7.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_7.insets = new Insets(0, 0, 5, 5);
@@ -545,10 +528,13 @@ public class HermesView extends JFrame {
 					"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"
 				}
 			) {
+				private static final long serialVersionUID = 1L;
+				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] {
 					String.class, String.class, String.class, String.class, String.class, String.class
 				};
-				public Class getColumnClass(int columnIndex) {
+				@SuppressWarnings("unchecked")
+				public Class<String> getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				}
 			};
