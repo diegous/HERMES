@@ -27,7 +27,7 @@ public class ChildDAO implements IDAO<Child> {
 				String sql = "SELECT * FROM child";
 				PreparedStatement query = conector.getConnection().prepareStatement(sql);
 				ResultSet result = query.executeQuery();
-				while(result.next()){resultList.add(new Child(result.getInt("id_context"), result.getString("description")));}
+				while(result.next()){resultList.add(new Child(result.getInt("id_child"), result.getString("name")));}
 				query.close();
 				result.close();
 				return resultList;

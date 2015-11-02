@@ -27,19 +27,50 @@ public class CategoryDAO implements IDAO<Category> {
 			PreparedStatement query = conector.getConnection().prepareStatement(sql);
 			ResultSet result = query.executeQuery();
 			while(result.next()){resultList.add(new Category(result.getInt("id_category"), result.getString("description")));}
+			query.close();
+			result.close();
 			return resultList;
 		} 
 		catch (SQLException e) {e.printStackTrace(); return resultList;}
 		finally{conector.close();}
 	}
+	
+	
+	
 	@Override
 	public Category getByText(String text) {
-		// TODO Auto-generated method stub
-		return null;
+		DBConector conector = new DBConector();
+		conector.connect();
+		Category category =null;
+		try {
+			String sql = "SELECT * FROM category WHERE description=?;";
+			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
+			preparedStatement.setString(1, text);
+			ResultSet result = preparedStatement.executeQuery();
+			if(result.next()){category = new Category(result.getInt("id_category"), result.getString("description"));}
+			preparedStatement.close();
+			result.close();
+			return category;		
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			return category;}
+		finally {conector.close();}
 	}
 	@Override
-	public void save(Category t) {
-		// TODO Auto-generated method stub
+	public void save(Category c) {
+		DBConector conector = new DBConector();
+		conector.connect();
+		try {
+			String sql = "INSERT INTO category (description) VALUES (?);";
+			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
+			preparedStatement.setString(1, c.getDescription());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} 
+		catch (SQLException e) {e.printStackTrace();}
+		finally{conector.close();}
+		
 		
 	}
 	

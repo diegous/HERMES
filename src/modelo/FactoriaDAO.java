@@ -16,7 +16,7 @@ public class FactoriaDAO {
 	public static IDAO<Child> getChildDAO(){return ChildDAO.getChildDAO();}
 	public static IDAO<Category> getCategoryDAO(){return CategoryDAO.getCategoryDAO();}
 	public static IDAO<Context> getContextDAO(){return ContextDAO.getContextDAO();}
-	public static IDAO<Notification> getNotificationDAO(){return NotificationDAO.getNotificationDAO();}
+	public static INotificationDAO getNotificationDAO(){return NotificationDAO.getNotificationDAO();}
 	public static IDAO<Tag> getTagDAO(){return TagDAO.getTagDAO();}
 	public static IDAO<Pictogram> getPictogramDAO(){return PictogramDAO.getPictogramDAO();}
 	public static IMonitorInformationDAO getMonitorInformationDAO(){return MonitorInformationDAO.getMonitorInformationDAO();};
