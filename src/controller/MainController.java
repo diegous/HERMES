@@ -22,24 +22,20 @@ public class MainController {
 		controller.processIncomingJson(json);
 		
 		
-		
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					IDAO<Child> dao = FactoriaDAO.getChildDAO();
-//					
-//					HermesView frame = new HermesView(dao.getList());
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-		
-		
-		
-		
 
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					IDAO<Child> dao = FactoriaDAO.getChildDAO();
+					
+					HermesView frame = new HermesView(dao.getList());
+					frame.setVisible(true);
+			
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 }
