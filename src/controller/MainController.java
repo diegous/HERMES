@@ -19,11 +19,13 @@ public class MainController {
 					
 					HermesView frame = new HermesView(dao.getList());
 					frame.setVisible(true);
+			
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
 		
 		
 		

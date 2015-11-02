@@ -19,4 +19,5 @@ public class FactoriaDAO {
 	public static IDAO<Notification> getNotificationDAO(){return NotificationDAO.getNotificationDAO();}
 	public static IDAO<Tag> getTagDAO(){return TagDAO.getTagDAO();}
 	public static IDAO<Pictogram> getPictogramDAO(){return PictogramDAO.getPictogramDAO();}
+	public static IMonitorInformationDAO getMonitorInformationDAO(){return MonitorInformationDAO.getMonitorInformationDAO();};
 }
