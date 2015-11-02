@@ -7,10 +7,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import bd.*;
+import modelo.*;
 
 public class Controller {
-	/*
+	
 	public void processIncomingJson(String json){
 		JSONParser parser = new JSONParser();
 		
@@ -25,29 +25,36 @@ public class Controller {
 				jpictogram = (String) jArray.get("pictogram");
 			
 			long
-				jsent      = (Long) jArray.get("sent"),
-				jrecieved  = (Long) jArray.get("recieved");
+				jsent      = (Long) jArray.get("sent");
 
-			Child child = new ChildDAO().getOrSave(jchild);
-			Context context = new ContextDAO().getOrSave(jcontext);
-			Category category = new CategoryDAO().getOrSave(jcategory);
-			Tag tag = new TagDAO().getOrSave(jtag);
-			Pictogram pictogram = new PictogramDAO().getOrSave(jpictogram);
-			Date sent = new Date(jsent);
-			Date recieved = new Date(jrecieved);
+			Child child = FactoriaDAO.getChildDAO().getByText(jchild);
+			if (child == null){
+				System.out.println("entra al if");
+				FactoriaDAO.getChildDAO().save(new Child(-1, jchild));
+				child = FactoriaDAO.getChildDAO().getByText(jchild);
+			}
 			
-			Notification notification = new Notification(child, context, category, tag, pictogram, sent, recieved);
+			System.out.println(child);
+//			Context context = new ContextDAO().getOrSave(jcontext);
+//			Category category = new CategoryDAO().getOrSave(jcategory);
+//			Tag tag = new TagDAO().getOrSave(jtag);
+//			Pictogram pictogram = new PictogramDAO().getOrSave(jpictogram);
+//			Date sent = new Date(jsent);
+//			Date recieved = new Date(jrecieved);
+			
+			
+//			Notification notification = new Notification(child, context, category, tag, pictogram, sent, recieved);
 			
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (java.text.ParseException e) {
-			System.err.println("Malformed JSON");
-			e.printStackTrace();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (java.text.ParseException e) {
+//			System.err.println("Malformed JSON");
+//			e.printStackTrace();
 		}
 		
 		
@@ -55,5 +62,5 @@ public class Controller {
 		
 		//Notification notification = processJson(json);
 		
-	}*/
+	}
 }

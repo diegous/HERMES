@@ -36,15 +36,15 @@ public class ChildDAO implements IDAO<Child> {
 	}
 	
 	public Child getChild(Child c) {
-		Child child = this.getChildByText(c.getName());
+		Child child = this.getByText(c.getName());
 		if(child == null){
-			this.saveChild(c);
-			child=this.getChildByText(c.getName());
+			this.save(c);
+			child=this.getByText(c.getName());
 		}
 		return child;
 	}
 	
-	private void saveChild(Child c) {
+	public void save(Child c) {
 		DBConector conector = new DBConector();
 		conector.connect();
 		try {
@@ -57,7 +57,7 @@ public class ChildDAO implements IDAO<Child> {
 		finally{conector.close();}
 	}
 
-	private Child getChildByText(String text) {
+	public Child getByText(String text) {
 		DBConector conector = new DBConector();
 		conector.connect();
 		Child child =null;

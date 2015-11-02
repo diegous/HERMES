@@ -32,6 +32,16 @@ public class CategoryDAO implements IDAO<Category> {
 		catch (SQLException e) {e.printStackTrace(); return resultList;}
 		finally{conector.close();}
 	}
+	@Override
+	public Category getByText(String text) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void save(Category t) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
