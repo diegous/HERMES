@@ -8,7 +8,7 @@ public class MonitorInformation {
 	private List<Context> context;
 	private List<Category> category;
 	private List<Tag> tag;
-	private List<Pictogram> content;
+	private List<Pictogram> pictogram;
 	private List<Notification> notification;
 	
 	
@@ -17,7 +17,7 @@ public class MonitorInformation {
 		this.context=context;
 		this.category=category;
 		this.tag=tag;
-		this.content=content;
+		this.pictogram=content;
 		this.notification=notification;
 	}
 	
@@ -38,9 +38,9 @@ public class MonitorInformation {
 	
 	public void addTag(Tag tag) {this.tag.add(tag);}
 	
-	public List<Pictogram> getContent() {return content;}
+	public List<Pictogram> getPictogram() {return pictogram;}
 	
-	public void addContent(Pictogram content) {this.content.add(content);}
+	public void addPictogram(Pictogram pictogram) {this.pictogram.add(pictogram);}
 	
 	public List<Notification> getNotification() {return notification;}
 	

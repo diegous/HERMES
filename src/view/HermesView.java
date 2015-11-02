@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import modelo.Child;
+import modelo.*;
 
 import javax.swing.JTextField;
 
@@ -40,10 +40,10 @@ public class HermesView extends JFrame {
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
-	private List<Child> viewInfo;
+	private MonitorInformation viewInfo;
 
 	
-	public HermesView(List<Child> list) {
+	public HermesView(MonitorInformation list) {
 		viewInfo=list;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -223,7 +223,7 @@ public class HermesView extends JFrame {
 		JComboBox<String> comboBox_3 = new JComboBox<String>();
 		
 		comboBox_3.addItem(" ");
-		for (Child temp : viewInfo) {
+		for (Child temp : viewInfo.getChild()) {
 			comboBox_3.addItem(temp.getName());
 		}
 		

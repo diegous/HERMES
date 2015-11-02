@@ -32,26 +32,30 @@ public class MainController {
 
 	
 	public static void main(String[] args){
-		Controller controller = new Controller();
-
-		for(String json : getJson()){
-			System.out.println(json);
-			//controller.processIncomingJson(json);
-		}
-
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IDAO<Child> dao = FactoriaDAO.getChildDAO();
+					MonitorInformation monitor = FactoriaDAO.getMonitorInformationDAO().getMonitorInformation();
 					
-					HermesView frame = new HermesView(dao.getList());
+					HermesView frame = new HermesView(monitor);
 					frame.setVisible(true);
+
+					Controller controller = new Controller();
+
+					for(String json : getJson()){
+						controller.processIncomingJson(json, monitor);
+					}					
+					
+					frame.repaint();
 			
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
+		
 	}
 	
 }

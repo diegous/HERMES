@@ -9,7 +9,7 @@ import modelo.*;
 
 public class Controller {
 	
-	public void processIncomingJson(String json){
+	public void processIncomingJson(String json, MonitorInformation monitor){
 		JSONParser parser = new JSONParser();
 		
 		try {
@@ -30,24 +30,28 @@ public class Controller {
 			if (child == null){
 				FactoriaDAO.getChildDAO().save(new Child(-1, jchild));
 				child = FactoriaDAO.getChildDAO().getByText(jchild);
+				monitor.addChild(child);
 			}
 
 			Context context = FactoriaDAO.getContextDAO().getByText(jcontext);
 			if (context == null){
 				FactoriaDAO.getContextDAO().save(new Context(-1, jcontext));
 				context = FactoriaDAO.getContextDAO().getByText(jcontext);
+				monitor.addContext(context);
 			}
 
 			Category category = FactoriaDAO.getCategoryDAO().getByText(jcategory);
 			if (category == null){
 				FactoriaDAO.getCategoryDAO().save(new Category(-1, jcategory));
 				category = FactoriaDAO.getCategoryDAO().getByText(jcategory);
+				monitor.addCategory(category);
 			}
 
 			Tag tag = FactoriaDAO.getTagDAO().getByText(jtag);
 			if (tag == null){
 				FactoriaDAO.getTagDAO().save(new Tag(-1, jtag));
 				tag = FactoriaDAO.getTagDAO().getByText(jtag);
+				monitor.addTag(tag);
 			}
 
 			Pictogram pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
@@ -55,7 +59,7 @@ public class Controller {
 				System.out.println(jpictogram);
 				FactoriaDAO.getPictogramDAO().save(new Pictogram(-1, jpictogram));
 				pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
-			
+				monitor.addPictogram(pictogram);
 			}
 			
 			Date sent = new Date(jsent);

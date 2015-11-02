@@ -20,8 +20,8 @@ public class MonitorInformationDAO implements IMonitorInformationDAO {
 		List<Category> category= FactoriaDAO.getCategoryDAO().getList(); 
 		List<Tag> tag= FactoriaDAO.getTagDAO().getList(); 
 		List<Pictogram> content= FactoriaDAO.getPictogramDAO().getList();
-		List<Notification> notification= FactoriaDAO.getNotificationDAO().getList();
-		MonitorInformation mi = new MonitorInformation(child, context, category, tag, content, notification);
+//		List<Notification> notification= FactoriaDAO.getNotificationDAO().getList();
+		MonitorInformation mi = new MonitorInformation(child, context, category, tag, content, null);
 		return mi;
 	}
 
