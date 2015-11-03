@@ -425,61 +425,7 @@ public class HermesView extends JFrame {
 		lblEtiquetas.setFont(new Font("Cambria", Font.BOLD, 15));
 		panel.add(lblEtiquetas);
 		
-		//CREAR
-		JLabel lblNewLabel = new JLabel("Crear etiqueta:");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel.insets = new Insets(0, 5, 5, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 1;
-		Etiquetas.add(lblNewLabel, gbc_lblNewLabel);
 		
-		JTextField inputCrear = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 1;
-		Etiquetas.add(inputCrear, gbc_textField);
-		inputCrear.setColumns(10);
-		
-		JButton btnCrear = new JButton("Crear");
-		GridBagConstraints gbc_btnCrear = new GridBagConstraints();
-		gbc_btnCrear.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnCrear.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCrear.gridx = 2;
-		gbc_btnCrear.gridy = 1;
-		Etiquetas.add(btnCrear, gbc_btnCrear);
-		btnCrear.addActionListener(new ActionListener() {
-			
-			private MonitorInformation viewInfo;
-			private JTextField input;
-			
-			public ActionListener init(JTextField input ,MonitorInformation viewInfo ){
-				this.viewInfo=viewInfo;
-		        this.input=input;
-		        return this;
-		    }
-			public void actionPerformed(ActionEvent e) {
-				if(this.input.getText().length()>0){
-					FactoriaDAO.getTagDAO().save(new Tag(0, this.input.getText()));
-					this.input.setText(null);
-				}
-			}
-			}.init(inputCrear, this.viewInfo));	
-		
-		
-		
-		JSeparator separator = new JSeparator();
-		separator.setBackground(Color.BLACK);
-		separator.setForeground(Color.BLACK);
-		GridBagConstraints gbc_separator = new GridBagConstraints();
-		gbc_separator.fill = GridBagConstraints.HORIZONTAL;
-		gbc_separator.gridwidth = 4;
-		gbc_separator.insets = new Insets(0, 0, 5, 0);
-		gbc_separator.gridx = 0;
-		gbc_separator.gridy = 2;
-		Etiquetas.add(separator, gbc_separator);
 		
 		
 		//ELIMINAR
@@ -624,7 +570,72 @@ public class HermesView extends JFrame {
 		gbc_btnRenombrar.gridy = 8;
 		Etiquetas.add(btnRenombrar, gbc_btnRenombrar);
 		
-		
+		//CREAR
+				JLabel lblNewLabel = new JLabel("Crear etiqueta:");
+				GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+				gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
+				gbc_lblNewLabel.insets = new Insets(0, 5, 5, 5);
+				gbc_lblNewLabel.gridx = 0;
+				gbc_lblNewLabel.gridy = 1;
+				Etiquetas.add(lblNewLabel, gbc_lblNewLabel);
+				
+				JTextField inputCrear = new JTextField();
+				GridBagConstraints gbc_textField = new GridBagConstraints();
+				gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+				gbc_textField.insets = new Insets(0, 0, 5, 5);
+				gbc_textField.gridx = 1;
+				gbc_textField.gridy = 1;
+				Etiquetas.add(inputCrear, gbc_textField);
+				inputCrear.setColumns(10);
+				
+				JButton btnCrear = new JButton("Crear");
+				GridBagConstraints gbc_btnCrear = new GridBagConstraints();
+				gbc_btnCrear.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnCrear.insets = new Insets(0, 0, 5, 5);
+				gbc_btnCrear.gridx = 2;
+				gbc_btnCrear.gridy = 1;
+				Etiquetas.add(btnCrear, gbc_btnCrear);
+				btnCrear.addActionListener(new ActionListener() {
+					
+					private MonitorInformation viewInfo;
+					private JTextField input;
+					private JComboBox<String> comboRenombrarEtiqueta;
+					private JComboBox<String> comboAsignarEtiqueta;
+					private JComboBox<String> comboEliminarEtiqueta;
+					
+					public ActionListener init(JTextField input ,MonitorInformation viewInfo, JComboBox<String> renombrar, JComboBox<String> asignar, JComboBox<String> eliminar ){
+						this.viewInfo=viewInfo;
+						this.comboRenombrarEtiqueta=renombrar;
+						this.comboAsignarEtiqueta=asignar;
+						this.comboEliminarEtiqueta=eliminar;
+				        this.input=input;
+				        return this;
+				    }
+					public void actionPerformed(ActionEvent e) {
+						if(this.input.getText().length()>0){
+							FactoriaDAO.getTagDAO().save(new Tag(0, this.input.getText()));
+							this.comboRenombrarEtiqueta.addItem(this.input.getText());
+							this.comboAsignarEtiqueta.addItem(this.input.getText());
+							this.comboEliminarEtiqueta.addItem(this.input.getText());
+							this.input.setText(null);
+
+						}
+					}
+					}.init(inputCrear, this.viewInfo,comboRenombrarEtiqueta,comboAsignarEtiqueta,comboEliminarEtiqueta ));	
+				
+				
+				
+				JSeparator separator = new JSeparator();
+				separator.setBackground(Color.BLACK);
+				separator.setForeground(Color.BLACK);
+				GridBagConstraints gbc_separator = new GridBagConstraints();
+				gbc_separator.fill = GridBagConstraints.HORIZONTAL;
+				gbc_separator.gridwidth = 4;
+				gbc_separator.insets = new Insets(0, 0, 5, 0);
+				gbc_separator.gridx = 0;
+				gbc_separator.gridy = 2;
+				Etiquetas.add(separator, gbc_separator);
+				
 		
 		
 		
@@ -668,25 +679,19 @@ public class HermesView extends JFrame {
 	
 		
 		//TABLA
-		DefaultTableModel modelo = new DefaultTableModel(
-				new Object[][] {{null, null, null, null, null, null}},
-				new String[] {
-					"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"
-				}
-			) {
-				private static final long serialVersionUID = 1L;
-				@SuppressWarnings("rawtypes")
-				Class[] columnTypes = new Class[] {
-					String.class, String.class, String.class, String.class, String.class, String.class
-				};
-				@SuppressWarnings("unchecked")
-				public Class<String> getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-			};
-			
-			
-			JTable table = new JTable(modelo);
+		
+		 
+		DefaultTableModel modelo = new DefaultTableModel();
+		
+		String[] column= new String[]{"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"};
+		for (int i=0;i<6;i++){modelo.addColumn(column[i]);}
+		if(viewInfo.getNotification()!=null){
+			for (Notification temp : viewInfo.getNotification()) {
+				String[] row= new String[]{temp.getSent().toString(), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+				modelo.addRow(row);
+			}
+		}
+		JTable table = new JTable(modelo);
 			
 			
 			JScrollPane scrollPane = new JScrollPane(table);
