@@ -3,6 +3,7 @@ package modelo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PictogramDAO implements IDAO<Pictogram> {
@@ -19,8 +20,21 @@ public class PictogramDAO implements IDAO<Pictogram> {
 	//METHODS
 	@Override
 	public List<Pictogram> getList() {
-		// TODO Auto-generated method stub
-		return null;
+		DBConector conector = new DBConector();
+		conector.connect();
+		List<Pictogram> resultList = new ArrayList<Pictogram>();
+		try {
+			String sql = "SELECT * FROM pictogram";
+			PreparedStatement query = conector.getConnection().prepareStatement(sql);
+			ResultSet result = query.executeQuery();
+			while(result.next()){resultList.add(new Pictogram(result.getInt("id_pictogram"), result.getString("content")));}
+			query.close();
+			result.close();
+			return resultList;
+			
+		} 
+		catch (SQLException e) {e.printStackTrace(); return resultList;}
+		finally{conector.close();}
 	}
 
 	@Override

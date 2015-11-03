@@ -1,8 +1,11 @@
 package modelo;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 public class NotificationDAO implements INotificationDAO {
@@ -37,6 +40,66 @@ public class NotificationDAO implements INotificationDAO {
 		finally{conector.close();}
 		
 	}
+	
+	
+	@Override
+	public List<Notification> getList(Filter f) {
+		/*DBConector conector = new DBConector();
+		conector.connect();
+		List<Notification> resultList = new ArrayList<Notification>();
+		try {
+			
+			//CONSULTA
+			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, t.id_tag, t.description as Dtag, sent_date, received_date" 
+					+"FROM notification as n inner join category as cat on (n.id_category=cat.id_category)" 
+	                   +"inner join child as c on (n.id_child=c.id_child)" 
+	                   +"inner join context as cont on (n.id_context=cont.id_context)" 
+	                   +"inner join pictogram as p on (n.id_pictogram=p.id_pictogram)"
+	                   +"inner join tag as t on (n.id_tag=t.id_tag)"
+	                   +"WHERE 1=1";
+	        if(f.getCategory().length()>0){sql=sql+" and cat.description=?";}
+	        if(f.getChild().length()>0){sql=sql+" and name=?";}
+	        if(f.getContext().length()>0){sql=sql+" and cont.description=?";}
+	        if(f.getPictogram().length()>0){sql=sql+" and p.content=?";}
+	        if(f.getTag().length()>0){sql=sql+" and t.description=?";}
+	        if(f.getSince().length()>0){sql=sql+" and sent_date>=?";}
+	        if(f.getUntil().length()>0){sql=sql+" and sent_date<=?";}
+	       
+	        PreparedStatement query = conector.getConnection().prepareStatement(sql);
+	        
+	        //PARAMETROS
+	        int i=1;
+	        if(f.getCategory().length()>0){query.setString(i, f.getCategory()); i++;}
+	        if(f.getChild().length()>0){query.setString(i, f.getChild()); i++;}
+	        if(f.getContext().length()>0){query.setString(i, f.getContext()); i++;}
+	        if(f.getPictogram().length()>0){query.setString(i, f.getPictogram()); i++;}
+	        if(f.getTag().length()>0){query.setString(i, f.getTag()); i++;}
+	        if(f.getSince().length()>0){query.setString(i, f.getSince()); i++;}
+	        if(f.getUntil().length()>0){query.setString(i, f.getUntil());}
+	        
+	        ResultSet result = query.executeQuery();
+			
+			//PROCESO RESULTADOS
+	        while(result.next()){resultList.add(new Notification(result.getInt("id_notification"),
+	        													 new Child(result.getInt("id_child"), result.getString("name")),
+	        													 new Context(result.getInt("id_context"), result.getString("Dcontext")),
+	        													 new Category(result.getInt("id_category"), result.getString("Dcategory")),
+	        													 new Tag(result.getInt("id_tag"), result.getString("Dtag")),
+	        													 new Pictogram(result.getInt("id_pictogram"), result.getString("content")),
+	        													 new Date(result.getLong("sent_date")),
+	        													 new Date (result.getLong("received_date"))));}
+			query.close();
+			result.close();
+			return resultList;
+		} 
+		catch (SQLException e) {e.printStackTrace(); return resultList;}
+		finally{conector.close();}*/
+		return null;
+	}
+	
+	
+	
+	
 
 
 

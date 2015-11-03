@@ -7,6 +7,10 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -14,13 +18,11 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
-import java.util.List;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -36,20 +38,21 @@ import javax.swing.JTextField;
 public class HermesView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTable table;
-	private JTextField textField;
-	private JTextField textField_1;
+	//private JPanel contentPane;
+	//private JTable table;
+	//private JTextField textField;
+	//private JTextField textField_1;
 	private MonitorInformation viewInfo;
 
 	
 	public HermesView(MonitorInformation list) {
 		viewInfo=list;
+		System.out.println("pintado");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 50, 900, 600);
 		setTitle("Hermes Monitor");
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
@@ -99,6 +102,7 @@ public class HermesView extends JFrame {
 		filtros.setForeground(new Color(0, 0, 0));
 		filtros.setFont(new Font("Cambria", Font.BOLD, 15));
 		
+		
 		//CONTENIDO
 		JLabel contenido = new JLabel("Contenido:");
 		contenido.setHorizontalAlignment(SwingConstants.LEFT);
@@ -110,14 +114,36 @@ public class HermesView extends JFrame {
 		gbc_contenido.gridy = 1;
 		Filtros.add(contenido, gbc_contenido);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Entusiasmado", "Alegre", "Molesto"}));
+		final JComboBox<String> comboContenido = new JComboBox<String>();
+		comboContenido.addItem(" ");
+		for (Pictogram temp : viewInfo.getPictogram()) {
+			comboContenido.addItem(temp.getContent());
+		}
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 1;
-		Filtros.add(comboBox, gbc_comboBox);
+		Filtros.add(comboContenido, gbc_comboBox);
+		comboContenido.addItemListener(new ItemListener() 
+        { 
+			private MonitorInformation viewInfo;
+            public void itemStateChanged(ItemEvent e)  
+            { 
+                if(comboContenido.getSelectedItem().equals(e.getItem())) 
+                { 
+                  viewInfo.getFilter().setPictogram(e.getItem().toString());
+                } 
+            }
+
+			public ItemListener init(MonitorInformation viewInfo) {
+				this.viewInfo=viewInfo;
+				return this;
+			} 
+        }.init(this.viewInfo));
+		
+		
+		
 		
 		//FECHA
 		JLabel Fechahora = new JLabel("Fecha/Hora");
@@ -178,14 +204,37 @@ public class HermesView extends JFrame {
 		gbc_contexto.gridy = 2;
 		Filtros.add(contexto, gbc_contexto);
 		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Pista", "Establo-Terapia", "Hogar"}));
+		JComboBox<String> comboContext = new JComboBox<String>();
+		comboContext.addItem(" ");
+		for (Context temp : viewInfo.getContext()) {
+			comboContext.addItem(temp.getDescription());
+		}
 		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
 		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_1.gridx = 1;
 		gbc_comboBox_1.gridy = 2;
-		Filtros.add(comboBox_1, gbc_comboBox_1);
+		Filtros.add(comboContext, gbc_comboBox_1);
+		comboContext.addItemListener(new ItemListener() 
+        { 
+			private MonitorInformation viewInfo;
+            public void itemStateChanged(ItemEvent e)  
+            { 
+                if(comboContenido.getSelectedItem().equals(e.getItem())) 
+                { 
+                  viewInfo.getFilter().setContext(e.getItem().toString());
+                } 
+            }
+
+			public ItemListener init(MonitorInformation viewInfo) {
+				this.viewInfo=viewInfo;
+				return this;
+			} 
+        }.init(this.viewInfo));
+		
+		
+		
+		
 		
 		//CATEGORIA
 		JLabel categoria = new JLabel("Categor\u00EDa:");
@@ -198,14 +247,33 @@ public class HermesView extends JFrame {
 		gbc_categoria.gridy = 3;
 		Filtros.add(categoria, gbc_categoria);
 		
-		JComboBox<String> comboBox_2 = new JComboBox<String>();
-		comboBox_2.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Emociones", "Alimentos", "Actividades y paseo", "<Predeterminada>"}));
+		JComboBox<String> comboCategory = new JComboBox<String>();
+		comboCategory.addItem(" ");
+		for (Category temp : viewInfo.getCategory()) {
+			comboCategory.addItem(temp.getDescription());
+		}
 		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
 		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_2.gridx = 1;
 		gbc_comboBox_2.gridy = 3;
-		Filtros.add(comboBox_2, gbc_comboBox_2);
+		Filtros.add(comboCategory, gbc_comboBox_2);
+		comboCategory.addItemListener(new ItemListener() 
+        { 
+			private MonitorInformation viewInfo;
+            public void itemStateChanged(ItemEvent e)  
+            { 
+                if(comboContenido.getSelectedItem().equals(e.getItem())) 
+                { 
+                  viewInfo.getFilter().setCategory(e.getItem().toString());
+                } 
+            }
+
+			public ItemListener init(MonitorInformation viewInfo) {
+				this.viewInfo=viewInfo;
+				return this;
+			} 
+        }.init(this.viewInfo));
 		
 		
 		
@@ -220,20 +288,33 @@ public class HermesView extends JFrame {
 		gbc_nino.gridy = 4;
 		Filtros.add(nino, gbc_nino);
 		
-		JComboBox<String> comboBox_3 = new JComboBox<String>();
-		
-		comboBox_3.addItem(" ");
+		JComboBox<String> comboNino = new JComboBox<String>();
+		comboNino.addItem(" ");
 		for (Child temp : viewInfo.getChild()) {
-			comboBox_3.addItem(temp.getName());
+			comboNino.addItem(temp.getName());
 		}
-		
-		
 		GridBagConstraints gbc_comboBox_3 = new GridBagConstraints();
 		gbc_comboBox_3.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_3.gridx = 1;
 		gbc_comboBox_3.gridy = 4;
-		Filtros.add(comboBox_3, gbc_comboBox_3);
+		Filtros.add(comboNino, gbc_comboBox_3);
+		comboNino.addItemListener(new ItemListener() 
+        { 
+			private MonitorInformation viewInfo;
+            public void itemStateChanged(ItemEvent e)  
+            { 
+                if(comboContenido.getSelectedItem().equals(e.getItem())) 
+                { 
+                  viewInfo.getFilter().setChild(e.getItem().toString());
+                } 
+            }
+
+			public ItemListener init(MonitorInformation viewInfo) {
+				this.viewInfo=viewInfo;
+				return this;
+			} 
+        }.init(this.viewInfo));
 		
 		
 		
@@ -249,25 +330,58 @@ public class HermesView extends JFrame {
 		gbc_Etiqueta.gridy = 5;
 		Filtros.add(Etiqueta, gbc_Etiqueta);
 		
-		JComboBox<String> comboBox_4 = new JComboBox<String>();
-		comboBox_4.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Importante", "CharlarConPadres"}));
+		JComboBox<String> comboEtiqueta = new JComboBox<String>();
+		comboEtiqueta.addItem(" ");
+		for (Tag temp : viewInfo.getTag()) {
+			comboEtiqueta.addItem(temp.getDescription());
+		}
 		GridBagConstraints gbc_comboBox_4 = new GridBagConstraints();
 		gbc_comboBox_4.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_4.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_4.gridx = 1;
 		gbc_comboBox_4.gridy = 5;
-		Filtros.add(comboBox_4, gbc_comboBox_4);
+		Filtros.add(comboEtiqueta, gbc_comboBox_4);
+		comboEtiqueta.addItemListener(new ItemListener() 
+        { 
+			private MonitorInformation viewInfo;
+            public void itemStateChanged(ItemEvent e)  
+            { 
+                if(comboContenido.getSelectedItem().equals(e.getItem())) 
+                { 
+                  viewInfo.getFilter().setChild(e.getItem().toString());
+                } 
+            }
+
+			public ItemListener init(MonitorInformation viewInfo) {
+				this.viewInfo=viewInfo;
+				return this;
+			} 
+        }.init(this.viewInfo));
 		
 		
-		
-		JButton btnNewButton = new JButton("Filtrar");
+		//BOTON DEL FILTRO
+		JButton buttonFilter = new JButton("Filtrar");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton.gridwidth = 2;
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 6;
-		Filtros.add(btnNewButton, gbc_btnNewButton);
+		Filtros.add(buttonFilter, gbc_btnNewButton);
+		buttonFilter.addActionListener(new ActionListener() {
+		
+			private MonitorInformation viewInfo;
+			
+			public ActionListener init(MonitorInformation viewInfo){
+				this.viewInfo=viewInfo;
+				return this;
+		    }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				this.viewInfo.filtar();
+				
+			}
+			}.init(this.viewInfo));
 		
 		
 		
@@ -320,14 +434,14 @@ public class HermesView extends JFrame {
 		gbc_lblNewLabel.gridy = 1;
 		Etiquetas.add(lblNewLabel, gbc_lblNewLabel);
 		
-		textField = new JTextField();
+		JTextField inputCrear = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.gridx = 1;
 		gbc_textField.gridy = 1;
-		Etiquetas.add(textField, gbc_textField);
-		textField.setColumns(10);
+		Etiquetas.add(inputCrear, gbc_textField);
+		inputCrear.setColumns(10);
 		
 		JButton btnCrear = new JButton("Crear");
 		GridBagConstraints gbc_btnCrear = new GridBagConstraints();
@@ -336,6 +450,25 @@ public class HermesView extends JFrame {
 		gbc_btnCrear.gridx = 2;
 		gbc_btnCrear.gridy = 1;
 		Etiquetas.add(btnCrear, gbc_btnCrear);
+		btnCrear.addActionListener(new ActionListener() {
+			
+			private MonitorInformation viewInfo;
+			private JTextField input;
+			
+			public ActionListener init(JTextField input ,MonitorInformation viewInfo ){
+				this.viewInfo=viewInfo;
+		        this.input=input;
+		        return this;
+		    }
+			public void actionPerformed(ActionEvent e) {
+				if(this.input.getText().length()>0){
+					FactoriaDAO.getTagDAO().save(new Tag(0, this.input.getText()));
+					this.input.setText(null);
+				}
+			}
+			}.init(inputCrear, this.viewInfo));	
+		
+		
 		
 		JSeparator separator = new JSeparator();
 		separator.setBackground(Color.BLACK);
@@ -358,13 +491,16 @@ public class HermesView extends JFrame {
 		gbc_lblNewLabel_1.gridy = 3;
 		Etiquetas.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		JComboBox<String> comboBox_5 = new JComboBox<String>();
+		JComboBox<String> comboEliminarEtiqueta = new JComboBox<String>();
+		for (Tag temp : viewInfo.getTag()) {
+			comboEliminarEtiqueta.addItem(temp.getDescription());
+		}
 		GridBagConstraints gbc_comboBox_5 = new GridBagConstraints();
 		gbc_comboBox_5.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_5.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_5.gridx = 1;
 		gbc_comboBox_5.gridy = 3;
-		Etiquetas.add(comboBox_5, gbc_comboBox_5);
+		Etiquetas.add(comboEliminarEtiqueta, gbc_comboBox_5);
 		
 		JButton btnEliminar = new JButton("Eliminar");
 		GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
@@ -373,7 +509,22 @@ public class HermesView extends JFrame {
 		gbc_btnEliminar.gridx = 2;
 		gbc_btnEliminar.gridy = 3;
 		Etiquetas.add(btnEliminar, gbc_btnEliminar);
+	/*	btnEliminar.addActionListener(new ActionListener() {
+			
+			private MonitorInformation viewInfo;
+						
+			public ActionListener init(MonitorInformation viewInfo ){
+				this.viewInfo=viewInfo;
+		        return this;
+		    }
+			public void actionPerformed(ActionEvent e) {
+				FactoriaDAO.getTagDAO().delete();
 		
+				
+			}
+			}.init(this.viewInfo));	
+		
+		*/
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.BLACK);
 		separator_1.setBackground(Color.BLACK);
@@ -395,13 +546,16 @@ public class HermesView extends JFrame {
 		gbc_lblNewLabel_2.gridy = 5;
 		Etiquetas.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		JComboBox<String> comboBox_6 = new JComboBox<String>();
+		JComboBox<String> comboAsignarEtiqueta = new JComboBox<String>();
+		for (Tag temp : viewInfo.getTag()) {
+			comboAsignarEtiqueta.addItem(temp.getDescription());
+		}
 		GridBagConstraints gbc_comboBox_6 = new GridBagConstraints();
 		gbc_comboBox_6.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_6.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_6.gridx = 1;
 		gbc_comboBox_6.gridy = 5;
-		Etiquetas.add(comboBox_6, gbc_comboBox_6);
+		Etiquetas.add(comboAsignarEtiqueta, gbc_comboBox_6);
 		
 		JButton btnAsignardesasignar = new JButton("Asignar/desasignar");
 		GridBagConstraints gbc_btnAsignardesasignar = new GridBagConstraints();
@@ -433,14 +587,17 @@ public class HermesView extends JFrame {
 		gbc_lblRenombrarEtiqueta.gridy = 7;
 		Etiquetas.add(lblRenombrarEtiqueta, gbc_lblRenombrarEtiqueta);
 		
-		JComboBox<String> comboBox_7 = new JComboBox<String>();
+		JComboBox<String> comboRenombrarEtiqueta = new JComboBox<String>();
+		for (Tag temp : viewInfo.getTag()) {
+			comboRenombrarEtiqueta.addItem(temp.getDescription());
+		}
 		GridBagConstraints gbc_comboBox_7 = new GridBagConstraints();
 		gbc_comboBox_7.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_7.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_7.gridwidth = 2;
 		gbc_comboBox_7.gridx = 1;
 		gbc_comboBox_7.gridy = 7;
-		Etiquetas.add(comboBox_7, gbc_comboBox_7);
+		Etiquetas.add(comboRenombrarEtiqueta, gbc_comboBox_7);
 		
 		JLabel lblNuevoNombre = new JLabel("Nuevo nombre:");
 		GridBagConstraints gbc_lblNuevoNombre = new GridBagConstraints();
@@ -450,7 +607,7 @@ public class HermesView extends JFrame {
 		gbc_lblNuevoNombre.gridy = 8;
 		Etiquetas.add(lblNuevoNombre, gbc_lblNuevoNombre);
 		
-		textField_1 = new JTextField();
+		JTextField textField_1 = new JTextField();
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.insets = new Insets(0, 0, 0, 5);
@@ -512,18 +669,7 @@ public class HermesView extends JFrame {
 		
 		//TABLA
 		DefaultTableModel modelo = new DefaultTableModel(
-				new Object[][] {
-					{"10", "Entusiasmado", null, null, null, null},
-					{"9", "Entusiasmado", null, null, null, null},
-					{"7", "Alegre", null, null, null, null},
-					{"2", "Molesto", null, null, null, null},
-					{"5", "Entusiasmado", null, null, null, null},
-					{"6", "Alegre", null, null, null, null},
-					{"8", "Molesto", null, null, null, null},
-					{"7", "Alegre", null, null, null, null},
-					{"4", "Entusiasmado", null, null, null, null},
-					{"10", "Molesto", null, null, null, null},
-				},
+				new Object[][] {{null, null, null, null, null, null}},
 				new String[] {
 					"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"
 				}
@@ -540,7 +686,7 @@ public class HermesView extends JFrame {
 			};
 			
 			
-			table = new JTable(modelo);
+			JTable table = new JTable(modelo);
 			
 			
 			JScrollPane scrollPane = new JScrollPane(table);
@@ -557,26 +703,6 @@ public class HermesView extends JFrame {
 			TableRowSorter<TableModel> orden = new TableRowSorter<TableModel>(modelo);
 			table.setRowSorter(orden);
 			
-			//orden.setRowFilter(RowFilter.regexFilter("Entusiasmado", 1));
-			//orden.setRowFilter(RowFilter.regexFilter("10", 0));
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
 	}
 
 	

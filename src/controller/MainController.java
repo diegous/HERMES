@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -33,27 +32,18 @@ public class MainController {
 	
 	public static void main(String[] args){
 		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MonitorInformation monitor = FactoriaDAO.getMonitorInformationDAO().getMonitorInformation();
-					
-					HermesView frame = new HermesView(monitor);
-					frame.setVisible(true);
+		MonitorInformation monitor = FactoriaDAO.getMonitorInformationDAO().getMonitorInformation();
+		
+		HermesView frame = new HermesView(monitor);
+		frame.setVisible(true);
+		
+		Controller controller = new Controller();
 
-					Controller controller = new Controller();
-
-					for(String json : getJson()){
-						controller.processIncomingJson(json, monitor);
-					}					
+		for(String json : getJson()){
+			controller.processIncomingJson(json, monitor);
+		}					
 					
-					frame.repaint();
-			
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		
 		
 		
 	}
