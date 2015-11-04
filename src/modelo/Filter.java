@@ -57,7 +57,6 @@ public class Filter {
 	public void setPictogram(String pictogram) {this.pictogram = pictogram;}
 	
 	public List<Notification> filtar(){
-		System.out.println(this.getCategory()+" " +this.getChild()+" "+this.getContext() +" "+this.getPictogram()+" "+this.getTag() );
 		List<Notification> n = FactoriaDAO.getNotificationDAO().getList(this);
 		return n;
 	}

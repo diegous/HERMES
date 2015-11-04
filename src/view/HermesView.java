@@ -25,13 +25,14 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
+import org.freixas.jcalendar.JCalendarCombo;
 
 import modelo.*;
 
@@ -127,231 +128,264 @@ public class HermesView extends JFrame {
 					gbc_scrollPane.gridy = 1;
 					Notificaciones.add(scrollPane, gbc_scrollPane);
 				
-							
-					
 					TableRowSorter<TableModel> orden = new TableRowSorter<TableModel>(modelo);
 					table.setRowSorter(orden);
 		
 		
 		
 		//PANEL DE FILTROS---------------------------------------------------------------------------
-		JPanel Filtros = new JPanel();
-		Filtros.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		Filtros.setBackground(new Color(153, 204, 51));
-		GridBagConstraints gbc_Filtros = new GridBagConstraints();
-		gbc_Filtros.insets = new Insets(5, 5, 5, 5);
-		gbc_Filtros.fill = GridBagConstraints.BOTH;
-		gbc_Filtros.gridx = 0;
-		gbc_Filtros.gridy = 0;
-		contentPane.add(Filtros, gbc_Filtros);
-		GridBagLayout gbl_Filtros = new GridBagLayout();
-		gbl_Filtros.columnWidths = new int[]{50, 100, 100};
-		gbl_Filtros.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_Filtros.columnWeights = new double[]{1.0, 1.0, 1.0};
-		gbl_Filtros.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
-		Filtros.setLayout(gbl_Filtros);
+					JPanel Filtros = new JPanel();
+					Filtros.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+					Filtros.setBackground(new Color(153, 204, 51));
+					GridBagConstraints gbc_Filtros = new GridBagConstraints();
+					gbc_Filtros.insets = new Insets(5, 5, 5, 5);
+					gbc_Filtros.fill = GridBagConstraints.BOTH;
+					gbc_Filtros.gridx = 0;
+					gbc_Filtros.gridy = 0;
+					contentPane.add(Filtros, gbc_Filtros);
+					GridBagLayout gbl_Filtros = new GridBagLayout();
+					gbl_Filtros.columnWidths = new int[]{50, 100, 100};
+					gbl_Filtros.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+					gbl_Filtros.columnWeights = new double[]{1.0, 1.0, 1.0};
+					gbl_Filtros.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+					Filtros.setLayout(gbl_Filtros);
 		
 		
-		//TITULO
-		JPanel Titulo = new JPanel();
-		Titulo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		Titulo.setBackground(new Color(51, 102, 153));
-		GridBagConstraints gbc_Titulo = new GridBagConstraints();
-		gbc_Titulo.anchor = GridBagConstraints.NORTH;
-		gbc_Titulo.gridwidth = 4;
-		gbc_Titulo.insets = new Insets(0, 0, 10, 0);
-		gbc_Titulo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Titulo.gridx = 0;
-		gbc_Titulo.gridy = 0;
-		Filtros.add(Titulo, gbc_Titulo);
+				//TITULO
+					JPanel Titulo = new JPanel();
+					Titulo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+					Titulo.setBackground(new Color(51, 102, 153));
+					GridBagConstraints gbc_Titulo = new GridBagConstraints();
+					gbc_Titulo.anchor = GridBagConstraints.NORTH;
+					gbc_Titulo.gridwidth = 4;
+					gbc_Titulo.insets = new Insets(0, 0, 10, 0);
+					gbc_Titulo.fill = GridBagConstraints.HORIZONTAL;
+					gbc_Titulo.gridx = 0;
+					gbc_Titulo.gridy = 0;
+					Filtros.add(Titulo, gbc_Titulo);
+					
+					JLabel filtros = new JLabel("FILTROS");
+					Titulo.add(filtros);
+					filtros.setForeground(new Color(0, 0, 0));
+					filtros.setFont(new Font("Cambria", Font.BOLD, 15));
 		
-		JLabel filtros = new JLabel("FILTROS");
-		Titulo.add(filtros);
-		filtros.setForeground(new Color(0, 0, 0));
-		filtros.setFont(new Font("Cambria", Font.BOLD, 15));
 		
-		
-		//CONTENIDO
-		JLabel contenido = new JLabel("Contenido:");
-		contenido.setHorizontalAlignment(SwingConstants.LEFT);
-		//contenido.setFont(new Font("Cambria", Font.BOLD, 11));
-		GridBagConstraints gbc_contenido = new GridBagConstraints();
-		gbc_contenido.fill = GridBagConstraints.HORIZONTAL;
-		gbc_contenido.insets = new Insets(0, 5, 5, 5);
-		gbc_contenido.gridx = 0;
-		gbc_contenido.gridy = 1;
-		Filtros.add(contenido, gbc_contenido);
-		
-		comboContenido = new JComboBox<String>();
-		comboContenido.addItem("Todo");
-		for (Pictogram temp : viewInfo.getPictogram()) {
-			comboContenido.addItem(temp.getContent());
-		}
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 1;
-		Filtros.add(comboContenido, gbc_comboBox);
-		comboContenido.addItemListener(new ItemListener() 
-        { 
-			private MonitorInformation viewInfo;
-
-            public void itemStateChanged(ItemEvent e) { 
-                viewInfo.getFilter().setPictogram(e.getItem().toString());
-        
-/*
-			public void itemStateChanged(ItemEvent e) { 
-                if(e.getStateChange() == ItemEvent.SELECTED){ 
-                  viewInfo.getFilter().setPictogram(e.getItem().toString());
-                } 
-*/
-            }
-
-			public ItemListener init(MonitorInformation viewInfo) {
-				this.viewInfo=viewInfo;
-				return this;
-			} 
-        }.init(this.viewInfo));
+				//CONTENIDO
+					JLabel contenido = new JLabel("Contenido:");
+					contenido.setHorizontalAlignment(SwingConstants.LEFT);
+					//contenido.setFont(new Font("Cambria", Font.BOLD, 11));
+					GridBagConstraints gbc_contenido = new GridBagConstraints();
+					gbc_contenido.fill = GridBagConstraints.HORIZONTAL;
+					gbc_contenido.insets = new Insets(0, 5, 5, 5);
+					gbc_contenido.gridx = 0;
+					gbc_contenido.gridy = 1;
+					Filtros.add(contenido, gbc_contenido);
+					
+					comboContenido = new JComboBox<String>();
+					comboContenido.addItem("Todo");
+					for (Pictogram temp : viewInfo.getPictogram()) {
+						comboContenido.addItem(temp.getContent());
+					}
+					GridBagConstraints gbc_comboBox = new GridBagConstraints();
+					gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+					gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+					gbc_comboBox.gridx = 1;
+					gbc_comboBox.gridy = 1;
+					Filtros.add(comboContenido, gbc_comboBox);
+					comboContenido.addItemListener(new ItemListener() 
+			        { 
+						private MonitorInformation viewInfo;
+			
+						public void itemStateChanged(ItemEvent e) { 
+			                if(e.getStateChange() == ItemEvent.SELECTED){ 
+			                  viewInfo.getFilter().setPictogram(e.getItem().toString());
+			                } 
+			
+			            }
+			
+						public ItemListener init(MonitorInformation viewInfo) {
+							this.viewInfo=viewInfo;
+							return this;
+						} 
+			        }.init(this.viewInfo));
+					
 		
 		
 		
-		
-		//FECHA
-		JLabel Fechahora = new JLabel("Fecha/Hora");
-		Fechahora.setHorizontalAlignment(SwingConstants.LEFT);
-		//Fechahora.setFont(new Font("Cambria", Font.BOLD, 11));
-		GridBagConstraints gbc_Fechahora = new GridBagConstraints();
-		gbc_Fechahora.insets = new Insets(0, 10, 0, 10);
-		gbc_Fechahora.gridx = 2;
-		gbc_Fechahora.gridy = 1;
-		Filtros.add(Fechahora, gbc_Fechahora);
-		
-				
-		JLabel desde = new JLabel("Desde:");
-		//desde.setFont(new Font("Cambria", Font.BOLD, 11));
-		GridBagConstraints gbc_desde = new GridBagConstraints();
-		gbc_desde.fill = GridBagConstraints.HORIZONTAL;
-		gbc_desde.insets = new Insets(0, 10, 0, 10);
-		gbc_desde.gridx = 2;
-		gbc_desde.gridy = 2;
-		Filtros.add(desde, gbc_desde);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerDateModel(new Date(341463600000L), new Date(341463600000L), new Date(1476932400000L), Calendar.DAY_OF_YEAR));
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.insets = new Insets(0, 10, 0, 10);
-		gbc_spinner.gridx = 2;
-		gbc_spinner.gridy = 3;
-		Filtros.add(spinner, gbc_spinner);
-		
-		JLabel hasta = new JLabel("Hasta:");
-		//hasta.setFont(new Font("Cambria", Font.BOLD, 11));
-		GridBagConstraints gbc_hasta = new GridBagConstraints();
-		gbc_hasta.fill = GridBagConstraints.HORIZONTAL;
-		gbc_hasta.insets = new Insets(0,10,0, 10);
-		gbc_hasta.gridx = 2;
-		gbc_hasta.gridy = 4;
-		Filtros.add(hasta, gbc_hasta);
-		
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerDateModel(new Date(1477537200000L), new Date(1445914800000L), new Date(1509073200000L), Calendar.DAY_OF_YEAR));
-		GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
-		gbc_spinner_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinner_1.insets = new Insets(0, 10, 0, 10);
-		gbc_spinner_1.gridx = 2;
-		gbc_spinner_1.gridy = 5;
-		Filtros.add(spinner_1, gbc_spinner_1);
-		
-		
-		//CONTEXTO
-		JLabel contexto = new JLabel("Contexto:");
-		contexto.setHorizontalAlignment(SwingConstants.LEFT);
-		//contexto.setFont(new Font("Cambria", Font.BOLD, 11));
-		GridBagConstraints gbc_contexto = new GridBagConstraints();
-		gbc_contexto.fill = GridBagConstraints.HORIZONTAL;
-		gbc_contexto.insets = new Insets(0, 5, 5, 5);
-		gbc_contexto.gridx = 0;
-		gbc_contexto.gridy = 2;
-		Filtros.add(contexto, gbc_contexto);
-		
-		comboContext = new JComboBox<String>();
-		comboContext.addItem("Todo");
-		for (Context temp : viewInfo.getContext()) {
-			comboContext.addItem(temp.getDescription());
-		}
-		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
-		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_1.gridx = 1;
-		gbc_comboBox_1.gridy = 2;
-		Filtros.add(comboContext, gbc_comboBox_1);
-		comboContext.addItemListener(new ItemListener() 
-        { 
-			private MonitorInformation viewInfo;
-
-            public void itemStateChanged(ItemEvent e){
-            	viewInfo.getFilter().setContext(e.getItem().toString());
-/*
-			public void itemStateChanged(ItemEvent e) { 
-                if(e.getStateChange() == ItemEvent.SELECTED){ 
-                  viewInfo.getFilter().setContext(e.getItem().toString());
-                } 
-*/
-            }
-
-			public ItemListener init(MonitorInformation viewInfo) {
-				this.viewInfo=viewInfo;
-				return this;
-			} 
-        }.init(this.viewInfo));
-		
-		
-		
+				//FECHA
+					JLabel Fechahora = new JLabel("Fecha/Hora");
+					Fechahora.setHorizontalAlignment(SwingConstants.LEFT);
+					GridBagConstraints gbc_Fechahora = new GridBagConstraints();
+					gbc_Fechahora.insets = new Insets(0, 10, 0, 10);
+					gbc_Fechahora.gridx = 2;
+					gbc_Fechahora.gridy = 1;
+					Filtros.add(Fechahora, gbc_Fechahora);
+					
+							
+					JLabel desde = new JLabel("Desde:");
+					GridBagConstraints gbc_desde = new GridBagConstraints();
+					gbc_desde.fill = GridBagConstraints.HORIZONTAL;
+					gbc_desde.insets = new Insets(0, 10, 0, 10);
+					gbc_desde.gridx = 2;
+					gbc_desde.gridy = 2;
+					Filtros.add(desde, gbc_desde);
+					
+					
+					JCalendarCombo calDesde=new  JCalendarCombo();
+					GridBagConstraints gbc_spinner = new GridBagConstraints();
+					gbc_spinner.insets = new Insets(0, 10, 0, 10);
+					gbc_spinner.gridx = 2;
+					gbc_spinner.gridy = 3;
+					Filtros.add(calDesde, gbc_spinner);
+					calDesde.addItemListener(new ItemListener() 
+			        { 
+						private MonitorInformation viewInfo;
+			
+						@SuppressWarnings("deprecation")
+						public void itemStateChanged(ItemEvent e) { 
+			                if(e.getStateChange() == ItemEvent.SELECTED){ 
+			                	String phrase = e.getItem().toString();
+			                	String delims = "[ ]+";
+			                	String[] tokens = phrase.split(delims);
+			                	for (int i=0; i<tokens.length;i++){
+			                		System.out.println(tokens[i]);
+			                	}
+			                	System.out.println(tokens[5]);
+			                	Integer.parseInt(tokens[5]);
+			                	Date d=new Date(Integer.parseInt(tokens[5]), 11, 4);
+			                	System.out.println(d.getTime());
+			                	System.out.println(new Date().getTime());
+			                	//;
+			                	
+			                	
+			                	
+			                } 
+			
+			            }
+			
+						public ItemListener init(MonitorInformation viewInfo) {
+							this.viewInfo=viewInfo;
+							return this;
+						} 
+			        }.init(this.viewInfo));
+					
+					/*JSpinner spinner = new JSpinner();
+					spinner.setModel(new SpinnerDateModel(new Date(341463600000L), new Date(341463600000L), new Date(1476932400000L), Calendar.DAY_OF_YEAR));
+					GridBagConstraints gbc_spinner = new GridBagConstraints();
+					gbc_spinner.insets = new Insets(0, 10, 0, 10);
+					gbc_spinner.gridx = 2;
+					gbc_spinner.gridy = 3;
+					Filtros.add(spinner, gbc_spinner);*/
+					
+					JLabel hasta = new JLabel("Hasta:");
+					GridBagConstraints gbc_hasta = new GridBagConstraints();
+					gbc_hasta.fill = GridBagConstraints.HORIZONTAL;
+					gbc_hasta.insets = new Insets(0,10,0, 10);
+					gbc_hasta.gridx = 2;
+					gbc_hasta.gridy = 4;
+					Filtros.add(hasta, gbc_hasta);
+					
+					
+					JCalendarCombo calHasta=new  JCalendarCombo();
+					GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
+					gbc_spinner_1.fill = GridBagConstraints.HORIZONTAL;
+					gbc_spinner_1.insets = new Insets(0, 10, 0, 10);
+					gbc_spinner_1.gridx = 2;
+					gbc_spinner_1.gridy = 5;
+					Filtros.add(calHasta, gbc_spinner_1);
+					
+					
+					/*JSpinner spinner_1 = new JSpinner();
+					spinner_1.setModel(new SpinnerDateModel(new Date(1477537200000L), new Date(1445914800000L), new Date(1509073200000L), Calendar.DAY_OF_YEAR));
+					GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
+					gbc_spinner_1.fill = GridBagConstraints.HORIZONTAL;
+					gbc_spinner_1.insets = new Insets(0, 10, 0, 10);
+					gbc_spinner_1.gridx = 2;
+					gbc_spinner_1.gridy = 5;
+					Filtros.add(spinner_1, gbc_spinner_1);*/
 		
 		
-		//CATEGORIA
-		JLabel categoria = new JLabel("Categor\u00EDa:");
-		categoria.setHorizontalAlignment(SwingConstants.LEFT);
-		//categoria.setFont(new Font("Cambria", Font.BOLD, 11));
-		GridBagConstraints gbc_categoria = new GridBagConstraints();
-		gbc_categoria.fill = GridBagConstraints.HORIZONTAL;
-		gbc_categoria.insets = new Insets(0, 5, 5, 5);
-		gbc_categoria.gridx = 0;
-		gbc_categoria.gridy = 3;
-		Filtros.add(categoria, gbc_categoria);
+				//CONTEXTO
+					JLabel contexto = new JLabel("Contexto:");
+					contexto.setHorizontalAlignment(SwingConstants.LEFT);
+					//contexto.setFont(new Font("Cambria", Font.BOLD, 11));
+					GridBagConstraints gbc_contexto = new GridBagConstraints();
+					gbc_contexto.fill = GridBagConstraints.HORIZONTAL;
+					gbc_contexto.insets = new Insets(0, 5, 5, 5);
+					gbc_contexto.gridx = 0;
+					gbc_contexto.gridy = 2;
+					Filtros.add(contexto, gbc_contexto);
+					
+					comboContext = new JComboBox<String>();
+					comboContext.addItem("Todo");
+					for (Context temp : viewInfo.getContext()) {
+						comboContext.addItem(temp.getDescription());
+					}
+					GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
+					gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
+					gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
+					gbc_comboBox_1.gridx = 1;
+					gbc_comboBox_1.gridy = 2;
+					Filtros.add(comboContext, gbc_comboBox_1);
+					comboContext.addItemListener(new ItemListener() 
+			        { 
+						private MonitorInformation viewInfo;
+			
+			         	public void itemStateChanged(ItemEvent e) { 
+			                if(e.getStateChange() == ItemEvent.SELECTED){ 
+			                  viewInfo.getFilter().setContext(e.getItem().toString());
+			                } 
+			
+			            }
+			
+						public ItemListener init(MonitorInformation viewInfo) {
+							this.viewInfo=viewInfo;
+							return this;
+						} 
+			        }.init(this.viewInfo));
 		
-		comboCategory = new JComboBox<String>();
-		comboCategory.addItem("Todo");
-		for (Category temp : viewInfo.getCategory()) {
-			comboCategory.addItem(temp.getDescription());
-		}
-		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
-		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_2.gridx = 1;
-		gbc_comboBox_2.gridy = 3;
-		Filtros.add(comboCategory, gbc_comboBox_2);
-		comboCategory.addItemListener(new ItemListener() 
-        { 
-			private MonitorInformation viewInfo;
-
-            public void itemStateChanged(ItemEvent e) 
-            {viewInfo.getFilter().setCategory(e.getItem().toString());}
-            
-            /*
-			public void itemStateChanged(ItemEvent e) { 
-                if(e.getStateChange() == ItemEvent.SELECTED){ 
-                  viewInfo.getFilter().setCategory(e.getItem().toString());
-                } */
-
-
-			public ItemListener init(MonitorInformation viewInfo) {
-				this.viewInfo=viewInfo;
-				return this;
-			} 
-        }.init(this.viewInfo));
+		
+		
+		
+		
+				//CATEGORIA
+					JLabel categoria = new JLabel("Categor\u00EDa:");
+					categoria.setHorizontalAlignment(SwingConstants.LEFT);
+					//categoria.setFont(new Font("Cambria", Font.BOLD, 11));
+					GridBagConstraints gbc_categoria = new GridBagConstraints();
+					gbc_categoria.fill = GridBagConstraints.HORIZONTAL;
+					gbc_categoria.insets = new Insets(0, 5, 5, 5);
+					gbc_categoria.gridx = 0;
+					gbc_categoria.gridy = 3;
+					Filtros.add(categoria, gbc_categoria);
+					
+					comboCategory = new JComboBox<String>();
+					comboCategory.addItem("Todo");
+					for (Category temp : viewInfo.getCategory()) {
+						comboCategory.addItem(temp.getDescription());
+					}
+					GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
+					gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
+					gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
+					gbc_comboBox_2.gridx = 1;
+					gbc_comboBox_2.gridy = 3;
+					Filtros.add(comboCategory, gbc_comboBox_2);
+					comboCategory.addItemListener(new ItemListener() 
+			        { 
+						private MonitorInformation viewInfo;
+			
+			            public void itemStateChanged(ItemEvent e) { 
+			                if(e.getStateChange() == ItemEvent.SELECTED){ 
+			                  viewInfo.getFilter().setCategory(e.getItem().toString());
+			                }
+			             }
+			
+			
+						public ItemListener init(MonitorInformation viewInfo) {
+							this.viewInfo=viewInfo;
+							return this;
+						} 
+			        }.init(this.viewInfo));
 		
 		
 		
@@ -380,11 +414,7 @@ public class HermesView extends JFrame {
 		comboNino.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
-/*
-            public void itemStateChanged(ItemEvent e){ 
-                viewInfo.getFilter().setChild(e.getItem().toString());
-               
-*/
+
 			public void itemStateChanged(ItemEvent e) { 
                 if(e.getStateChange() == ItemEvent.SELECTED){ 
                   viewInfo.getFilter().setChild(e.getItem().toString());
@@ -428,15 +458,12 @@ public class HermesView extends JFrame {
 		comboEtiqueta.addItemListener(new ItemListener() { 
 			private MonitorInformation viewInfo;
 
-            public void itemStateChanged(ItemEvent e){ 
-                  viewInfo.getFilter().setTag(e.getItem().toString());
-            
-/*
+          
             public void itemStateChanged(ItemEvent e) { 
                 if(e.getStateChange() == ItemEvent.SELECTED){ 
                   viewInfo.getFilter().setTag(e.getItem().toString());
                 } 
-*/
+
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
