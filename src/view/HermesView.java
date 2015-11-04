@@ -357,13 +357,7 @@ public class HermesView extends JFrame {
 						} 
 			        }.init(this.viewInfo));
 			        
-					/*JSpinner spinner = new JSpinner();
-					spinner.setModel(new SpinnerDateModel(new Date(341463600000L), new Date(341463600000L), new Date(1476932400000L), Calendar.DAY_OF_YEAR));
-					GridBagConstraints gbc_spinner = new GridBagConstraints();
-					gbc_spinner.insets = new Insets(0, 10, 0, 10);
-					gbc_spinner.gridx = 2;
-					gbc_spinner.gridy = 3;
-					Filtros.add(spinner, gbc_spinner);*/
+					
 					
 					JLabel hasta = new JLabel("Hasta:");
 					GridBagConstraints gbc_hasta = new GridBagConstraints();
@@ -395,14 +389,7 @@ public class HermesView extends JFrame {
 			        }.init(this.viewInfo));
 					
 					
-					/*JSpinner spinner_1 = new JSpinner();
-					spinner_1.setModel(new SpinnerDateModel(new Date(1477537200000L), new Date(1445914800000L), new Date(1509073200000L), Calendar.DAY_OF_YEAR));
-					GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
-					gbc_spinner_1.fill = GridBagConstraints.HORIZONTAL;
-					gbc_spinner_1.insets = new Insets(0, 10, 0, 10);
-					gbc_spinner_1.gridx = 2;
-					gbc_spinner_1.gridy = 5;
-					Filtros.add(spinner_1, gbc_spinner_1);*/
+					
 		
 		
 				//CONTEXTO
