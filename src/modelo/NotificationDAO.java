@@ -111,7 +111,7 @@ public class NotificationDAO implements INotificationDAO {
 		DBConector conector = new DBConector();
 		conector.connect();
 		try {
-			String sql = "UPDATE notification SET id_tag=null WHERE id_tag=? ";
+			String sql = "UPDATE notification SET id_tag=0 WHERE id_tag=? ";
 			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
 			preparedStatement.setInt(1,selectDelete.getId());
 			preparedStatement.executeUpdate();

@@ -11,16 +11,15 @@ public class MonitorInformation {
 	private List<Pictogram> pictogram;
 	private List<Notification> notification;
 	private Filter filter;
+
 	
-	private String selectDelete;
+
 	private String selectAsignar;
 	private String selectModify;
 	private String selectNotification;
 	private String selectRename;
-	
+	private Tag selectDelete;
 
-	
-	
 
 	
 
@@ -40,6 +39,7 @@ public class MonitorInformation {
 	}
 	
 	
+
 	
 	public String getSelectNotification() {return selectNotification;}
 
@@ -49,10 +49,10 @@ public class MonitorInformation {
 
 	public void setSelectAsignar(String selectAsignar) {this.selectAsignar = selectAsignar;}
 	
+		public Tag getSelectDelete() {return selectDelete;}
+
 	
-	public String getSelectDelete() {return selectDelete;}
-	
-	public void setSelectDelete(String selectDelete) {this.selectDelete = selectDelete;}
+	public void setSelectDelete(Tag selectDelete) {this.selectDelete = selectDelete;}
 
 	public List<Child> getChild() {return child;}
 	
@@ -83,11 +83,11 @@ public class MonitorInformation {
 	public Filter getFilter() {return filter;}
 	
 	public String getSelectRename() {return selectRename;}
-
+	
 	public void setSelectRename(String selectRename) {this.selectRename = selectRename;}
 
+	public void deleteTag(Tag string) {
+		tag.remove(string);
+	}
 
-
-	
-	
 }

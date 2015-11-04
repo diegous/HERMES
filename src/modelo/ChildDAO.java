@@ -71,7 +71,7 @@ public class ChildDAO implements IDAO<Child> {
 		
 	}
 	@Override
-	public void delete(String selectDelete) {
+	public void delete(Child selectDelete) {
 		// TODO Auto-generated method stub
 		
 	}
