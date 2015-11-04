@@ -32,6 +32,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.freixas.jcalendar.DateEvent;
+import org.freixas.jcalendar.DateListener;
 import org.freixas.jcalendar.JCalendarCombo;
 
 import modelo.*;
@@ -232,43 +234,25 @@ public class HermesView extends JFrame {
 					
 					
 					JCalendarCombo calDesde=new  JCalendarCombo();
+					calDesde.setDate(new Date(1420081200000L));
 					GridBagConstraints gbc_spinner = new GridBagConstraints();
 					gbc_spinner.insets = new Insets(0, 10, 0, 10);
 					gbc_spinner.gridx = 2;
 					gbc_spinner.gridy = 3;
 					Filtros.add(calDesde, gbc_spinner);
-					calDesde.addItemListener(new ItemListener() 
+					calDesde.addDateListener(new DateListener() 
 			        { 
 						private MonitorInformation viewInfo;
 			
-						@SuppressWarnings("deprecation")
-						public void itemStateChanged(ItemEvent e) { 
-			                if(e.getStateChange() == ItemEvent.SELECTED){ 
-			                	String phrase = e.getItem().toString();
-			                	String delims = "[ ]+";
-			                	String[] tokens = phrase.split(delims);
-			                	for (int i=0; i<tokens.length;i++){
-			                		System.out.println(tokens[i]);
-			                	}
-			                	System.out.println(tokens[5]);
-			                	Integer.parseInt(tokens[5]);
-			                	Date d=new Date(Integer.parseInt(tokens[5]), 11, 4);
-			                	System.out.println(d.getTime());
-			                	System.out.println(new Date().getTime());
-			                	//;
-			                	
-			                	
-			                	
-			                } 
-			
+						public void dateChanged(DateEvent  e) {
+							viewInfo.getFilter().setSince(e.getSelectedDate().getTimeInMillis());
 			            }
-			
-						public ItemListener init(MonitorInformation viewInfo) {
+						public DateListener init(MonitorInformation viewInfo) {
 							this.viewInfo=viewInfo;
 							return this;
 						} 
 			        }.init(this.viewInfo));
-					
+			        
 					/*JSpinner spinner = new JSpinner();
 					spinner.setModel(new SpinnerDateModel(new Date(341463600000L), new Date(341463600000L), new Date(1476932400000L), Calendar.DAY_OF_YEAR));
 					GridBagConstraints gbc_spinner = new GridBagConstraints();
@@ -285,14 +269,26 @@ public class HermesView extends JFrame {
 					gbc_hasta.gridy = 4;
 					Filtros.add(hasta, gbc_hasta);
 					
-					
 					JCalendarCombo calHasta=new  JCalendarCombo();
+					calHasta.setDate(new Date());
 					GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
 					gbc_spinner_1.fill = GridBagConstraints.HORIZONTAL;
 					gbc_spinner_1.insets = new Insets(0, 10, 0, 10);
 					gbc_spinner_1.gridx = 2;
 					gbc_spinner_1.gridy = 5;
 					Filtros.add(calHasta, gbc_spinner_1);
+					calHasta.addDateListener(new DateListener() 
+			        { 
+						private MonitorInformation viewInfo;
+			
+						public void dateChanged(DateEvent  e) {
+							viewInfo.getFilter().setUntil(e.getSelectedDate().getTimeInMillis());
+			            }
+						public DateListener init(MonitorInformation viewInfo) {
+							this.viewInfo=viewInfo;
+							return this;
+						} 
+			        }.init(this.viewInfo));
 					
 					
 					/*JSpinner spinner_1 = new JSpinner();
