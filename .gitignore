@@ -1,1 +1,4 @@
 /hermes.db
+
+# compiled source
+*.class
