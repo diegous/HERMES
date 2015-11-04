@@ -48,7 +48,6 @@ public class NotificationDAO implements INotificationDAO {
 		conector.connect();
 		List<Notification> resultList = new ArrayList<Notification>();
 		try {
-			
 			//CONSULTA
 			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, t.id_tag, t.description as Dtag, sent_date, received_date" 
 					+" FROM notification as n inner join category as cat on (n.id_category=cat.id_category)" 
@@ -61,14 +60,14 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getChild() != "Todo"){sql=sql+" and name=?";}
 	        if(f.getContext() != "Todo"){sql=sql+" and cont.description=?";}
 	        if(f.getPictogram() != "Todo"){sql=sql+" and p.content=?";}
-	        if(f.getTag() != "Todo"){sql=sql+" and t.description=?";}
+	        if(f.getTag() != ""){sql=sql+" and t.description=?";}
 	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
 	        //La fecha "hasta" va siempre
-	        sql=sql+" and sent_date<=?";
+	        sql=sql+" and received_date<=?";
 	        sql=sql+";";
-	       
+
 	        PreparedStatement query = conector.getConnection().prepareStatement(sql);
-	        
+
 	        //PARAMETROS
 	        int i=1;
 	        if(f.getCategory() != "Todo"){query.setString(i, f.getCategory()); i++;}
@@ -77,8 +76,8 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getPictogram() != "Todo"){query.setString(i, f.getPictogram()); i++;}
 	        if(f.getTag() != "Todo"){query.setString(i, f.getTag()); i++;}
 	        if(f.getSince() != 0){query.setLong(i, f.getSince()); i++;}
-	        //La fecha "hasta" de búsqueda va siempre
-	        // Hay que sumarle 86400000 (un día en milisegundos) para que la busqueda incluya al dia seleccionado 
+	        //La fecha "hasta" de bï¿½squeda va siempre
+	        // Hay que sumarle 86400000 (un dï¿½a en milisegundos) para que la busqueda incluya al dia seleccionado 
 	        query.setLong(i, f.getUntil()+86400000);
 	        
 	        ResultSet result = query.executeQuery();

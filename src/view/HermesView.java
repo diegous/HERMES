@@ -53,8 +53,69 @@ public class HermesView extends JFrame {
 	private JComboBox<String> comboCategory;
 	private JComboBox<Tag> comboEtiqueta;
 	private JComboBox<String> comboContenido;
+	private JComboBox<String> comboRenombrarEtiqueta,comboAsignarEtiqueta;
+	private JComboBox<Tag> comboEliminarEtiqueta;
 	private DefaultTableModel modelo;
 	private MonitorInformation viewInfo;
+	
+	
+	public void repaintComboBoxes(){
+		this.comboNino.removeAllItems();
+		comboNino.addItem("Todo");
+		for (Child temp : viewInfo.getChild()) {
+			comboNino.addItem(temp.getName());
+		}
+		
+		this.comboContext.removeAllItems();
+		comboContext.addItem("Todo");
+		for (Context temp : viewInfo.getContext()) {
+			comboContext.addItem(temp.getDescription());
+		}
+		
+		this.comboCategory.removeAllItems();
+		comboCategory.addItem("Todo");
+		for (Category temp : viewInfo.getCategory()) {
+			comboCategory.addItem(temp.getDescription());
+		}
+		
+		this.comboEtiqueta.removeAllItems();
+		for (Tag temp : viewInfo.getTag()) {
+			comboEtiqueta.addItem(temp);
+		}
+		
+		this.comboContenido.removeAllItems();
+		comboContenido.addItem("Todo");
+		for (Pictogram temp : viewInfo.getPictogram()) {
+			comboContenido.addItem(temp.getContent());
+		}
+		
+		this.comboRenombrarEtiqueta.removeAllItems();
+		for (Tag temp : viewInfo.getTag()) {
+			comboRenombrarEtiqueta.addItem(temp.getDescription());
+		}
+		
+		this.comboAsignarEtiqueta.removeAllItems();
+		for (Tag temp : viewInfo.getTag()) {
+			comboAsignarEtiqueta.addItem(temp.getDescription());
+		}
+		
+		this.comboEliminarEtiqueta.removeAllItems();
+		for (Tag temp : viewInfo.getTag()) {
+			comboEliminarEtiqueta.addItem(temp);
+		}
+		
+//		List<Notification> n = this.viewInfo.getFilter().filtar();
+//		int filas=this.modelo.getRowCount();
+//		for (int i = 0;filas>i; i++) {
+//			this.modelo.removeRow(0);
+//		}
+//		
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
+//		for (Notification temp : n) {
+//			String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+//			this.modelo.addRow(row);
+//		}
+	}
 
 	
 	public HermesView(MonitorInformation list) {
@@ -466,8 +527,6 @@ public class HermesView extends JFrame {
 		
 		comboEtiqueta = new JComboBox<Tag>();
 
-		comboEtiqueta.addItem(new Tag(0,"Todo"));
-
 		for (Tag temp : viewInfo.getTag()) {
 			comboEtiqueta.addItem(temp);
 		}
@@ -516,18 +575,16 @@ public class HermesView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Notification> n = this.viewInfo.getFilter().filtar();
-					int filas=this.modelo.getRowCount();
-					for (int i = 0;filas>i; i++) {
-						this.modelo.removeRow(0);
-					}
-					
-					SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
-					for (Notification temp : n) {
-						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
-						this.modelo.addRow(row);
-					}	
-					
+				int filas=this.modelo.getRowCount();
+				for (int i = 0;filas>i; i++) {
+					this.modelo.removeRow(0);
+				}
 				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
+				for (Notification temp : n) {
+					String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+					this.modelo.addRow(row);
+				}
 				
 			}
 			}.init(this.viewInfo, modelo));
@@ -584,8 +641,7 @@ public class HermesView extends JFrame {
 		gbc_lblNewLabel_2.gridy = 5;
 		Etiquetas.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		JComboBox<String> comboAsignarEtiqueta = new JComboBox<String>();
-		comboAsignarEtiqueta.addItem("   ");
+		comboAsignarEtiqueta = new JComboBox<String>();
 		for (Tag temp : viewInfo.getTag()) {
 			comboAsignarEtiqueta.addItem(temp.getDescription());
 		}
@@ -678,8 +734,7 @@ public class HermesView extends JFrame {
 		gbc_lblRenombrarEtiqueta.gridy = 7;
 		Etiquetas.add(lblRenombrarEtiqueta, gbc_lblRenombrarEtiqueta);
 		
-		JComboBox<String> comboRenombrarEtiqueta = new JComboBox<String>();
-		comboRenombrarEtiqueta.addItem(null);
+		comboRenombrarEtiqueta = new JComboBox<String>();
 		for (Tag temp : viewInfo.getTag()) {
 			comboRenombrarEtiqueta.addItem(temp.getDescription());
 		}
@@ -693,16 +748,15 @@ public class HermesView extends JFrame {
 		comboRenombrarEtiqueta.addItemListener(new ItemListener() { 
 			private MonitorInformation viewInfo;
 
-			public void itemStateChanged(ItemEvent e) { 
+			public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED){ 
                   viewInfo.setSelectRename(e.getItem().toString());
-                  System.out.println(this.viewInfo.getSelectRename());
-                } 
+                }
             }
 			public ItemListener init(MonitorInformation viewInfo) {
 				this.viewInfo=viewInfo;
 				return this;
-			} 
+			}
         }.init(this.viewInfo));
 		
 		
@@ -744,8 +798,7 @@ public class HermesView extends JFrame {
 				gbc_lblNewLabel_1.gridy = 3;
 				Etiquetas.add(lblNewLabel_1, gbc_lblNewLabel_1);
 				
-				final JComboBox<Tag> comboEliminarEtiqueta = new JComboBox<Tag>();
-				comboEliminarEtiqueta.addItem(null);
+				comboEliminarEtiqueta = new JComboBox<Tag>();
 				for (Tag temp : viewInfo.getTag()) {
 					comboEliminarEtiqueta.addItem(temp);
 				}
@@ -797,20 +850,23 @@ public class HermesView extends JFrame {
 							this.viewInfo.deleteTag(this.viewInfo.getSelectDelete());
 
 							this.viewInfo.getTag().remove(this.viewInfo.getSelectDelete());
-							this.comboRenombrarEtiqueta.removeAllItems();
-							for (Tag temp : viewInfo.getTag()) {
-								comboRenombrarEtiqueta.addItem(temp.getDescription());
-							}
 							
-							this.comboAsignarEtiqueta.removeAllItems();
-							for (Tag temp : viewInfo.getTag()) {
-								comboAsignarEtiqueta.addItem(temp.getDescription());
-							}
+							repaintComboBoxes();
 							
-							this.comboEliminarEtiqueta.removeAllItems();
-							for (Tag temp : viewInfo.getTag()) {
-								comboEliminarEtiqueta.addItem(temp);
-							}
+//							this.comboRenombrarEtiqueta.removeAllItems();
+//							for (Tag temp : viewInfo.getTag()) {
+//								comboRenombrarEtiqueta.addItem(temp.getDescription());
+//							}
+//							
+//							this.comboAsignarEtiqueta.removeAllItems();
+//							for (Tag temp : viewInfo.getTag()) {
+//								comboAsignarEtiqueta.addItem(temp.getDescription());
+//							}
+//							
+//							this.comboEliminarEtiqueta.removeAllItems();
+//							for (Tag temp : viewInfo.getTag()) {
+//								comboEliminarEtiqueta.addItem(temp);
+//							}
 							
 							this.viewInfo.setSelectDelete(null);
 							
