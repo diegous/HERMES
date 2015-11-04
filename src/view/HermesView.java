@@ -692,7 +692,7 @@ public class HermesView extends JFrame {
 	
 		
 		//TABLA
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 		 
 		DefaultTableModel modelo = new DefaultTableModel();
 		
