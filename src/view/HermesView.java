@@ -113,21 +113,24 @@ public class HermesView extends JFrame {
 				//TABLA
 				modelo = new DefaultTableModel();
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
-				String[] column= new String[]{"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"};
-				for (int i=0;i<6;i++){modelo.addColumn(column[i]);}
+				String[] column= new String[]{"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas", "id_notification"};
+				for (int i=0;i<7;i++){modelo.addColumn(column[i]);}
 				if(viewInfo.getNotification()!=null){
 					for (Notification temp : viewInfo.getNotification()) {
-						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription(),Integer.toString(temp.getId()) };
 						
 						
 						modelo.addRow(row);
 					}
 				}
 				
-				System.out.println(modelo.getColumnCount());
+				
+				
+				
 				
 				final JTable table = new JTable(modelo);
-							
+				table.removeColumn(table.getColumnModel().getColumn(6));
+				
 				JScrollPane scrollPane = new JScrollPane(table);
 				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 				gbc_scrollPane.gridwidth = 3;
@@ -139,16 +142,28 @@ public class HermesView extends JFrame {
 				TableRowSorter<TableModel> orden = new TableRowSorter<TableModel>(modelo);
 				table.setRowSorter(orden);
 				
-				table.addMouseListener(new MouseAdapter() 
-				   {
-				      public void mouseClicked(MouseEvent e) 
-				      {
-				         int fila = table.rowAtPoint(e.getPoint());
-				         int columna = table.columnAtPoint(e.getPoint());
-				         if ((fila > -1) && (columna > -1))
-				            System.out.println(modelo.getValueAt(fila,5));
-				      }
-				   });
+				table.addMouseListener(new MouseAdapter(){
+					
+					private MonitorInformation viewInfo;
+					
+					public void mouseClicked(MouseEvent e) {
+				        int fila = table.rowAtPoint(e.getPoint());
+				        if ((fila > -1))
+				        { System.out.println(fila);
+				        System.out.println(table.getModel().getValueAt(fila,6));
+				        	this.viewInfo.setSelectNotification(
+				        			table.getModel().getValueAt(fila,6).toString());}
+				    }
+					
+					public MouseAdapter init(MonitorInformation viewInfo) {
+						this.viewInfo=viewInfo;
+						return this;
+					} 
+					
+				      
+				      
+				}.init(this.viewInfo));
+			
 				
 			
 		
@@ -601,7 +616,6 @@ public class HermesView extends JFrame {
 			public void itemStateChanged(ItemEvent e) { 
                 if(e.getStateChange() == ItemEvent.SELECTED){ 
                   viewInfo.setSelectAsignar(e.getItem().toString());
-                  System.out.println(this.viewInfo.getSelectAsignar());
                 } 
             }
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -622,21 +636,19 @@ public class HermesView extends JFrame {
 		
 			private MonitorInformation viewInfo;
 			private DefaultTableModel modelo;
+		
 			public ActionListener init(MonitorInformation viewInfo, DefaultTableModel modelo){
 				this.viewInfo=viewInfo;
 				this.modelo=modelo;
 				return this;
 		    }
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(this.viewInfo.getSelectNotification()!=null){
-			//	FactoriaDAO.getNotificationDAO().updateTag();
-				}
+					FactoriaDAO.getNotificationDAO().addTag( this.viewInfo.getSelectNotification(), this.viewInfo.getSelectAsignar());
 				
-				
-				/*
-				
-				List<Notification> n = this.viewInfo.getFilter().filtar();
+					List<Notification> n = this.viewInfo.getFilter().filtar();
 					int filas=this.modelo.getRowCount();
 					for (int i = 0;filas>i; i++) {
 						this.modelo.removeRow(0);
@@ -644,12 +656,12 @@ public class HermesView extends JFrame {
 					
 					SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 					for (Notification temp : n) {
-						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription(),Integer.toString(temp.getId()) };
 						this.modelo.addRow(row);
 					}	
 					
-				*/
-				
+			
+				}						
 			}
 			}.init(this.viewInfo, modelo));
 		
@@ -696,8 +708,7 @@ public class HermesView extends JFrame {
 			public void itemStateChanged(ItemEvent e) { 
                 if(e.getStateChange() == ItemEvent.SELECTED){ 
                   viewInfo.setSelectRename(e.getItem().toString());
-                  System.out.println(this.viewInfo.getSelectRename());
-                } 
+                 } 
             }
 			public ItemListener init(MonitorInformation viewInfo) {
 				this.viewInfo=viewInfo;

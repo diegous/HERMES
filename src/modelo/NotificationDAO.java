@@ -158,6 +158,21 @@ public class NotificationDAO implements INotificationDAO {
 		
 		
 	}
+	@Override
+	public void addTag(String selectNotification, String selectAsignar) {
+		DBConector conector = new DBConector();
+		conector.connect();
+		try {
+			String sql = "UPDATE notification SET id_tag=? WHERE id_notification=? ";
+			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
+			preparedStatement.setInt(1,FactoriaDAO.getTagDAO().getByText(selectAsignar).getId());
+			preparedStatement.setInt(2, Integer.parseInt(selectNotification));
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} 
+		catch (SQLException e) {e.printStackTrace();}
+		finally{conector.close();}
+	}
 	
 	
 	
