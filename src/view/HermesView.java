@@ -37,6 +37,7 @@ import org.freixas.jcalendar.JCalendarCombo;
 import modelo.*;
 
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 
 public class HermesView extends JFrame {
@@ -117,8 +118,7 @@ public class HermesView extends JFrame {
 				}
 				
 				JTable table = new JTable(modelo);
-					
-					
+							
 					JScrollPane scrollPane = new JScrollPane(table);
 					GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 					gbc_scrollPane.gridwidth = 3;
@@ -573,6 +573,22 @@ public class HermesView extends JFrame {
 		gbc_comboBox_6.gridx = 1;
 		gbc_comboBox_6.gridy = 5;
 		Etiquetas.add(comboAsignarEtiqueta, gbc_comboBox_6);
+		comboAsignarEtiqueta.addItemListener(new ItemListener() { 
+			private MonitorInformation viewInfo;
+
+			public void itemStateChanged(ItemEvent e) { 
+                if(e.getStateChange() == ItemEvent.SELECTED){ 
+                  viewInfo.setSelectAsignar(e.getItem().toString());
+                } 
+
+            }
+
+			public ItemListener init(MonitorInformation viewInfo) {
+				this.viewInfo=viewInfo;
+				return this;
+			} 
+        }.init(this.viewInfo));
+		
 		
 		JButton btnAsignardesasignar = new JButton("Asignar/desasignar");
 		GridBagConstraints gbc_btnAsignardesasignar = new GridBagConstraints();
@@ -592,6 +608,9 @@ public class HermesView extends JFrame {
 		gbc_separator_2.gridx = 0;
 		gbc_separator_2.gridy = 6;
 		Etiquetas.add(separator_2, gbc_separator_2);
+		
+		
+		
 		
 		
 		//RENOMBRAR

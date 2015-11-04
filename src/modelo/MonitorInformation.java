@@ -11,8 +11,12 @@ public class MonitorInformation {
 	private List<Pictogram> pictogram;
 	private List<Notification> notification;
 	private Filter filter;
+	
 	private String selectDelete;
-	//private String selectModify;
+	private String selectAsignar;
+	
+
+	private String selectModify;
 
 	
 	public MonitorInformation(List<Child> child, List<Context> context, List<Category> category, List<Tag> tag, List<Pictogram> content, List<Notification> notification, Filter filter){
@@ -25,6 +29,11 @@ public class MonitorInformation {
 		this.notification=notification;
 		this.filter=filter;
 	}
+	
+	
+	public String getSelectAsignar() {return selectAsignar;}
+
+	public void setSelectAsignar(String selectAsignar) {this.selectAsignar = selectAsignar;}
 	
 	
 	public String getSelectDelete() {return selectDelete;}
@@ -57,23 +66,7 @@ public class MonitorInformation {
 	
 	public void setNotification(List<Notification> notification){this.notification = notification;}
 	
-	
 	public Filter getFilter() {return filter;}
 	
-	public void filtar(){
-		this.setNotification(FactoriaDAO.getNotificationDAO().getList(this.getFilter()));
-		//this.filter.reset();
-	}
-
-	public void deleteTag(String string) {
-		int i=0;
-		boolean encontre=false;
-		while(!encontre){
-			if(this.tag.get(i).getDescription()==string){
-				this.tag.remove(i);
-				encontre=true;
-			}
-		}
-		
-	}
+	
 }
