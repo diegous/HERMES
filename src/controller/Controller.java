@@ -6,10 +6,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import modelo.*;
+import view.HermesView;
 
 public class Controller {
 	
-	public void processIncomingJson(String json, MonitorInformation monitor){
+	public void processIncomingJson(String json, HermesView frame){
 		JSONParser parser = new JSONParser();
 		
 		try {
@@ -30,28 +31,28 @@ public class Controller {
 			if (child == null){
 				FactoriaDAO.getChildDAO().save(new Child(-1, jchild));
 				child = FactoriaDAO.getChildDAO().getByText(jchild);
-				monitor.addChild(child);
+				frame.addChild(child.getName());
 			}
 
 			Context context = FactoriaDAO.getContextDAO().getByText(jcontext);
 			if (context == null){
 				FactoriaDAO.getContextDAO().save(new Context(-1, jcontext));
 				context = FactoriaDAO.getContextDAO().getByText(jcontext);
-				monitor.addContext(context);
+				frame.addContext(context.getDescription());
 			}
 
 			Category category = FactoriaDAO.getCategoryDAO().getByText(jcategory);
 			if (category == null){
 				FactoriaDAO.getCategoryDAO().save(new Category(-1, jcategory));
 				category = FactoriaDAO.getCategoryDAO().getByText(jcategory);
-				monitor.addCategory(category);
+				frame.addCategory(category.getDescription());
 			}
 
 			Tag tag = FactoriaDAO.getTagDAO().getByText(jtag);
 			if (tag == null){
 				FactoriaDAO.getTagDAO().save(new Tag(-1, jtag));
 				tag = FactoriaDAO.getTagDAO().getByText(jtag);
-				monitor.addTag(tag);
+				frame.addTag(tag.getDescription());
 			}
 
 			Pictogram pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
@@ -59,7 +60,7 @@ public class Controller {
 				System.out.println(jpictogram);
 				FactoriaDAO.getPictogramDAO().save(new Pictogram(-1, jpictogram));
 				pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
-				monitor.addPictogram(pictogram);
+				frame.addPictogram(pictogram.getContent());
 			}
 			
 			Date sent = new Date(jsent);
@@ -73,11 +74,6 @@ public class Controller {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
-		
-		//cdao.getByText(jArray.get("child"));
-		
-		//Notification notification = processJson(json);
 		
 	}
 }

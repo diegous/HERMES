@@ -70,5 +70,10 @@ public class ChildDAO implements IDAO<Child> {
 		finally {conector.close();}
 		
 	}
+	@Override
+	public void delete(String selectDelete) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -76,6 +76,11 @@ public class ContextDAO implements IDAO<Context>{
 				finally{conector.close();}
 				
 			}
+			@Override
+			public void delete(String selectDelete) {
+				// TODO Auto-generated method stub
+				
+			}
 			
 	
 

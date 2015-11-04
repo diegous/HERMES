@@ -40,7 +40,7 @@ public class MainController {
 		Controller controller = new Controller();
 
 		for(String json : getJson()){
-			controller.processIncomingJson(json, monitor);
+			controller.processIncomingJson(json, frame);
 		}					
 					
 		

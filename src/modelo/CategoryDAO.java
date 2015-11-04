@@ -73,6 +73,11 @@ public class CategoryDAO implements IDAO<Category> {
 		
 		
 	}
+	@Override
+	public void delete(String selectDelete) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

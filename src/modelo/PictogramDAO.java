@@ -73,5 +73,10 @@ public class PictogramDAO implements IDAO<Pictogram> {
 		finally{conector.close();}
 		
 	}
+	@Override
+	public void delete(String selectDelete) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

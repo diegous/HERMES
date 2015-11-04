@@ -38,10 +38,11 @@ import javax.swing.JTextField;
 public class HermesView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	//private JPanel contentPane;
-	//private JTable table;
-	//private JTextField textField;
-	//private JTextField textField_1;
+	private JComboBox<String> comboNino;
+	private JComboBox<String> comboContext;
+	private JComboBox<String> comboCategory;
+	private JComboBox<String> comboEtiqueta;
+	private JComboBox<String> comboContenido;
 	private MonitorInformation viewInfo;
 
 	
@@ -114,7 +115,7 @@ public class HermesView extends JFrame {
 		gbc_contenido.gridy = 1;
 		Filtros.add(contenido, gbc_contenido);
 		
-		final JComboBox<String> comboContenido = new JComboBox<String>();
+		comboContenido = new JComboBox<String>();
 		comboContenido.addItem(" ");
 		for (Pictogram temp : viewInfo.getPictogram()) {
 			comboContenido.addItem(temp.getContent());
@@ -204,7 +205,7 @@ public class HermesView extends JFrame {
 		gbc_contexto.gridy = 2;
 		Filtros.add(contexto, gbc_contexto);
 		
-		JComboBox<String> comboContext = new JComboBox<String>();
+		comboContext = new JComboBox<String>();
 		comboContext.addItem(" ");
 		for (Context temp : viewInfo.getContext()) {
 			comboContext.addItem(temp.getDescription());
@@ -247,7 +248,7 @@ public class HermesView extends JFrame {
 		gbc_categoria.gridy = 3;
 		Filtros.add(categoria, gbc_categoria);
 		
-		JComboBox<String> comboCategory = new JComboBox<String>();
+		comboCategory = new JComboBox<String>();
 		comboCategory.addItem(" ");
 		for (Category temp : viewInfo.getCategory()) {
 			comboCategory.addItem(temp.getDescription());
@@ -288,7 +289,7 @@ public class HermesView extends JFrame {
 		gbc_nino.gridy = 4;
 		Filtros.add(nino, gbc_nino);
 		
-		JComboBox<String> comboNino = new JComboBox<String>();
+		comboNino = new JComboBox<String>();
 		comboNino.addItem(" ");
 		for (Child temp : viewInfo.getChild()) {
 			comboNino.addItem(temp.getName());
@@ -330,7 +331,7 @@ public class HermesView extends JFrame {
 		gbc_Etiqueta.gridy = 5;
 		Filtros.add(Etiqueta, gbc_Etiqueta);
 		
-		JComboBox<String> comboEtiqueta = new JComboBox<String>();
+		comboEtiqueta = new JComboBox<String>();
 		comboEtiqueta.addItem(" ");
 		for (Tag temp : viewInfo.getTag()) {
 			comboEtiqueta.addItem(temp.getDescription());
@@ -425,64 +426,7 @@ public class HermesView extends JFrame {
 		lblEtiquetas.setFont(new Font("Cambria", Font.BOLD, 15));
 		panel.add(lblEtiquetas);
 		
-		
-		
-		
-		//ELIMINAR
-		JLabel lblNewLabel_1 = new JLabel("Eliminar etiqueta:");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_1.insets = new Insets(0, 5, 5, 5);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 3;
-		Etiquetas.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
-		JComboBox<String> comboEliminarEtiqueta = new JComboBox<String>();
-		for (Tag temp : viewInfo.getTag()) {
-			comboEliminarEtiqueta.addItem(temp.getDescription());
-		}
-		GridBagConstraints gbc_comboBox_5 = new GridBagConstraints();
-		gbc_comboBox_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_5.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_5.gridx = 1;
-		gbc_comboBox_5.gridy = 3;
-		Etiquetas.add(comboEliminarEtiqueta, gbc_comboBox_5);
-		
-		JButton btnEliminar = new JButton("Eliminar");
-		GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
-		gbc_btnEliminar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnEliminar.insets = new Insets(0, 0, 5, 5);
-		gbc_btnEliminar.gridx = 2;
-		gbc_btnEliminar.gridy = 3;
-		Etiquetas.add(btnEliminar, gbc_btnEliminar);
-	/*	btnEliminar.addActionListener(new ActionListener() {
-			
-			private MonitorInformation viewInfo;
-						
-			public ActionListener init(MonitorInformation viewInfo ){
-				this.viewInfo=viewInfo;
-		        return this;
-		    }
-			public void actionPerformed(ActionEvent e) {
-				FactoriaDAO.getTagDAO().delete();
-		
 				
-			}
-			}.init(this.viewInfo));	
-		
-		*/
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(Color.BLACK);
-		separator_1.setBackground(Color.BLACK);
-		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
-		gbc_separator_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_separator_1.gridwidth = 4;
-		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
-		gbc_separator_1.gridx = 0;
-		gbc_separator_1.gridy = 4;
-		Etiquetas.add(separator_1, gbc_separator_1);
-		
-		
 		//ASIGNACION
 		JLabel lblNewLabel_2 = new JLabel("Asignacion etiqueta:");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
@@ -493,6 +437,7 @@ public class HermesView extends JFrame {
 		Etiquetas.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		JComboBox<String> comboAsignarEtiqueta = new JComboBox<String>();
+		comboAsignarEtiqueta.addItem(null);
 		for (Tag temp : viewInfo.getTag()) {
 			comboAsignarEtiqueta.addItem(temp.getDescription());
 		}
@@ -524,7 +469,6 @@ public class HermesView extends JFrame {
 		
 		
 		//RENOMBRAR
-		
 		JLabel lblRenombrarEtiqueta = new JLabel("Renombrar etiqueta:");
 		GridBagConstraints gbc_lblRenombrarEtiqueta = new GridBagConstraints();
 		gbc_lblRenombrarEtiqueta.anchor = GridBagConstraints.WEST;
@@ -534,6 +478,7 @@ public class HermesView extends JFrame {
 		Etiquetas.add(lblRenombrarEtiqueta, gbc_lblRenombrarEtiqueta);
 		
 		JComboBox<String> comboRenombrarEtiqueta = new JComboBox<String>();
+		comboRenombrarEtiqueta.addItem(null);
 		for (Tag temp : viewInfo.getTag()) {
 			comboRenombrarEtiqueta.addItem(temp.getDescription());
 		}
@@ -570,6 +515,87 @@ public class HermesView extends JFrame {
 		gbc_btnRenombrar.gridy = 8;
 		Etiquetas.add(btnRenombrar, gbc_btnRenombrar);
 		
+		//ELIMINAR
+				JLabel lblNewLabel_1 = new JLabel("Eliminar etiqueta:");
+				GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+				gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
+				gbc_lblNewLabel_1.insets = new Insets(0, 5, 5, 5);
+				gbc_lblNewLabel_1.gridx = 0;
+				gbc_lblNewLabel_1.gridy = 3;
+				Etiquetas.add(lblNewLabel_1, gbc_lblNewLabel_1);
+				
+				final JComboBox<String> comboEliminarEtiqueta = new JComboBox<String>();
+				comboEliminarEtiqueta.addItem(null);
+				for (Tag temp : viewInfo.getTag()) {
+					comboEliminarEtiqueta.addItem(temp.getDescription());
+				}
+				GridBagConstraints gbc_comboBox_5 = new GridBagConstraints();
+				gbc_comboBox_5.fill = GridBagConstraints.HORIZONTAL;
+				gbc_comboBox_5.insets = new Insets(0, 0, 5, 5);
+				gbc_comboBox_5.gridx = 1;
+				gbc_comboBox_5.gridy = 3;
+				Etiquetas.add(comboEliminarEtiqueta, gbc_comboBox_5);
+				comboEliminarEtiqueta.addItemListener(new ItemListener() { 
+					private MonitorInformation viewInfo;
+		            public void itemStateChanged(ItemEvent e){ 
+		                if(comboEliminarEtiqueta.getSelectedItem().equals(e.getItem())){ 
+		                	viewInfo.setSelectDelete(e.getItem().toString());
+		                } 
+		            }
+		            public ItemListener init(MonitorInformation viewInfo) {
+						this.viewInfo=viewInfo;
+						return this;
+					} 
+		        }.init(this.viewInfo));
+				
+				
+				JButton btnEliminar = new JButton("Eliminar");
+				GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
+				gbc_btnEliminar.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnEliminar.insets = new Insets(0, 0, 5, 5);
+				gbc_btnEliminar.gridx = 2;
+				gbc_btnEliminar.gridy = 3;
+				Etiquetas.add(btnEliminar, gbc_btnEliminar);
+				/*btnEliminar.addActionListener(new ActionListener() {
+					
+					private MonitorInformation viewInfo;
+					private JComboBox<String> comboRenombrarEtiqueta;
+					private JComboBox<String> comboAsignarEtiqueta;
+					private JComboBox<String> comboEliminarEtiqueta;
+								
+					public ActionListener init(MonitorInformation viewInfo,JComboBox<String> renombrar, JComboBox<String> asignar, JComboBox<String> eliminar ){
+						this.viewInfo=viewInfo;
+						this.comboRenombrarEtiqueta=renombrar;
+						this.comboAsignarEtiqueta=asignar;
+						this.comboEliminarEtiqueta=eliminar;
+				        return this;
+				    }
+					public void actionPerformed(ActionEvent e) {
+						if(this.viewInfo.getSelectDelete()!=null && this.viewInfo.getSelectDelete()!=" " ){
+							FactoriaDAO.getTagDAO().delete(this.viewInfo.getSelectDelete());
+							this.viewInfo.deleteTag(this.viewInfo.getSelectDelete());
+							this.comboRenombrarEtiqueta.repaint();
+							this.comboAsignarEtiqueta.repaint();
+							this.comboAsignarEtiqueta.repaint();
+							this.viewInfo.setSelectDelete(null);
+						}
+						
+					}
+					}.init(this.viewInfo,comboRenombrarEtiqueta,comboAsignarEtiqueta,comboEliminarEtiqueta));	
+				*/
+				
+				JSeparator separator_1 = new JSeparator();
+				separator_1.setForeground(Color.BLACK);
+				separator_1.setBackground(Color.BLACK);
+				GridBagConstraints gbc_separator_1 = new GridBagConstraints();
+				gbc_separator_1.fill = GridBagConstraints.HORIZONTAL;
+				gbc_separator_1.gridwidth = 4;
+				gbc_separator_1.insets = new Insets(0, 0, 5, 0);
+				gbc_separator_1.gridx = 0;
+				gbc_separator_1.gridy = 4;
+				Etiquetas.add(separator_1, gbc_separator_1);
+				
+		
 		//CREAR
 				JLabel lblNewLabel = new JLabel("Crear etiqueta:");
 				GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -597,14 +623,12 @@ public class HermesView extends JFrame {
 				Etiquetas.add(btnCrear, gbc_btnCrear);
 				btnCrear.addActionListener(new ActionListener() {
 					
-					private MonitorInformation viewInfo;
 					private JTextField input;
 					private JComboBox<String> comboRenombrarEtiqueta;
 					private JComboBox<String> comboAsignarEtiqueta;
 					private JComboBox<String> comboEliminarEtiqueta;
 					
-					public ActionListener init(JTextField input ,MonitorInformation viewInfo, JComboBox<String> renombrar, JComboBox<String> asignar, JComboBox<String> eliminar ){
-						this.viewInfo=viewInfo;
+					public ActionListener init(JTextField input, JComboBox<String> renombrar, JComboBox<String> asignar, JComboBox<String> eliminar ){
 						this.comboRenombrarEtiqueta=renombrar;
 						this.comboAsignarEtiqueta=asignar;
 						this.comboEliminarEtiqueta=eliminar;
@@ -621,9 +645,7 @@ public class HermesView extends JFrame {
 
 						}
 					}
-					}.init(inputCrear, this.viewInfo,comboRenombrarEtiqueta,comboAsignarEtiqueta,comboEliminarEtiqueta ));	
-				
-				
+					}.init(inputCrear,comboRenombrarEtiqueta,comboAsignarEtiqueta,comboEliminarEtiqueta ));	
 				
 				JSeparator separator = new JSeparator();
 				separator.setBackground(Color.BLACK);
@@ -709,6 +731,15 @@ public class HermesView extends JFrame {
 			table.setRowSorter(orden);
 			
 	}
+
+
+	public void addChild(String name) {this.comboNino.addItem(name);}
+	public void addContext(String description) {this.comboContext.addItem(description);}
+	public void addCategory(String description) {this.comboCategory.addItem(description);}
+	public void addTag(String description) {this.comboEtiqueta.addItem(description);}
+	public void addPictogram(String content){this.comboContenido.addItem(content);} 
+	
+		
 
 	
 	
