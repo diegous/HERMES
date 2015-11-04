@@ -74,7 +74,7 @@ public class PictogramDAO implements IDAO<Pictogram> {
 		
 	}
 	@Override
-	public void delete(String selectDelete) {
+	public void delete(Pictogram selectDelete) {
 		// TODO Auto-generated method stub
 		
 	}

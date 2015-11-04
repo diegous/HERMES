@@ -11,7 +11,7 @@ public class MonitorInformation {
 	private List<Pictogram> pictogram;
 	private List<Notification> notification;
 	private Filter filter;
-	private String selectDelete;
+	private Tag selectDelete;
 	//private String selectModify;
 
 	
@@ -27,9 +27,9 @@ public class MonitorInformation {
 	}
 	
 	
-	public String getSelectDelete() {return selectDelete;}
+	public Tag getSelectDelete() {return selectDelete;}
 	
-	public void setSelectDelete(String selectDelete) {this.selectDelete = selectDelete;}
+	public void setSelectDelete(Tag selectDelete) {this.selectDelete = selectDelete;}
 
 	public List<Child> getChild() {return child;}
 	
@@ -65,15 +65,7 @@ public class MonitorInformation {
 		//this.filter.reset();
 	}
 
-	public void deleteTag(String string) {
-		int i=0;
-		boolean encontre=false;
-		while(!encontre){
-			if(this.tag.get(i).getDescription()==string){
-				this.tag.remove(i);
-				encontre=true;
-			}
-		}
-		
+	public void deleteTag(Tag string) {
+		tag.remove(string);
 	}
 }

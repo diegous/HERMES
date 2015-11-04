@@ -52,7 +52,7 @@ public class Controller {
 			if (tag == null){
 				FactoriaDAO.getTagDAO().save(new Tag(-1, jtag));
 				tag = FactoriaDAO.getTagDAO().getByText(jtag);
-				frame.addTag(tag.getDescription());
+				frame.addTag(tag);
 			}
 
 			Pictogram pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);

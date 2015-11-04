@@ -77,7 +77,7 @@ public class ContextDAO implements IDAO<Context>{
 				
 			}
 			@Override
-			public void delete(String selectDelete) {
+			public void delete(Context selectDelete) {
 				// TODO Auto-generated method stub
 				
 			}

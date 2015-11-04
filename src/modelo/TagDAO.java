@@ -73,22 +73,28 @@ public class TagDAO implements IDAO<Tag> {
 		finally{conector.close();}
 		
 	}
-	@Override
+	
+	
 	public void delete(String selectDelete) {
+		
+	}
+	
+	public void delete(Tag selectDelete) {
 		DBConector conector = new DBConector();
 		conector.connect();
-		try {
-			FactoriaDAO.getNotificationDAO().update(this.getByText(selectDelete));
-			String sql = "DELETE FROM tag WHERE description=?;";
-			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
-			preparedStatement.setString(1, selectDelete);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-			
-		} 
-		catch (SQLException e) {e.printStackTrace();}
-		finally{conector.close();}
-		
+		if(selectDelete.getId() != 0){
+			try {
+				FactoriaDAO.getNotificationDAO().update(this.getByText(selectDelete.getDescription()));
+				String sql = "DELETE FROM tag WHERE description=?;";
+				PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
+				preparedStatement.setString(1, selectDelete.getDescription());
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				
+			} 
+			catch (SQLException e) {e.printStackTrace();}
+			finally{conector.close();}
+		}
 	}
 
 }
