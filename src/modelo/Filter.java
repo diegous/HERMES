@@ -1,12 +1,13 @@
 package modelo;
 
+import java.util.Date;
 import java.util.List;
 
 public class Filter {
 	private String child;
 	private String context;
 	private String category;
-	private String since, until;
+	private long since, until;
 	private String tag;
 	private String pictogram;
 	
@@ -15,8 +16,8 @@ public class Filter {
 		this.child="Todo";
 		this.context="Todo";
 		this.category="Todo";
-		this.since="Todo"; 
-		this.until="Todo";
+		this.since=0; 
+		this.until=new Date().getTime();
 		this.tag="Todo";
 		this.pictogram="Todo";
 
@@ -40,13 +41,13 @@ public class Filter {
 	
 	public void setCategory(String category) {this.category = category;}
 	
-	public String getSince() {return since;}
+	public long getSince() {return since;}
 	
-	public void setSince(String since) {this.since = since;}
+	public void setSince(long since) {this.since = since;}
 	
-	public String getUntil() {return until;}
+	public long getUntil() {return until;}
 	
-	public void setUntil(String until) {this.until = until;}
+	public void setUntil(long until) {this.until = until;}
 	
 	public String getTag() {return tag;}
 	

@@ -62,8 +62,9 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getContext() != "Todo"){sql=sql+" and cont.description=?";}
 	        if(f.getPictogram() != "Todo"){sql=sql+" and p.content=?";}
 	        if(f.getTag() != "Todo"){sql=sql+" and t.description=?";}
-	        if(f.getSince() != "Todo"){sql=sql+" and sent_date>=?";}
-	        if(f.getUntil() != "Todo" ){sql=sql+" and sent_date<=?";}
+	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
+	        //La fecha "hasta" va siempre
+	        sql=sql+" and sent_date<=?";
 	        sql=sql+";";
 	       
 	        PreparedStatement query = conector.getConnection().prepareStatement(sql);
@@ -75,8 +76,10 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getContext() != "Todo"){query.setString(i, f.getContext()); i++;}
 	        if(f.getPictogram() != "Todo"){query.setString(i, f.getPictogram()); i++;}
 	        if(f.getTag() != "Todo"){query.setString(i, f.getTag()); i++;}
-	        if(f.getSince() != "Todo"){query.setString(i, f.getSince()); i++;}
-	        if(f.getUntil() != "Todo" ){query.setString(i, f.getUntil());}
+	        if(f.getSince() != 0){query.setLong(i, f.getSince()); i++;}
+	        //La fecha "hasta" de búsqueda va siempre
+	        // Hay que sumarle 86400000 (un día en milisegundos) para que la busqueda incluya al dia seleccionado 
+	        query.setLong(i, f.getUntil()+86400000);
 	        
 	        ResultSet result = query.executeQuery();
         	
