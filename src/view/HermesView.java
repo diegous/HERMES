@@ -23,6 +23,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.List;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -43,13 +44,12 @@ public class HermesView extends JFrame {
 	private JComboBox<String> comboCategory;
 	private JComboBox<String> comboEtiqueta;
 	private JComboBox<String> comboContenido;
+	private DefaultTableModel modelo;
 	private MonitorInformation viewInfo;
 
 	
 	public HermesView(MonitorInformation list) {
 		viewInfo=list;
-		System.out.println("pintado");
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 50, 900, 600);
 		setTitle("Hermes Monitor");
@@ -63,7 +63,71 @@ public class HermesView extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		
+		//PANEL DE NOTIFICACIONES---------------------------------------------------------------------------
+				JPanel Notificaciones = new JPanel();
+				Notificaciones.setToolTipText("");
+				Notificaciones.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+				Notificaciones.setBackground(new Color(153, 204, 51));
+				GridBagConstraints gbc_Notificaciones = new GridBagConstraints();
+				gbc_Notificaciones.gridwidth = 2;
+				gbc_Notificaciones.insets = new Insets(5, 5, 5, 5);
+				gbc_Notificaciones.fill = GridBagConstraints.BOTH;
+				gbc_Notificaciones.gridx = 0;
+				gbc_Notificaciones.gridy = 1;
+				contentPane.add(Notificaciones, gbc_Notificaciones);
+				GridBagLayout gbl_Notificaciones = new GridBagLayout();
+				gbl_Notificaciones.columnWidths = new int[]{0};
+				gbl_Notificaciones.rowHeights = new int[]{0, 0};
+				gbl_Notificaciones.columnWeights = new double[]{1.0};
+				gbl_Notificaciones.rowWeights = new double[]{0.0, 1.0};
+				Notificaciones.setLayout(gbl_Notificaciones);
+				
+				
+				//TITULO
+				JPanel panel_1 = new JPanel();
+				panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+				panel_1.setBackground(new Color(51, 102, 153));
+				GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+				gbc_panel_1.gridwidth = 3;
+				gbc_panel_1.insets = new Insets(0, 0, 10, 0);
+				gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
+				gbc_panel_1.gridx = 0;
+				gbc_panel_1.gridy = 0;
+				Notificaciones.add(panel_1, gbc_panel_1);
+				
+				JLabel lblNotificaciones = new JLabel("NOTIFICACIONES");
+				lblNotificaciones.setForeground(new Color(0, 0, 0));
+				lblNotificaciones.setFont(new Font("Cambria", Font.BOLD, 15));
+				panel_1.add(lblNotificaciones);
+			
+				
+				//TABLA
+				modelo = new DefaultTableModel();
+				
+				String[] column= new String[]{"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"};
+				for (int i=0;i<6;i++){modelo.addColumn(column[i]);}
+				if(viewInfo.getNotification()!=null){
+					for (Notification temp : viewInfo.getNotification()) {
+						String[] row= new String[]{temp.getSent().toString(), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+						modelo.addRow(row);
+					}
+				}
+				JTable table = new JTable(modelo);
+					
+					
+					JScrollPane scrollPane = new JScrollPane(table);
+					GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+					gbc_scrollPane.gridwidth = 3;
+					gbc_scrollPane.insets = new Insets(0, 0, 0, 0);
+					gbc_scrollPane.fill = GridBagConstraints.BOTH;
+					gbc_scrollPane.gridx = 0;
+					gbc_scrollPane.gridy = 1;
+					Notificaciones.add(scrollPane, gbc_scrollPane);
+				
+							
+					
+					TableRowSorter<TableModel> orden = new TableRowSorter<TableModel>(modelo);
+					table.setRowSorter(orden);
 		
 		
 		
@@ -116,7 +180,7 @@ public class HermesView extends JFrame {
 		Filtros.add(contenido, gbc_contenido);
 		
 		comboContenido = new JComboBox<String>();
-		comboContenido.addItem(" ");
+		comboContenido.addItem("Todo");
 		for (Pictogram temp : viewInfo.getPictogram()) {
 			comboContenido.addItem(temp.getContent());
 		}
@@ -129,12 +193,9 @@ public class HermesView extends JFrame {
 		comboContenido.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
-            public void itemStateChanged(ItemEvent e)  
-            { 
-                if(comboContenido.getSelectedItem().equals(e.getItem())) 
-                { 
-                  viewInfo.getFilter().setPictogram(e.getItem().toString());
-                } 
+            public void itemStateChanged(ItemEvent e) { 
+                viewInfo.getFilter().setPictogram(e.getItem().toString());
+        
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -206,7 +267,7 @@ public class HermesView extends JFrame {
 		Filtros.add(contexto, gbc_contexto);
 		
 		comboContext = new JComboBox<String>();
-		comboContext.addItem(" ");
+		comboContext.addItem("Todo");
 		for (Context temp : viewInfo.getContext()) {
 			comboContext.addItem(temp.getDescription());
 		}
@@ -219,12 +280,8 @@ public class HermesView extends JFrame {
 		comboContext.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
-            public void itemStateChanged(ItemEvent e)  
-            { 
-                if(comboContenido.getSelectedItem().equals(e.getItem())) 
-                { 
-                  viewInfo.getFilter().setContext(e.getItem().toString());
-                } 
+            public void itemStateChanged(ItemEvent e){
+            	viewInfo.getFilter().setContext(e.getItem().toString());
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -249,7 +306,7 @@ public class HermesView extends JFrame {
 		Filtros.add(categoria, gbc_categoria);
 		
 		comboCategory = new JComboBox<String>();
-		comboCategory.addItem(" ");
+		comboCategory.addItem("Todo");
 		for (Category temp : viewInfo.getCategory()) {
 			comboCategory.addItem(temp.getDescription());
 		}
@@ -262,12 +319,9 @@ public class HermesView extends JFrame {
 		comboCategory.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
-            public void itemStateChanged(ItemEvent e)  
-            { 
-                if(comboContenido.getSelectedItem().equals(e.getItem())) 
-                { 
-                  viewInfo.getFilter().setCategory(e.getItem().toString());
-                } 
+            public void itemStateChanged(ItemEvent e) 
+            {viewInfo.getFilter().setCategory(e.getItem().toString());
+            
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -290,7 +344,7 @@ public class HermesView extends JFrame {
 		Filtros.add(nino, gbc_nino);
 		
 		comboNino = new JComboBox<String>();
-		comboNino.addItem(" ");
+		comboNino.addItem("Todo");
 		for (Child temp : viewInfo.getChild()) {
 			comboNino.addItem(temp.getName());
 		}
@@ -303,12 +357,9 @@ public class HermesView extends JFrame {
 		comboNino.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
-            public void itemStateChanged(ItemEvent e)  
-            { 
-                if(comboContenido.getSelectedItem().equals(e.getItem())) 
-                { 
-                  viewInfo.getFilter().setChild(e.getItem().toString());
-                } 
+            public void itemStateChanged(ItemEvent e){ 
+                viewInfo.getFilter().setChild(e.getItem().toString());
+               
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -332,7 +383,7 @@ public class HermesView extends JFrame {
 		Filtros.add(Etiqueta, gbc_Etiqueta);
 		
 		comboEtiqueta = new JComboBox<String>();
-		comboEtiqueta.addItem(" ");
+		comboEtiqueta.addItem("Todo");
 		for (Tag temp : viewInfo.getTag()) {
 			comboEtiqueta.addItem(temp.getDescription());
 		}
@@ -345,12 +396,9 @@ public class HermesView extends JFrame {
 		comboEtiqueta.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
-            public void itemStateChanged(ItemEvent e)  
-            { 
-                if(comboContenido.getSelectedItem().equals(e.getItem())) 
-                { 
-                  viewInfo.getFilter().setChild(e.getItem().toString());
-                } 
+            public void itemStateChanged(ItemEvent e){ 
+                  viewInfo.getFilter().setTag(e.getItem().toString());
+            
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -361,7 +409,7 @@ public class HermesView extends JFrame {
 		
 		
 		//BOTON DEL FILTRO
-		JButton buttonFilter = new JButton("Filtrar");
+		JButton buttonFilter = new JButton("Ver");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton.gridwidth = 2;
@@ -372,17 +420,28 @@ public class HermesView extends JFrame {
 		buttonFilter.addActionListener(new ActionListener() {
 		
 			private MonitorInformation viewInfo;
-			
-			public ActionListener init(MonitorInformation viewInfo){
+			private DefaultTableModel modelo;
+			public ActionListener init(MonitorInformation viewInfo, DefaultTableModel modelo){
 				this.viewInfo=viewInfo;
+				this.modelo=modelo;
 				return this;
 		    }
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				this.viewInfo.filtar();
+				List<Notification> n = this.viewInfo.getFilter().filtar();
+					int filas=this.modelo.getRowCount();
+					for (int i = 0;filas>i; i++) {
+						this.modelo.removeRow(0);
+					}
+					for (Notification temp : n) {
+						String[] row= new String[]{temp.getSent().toString(), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+						this.modelo.addRow(row);
+					}	
+					
+				
 				
 			}
-			}.init(this.viewInfo));
+			}.init(this.viewInfo, modelo));
 		
 		
 		
@@ -662,73 +721,7 @@ public class HermesView extends JFrame {
 		
 		
 		
-		//PANEL DE NOTIFICACIONES---------------------------------------------------------------------------
-		JPanel Notificaciones = new JPanel();
-		Notificaciones.setToolTipText("");
-		Notificaciones.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		Notificaciones.setBackground(new Color(153, 204, 51));
-		GridBagConstraints gbc_Notificaciones = new GridBagConstraints();
-		gbc_Notificaciones.gridwidth = 2;
-		gbc_Notificaciones.insets = new Insets(5, 5, 5, 5);
-		gbc_Notificaciones.fill = GridBagConstraints.BOTH;
-		gbc_Notificaciones.gridx = 0;
-		gbc_Notificaciones.gridy = 1;
-		contentPane.add(Notificaciones, gbc_Notificaciones);
-		GridBagLayout gbl_Notificaciones = new GridBagLayout();
-		gbl_Notificaciones.columnWidths = new int[]{0};
-		gbl_Notificaciones.rowHeights = new int[]{0, 0};
-		gbl_Notificaciones.columnWeights = new double[]{1.0};
-		gbl_Notificaciones.rowWeights = new double[]{0.0, 1.0};
-		Notificaciones.setLayout(gbl_Notificaciones);
 		
-		
-		//TITULO
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_1.setBackground(new Color(51, 102, 153));
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.gridwidth = 3;
-		gbc_panel_1.insets = new Insets(0, 0, 10, 0);
-		gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel_1.gridx = 0;
-		gbc_panel_1.gridy = 0;
-		Notificaciones.add(panel_1, gbc_panel_1);
-		
-		JLabel lblNotificaciones = new JLabel("NOTIFICACIONES");
-		lblNotificaciones.setForeground(new Color(0, 0, 0));
-		lblNotificaciones.setFont(new Font("Cambria", Font.BOLD, 15));
-		panel_1.add(lblNotificaciones);
-	
-		
-		//TABLA
-		
-		 
-		DefaultTableModel modelo = new DefaultTableModel();
-		
-		String[] column= new String[]{"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"};
-		for (int i=0;i<6;i++){modelo.addColumn(column[i]);}
-		if(viewInfo.getNotification()!=null){
-			for (Notification temp : viewInfo.getNotification()) {
-				String[] row= new String[]{temp.getSent().toString(), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
-				modelo.addRow(row);
-			}
-		}
-		JTable table = new JTable(modelo);
-			
-			
-			JScrollPane scrollPane = new JScrollPane(table);
-			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-			gbc_scrollPane.gridwidth = 3;
-			gbc_scrollPane.insets = new Insets(0, 0, 0, 0);
-			gbc_scrollPane.fill = GridBagConstraints.BOTH;
-			gbc_scrollPane.gridx = 0;
-			gbc_scrollPane.gridy = 1;
-			Notificaciones.add(scrollPane, gbc_scrollPane);
-		
-					
-			
-			TableRowSorter<TableModel> orden = new TableRowSorter<TableModel>(modelo);
-			table.setRowSorter(orden);
 			
 	}
 

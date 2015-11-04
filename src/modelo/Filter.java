@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.List;
+
 public class Filter {
 	private String child;
 	private String context;
@@ -9,13 +11,13 @@ public class Filter {
 	private String pictogram;
 	
 	public Filter(){
-		this.child=" ";
-		this.context=" ";
-		this.category=" ";
-		this.since=" "; 
-		this.until=" ";
-		this.tag=" ";
-		this.pictogram=" ";
+		this.child="Todo";
+		this.context="Todo";
+		this.category="Todo";
+		this.since="Todo"; 
+		this.until="Todo";
+		this.tag="Todo";
+		this.pictogram="Todo";
 	}
 	
 	public String getChild() {return child;}
@@ -46,15 +48,12 @@ public class Filter {
 	
 	public void setPictogram(String pictogram) {this.pictogram = pictogram;}
 	
-	public void reset(){
-		setCategory("");
-		setChild("");
-		setContext("");
-		setPictogram("");
-		setTag("");
-		setSince("");
-		setUntil("");
+	public List<Notification> filtar(){
+		System.out.println(this.getCategory()+" " +this.getChild()+" "+this.getContext() +" "+this.getPictogram()+" "+this.getTag() );
+		List<Notification> n = FactoriaDAO.getNotificationDAO().getList(this);
+		return n;
 	}
+
 	
 	
 
