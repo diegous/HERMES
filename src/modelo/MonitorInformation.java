@@ -65,7 +65,6 @@ public class MonitorInformation {
 		//this.filter.reset();
 	}
 
-
 	public void deleteTag(String string) {
 		int i=0;
 		boolean encontre=false;
