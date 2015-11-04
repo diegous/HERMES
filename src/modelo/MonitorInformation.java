@@ -60,7 +60,11 @@ public class MonitorInformation {
 	
 	public Filter getFilter() {return filter;}
 	
-	
+	public void filtar(){
+		this.setNotification(FactoriaDAO.getNotificationDAO().getList(this.getFilter()));
+		//this.filter.reset();
+	}
+
 	public void deleteTag(String string) {
 		int i=0;
 		boolean encontre=false;

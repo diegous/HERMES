@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.SimpleDateFormat;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -24,6 +25,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Calendar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -103,15 +105,16 @@ public class HermesView extends JFrame {
 				
 				//TABLA
 				modelo = new DefaultTableModel();
-				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 				String[] column= new String[]{"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"};
 				for (int i=0;i<6;i++){modelo.addColumn(column[i]);}
 				if(viewInfo.getNotification()!=null){
 					for (Notification temp : viewInfo.getNotification()) {
-						String[] row= new String[]{temp.getSent().toString(), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
 						modelo.addRow(row);
 					}
 				}
+				
 				JTable table = new JTable(modelo);
 					
 					
@@ -193,9 +196,16 @@ public class HermesView extends JFrame {
 		comboContenido.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
+
             public void itemStateChanged(ItemEvent e) { 
                 viewInfo.getFilter().setPictogram(e.getItem().toString());
         
+/*
+			public void itemStateChanged(ItemEvent e) { 
+                if(e.getStateChange() == ItemEvent.SELECTED){ 
+                  viewInfo.getFilter().setPictogram(e.getItem().toString());
+                } 
+*/
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -228,7 +238,7 @@ public class HermesView extends JFrame {
 		Filtros.add(desde, gbc_desde);
 		
 		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerDateModel(new Date(1445914800000L), new Date(1445914800000L), new Date(1476932400000L), Calendar.DAY_OF_YEAR));
+		spinner.setModel(new SpinnerDateModel(new Date(341463600000L), new Date(341463600000L), new Date(1476932400000L), Calendar.DAY_OF_YEAR));
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
 		gbc_spinner.insets = new Insets(0, 10, 0, 10);
 		gbc_spinner.gridx = 2;
@@ -246,7 +256,7 @@ public class HermesView extends JFrame {
 		
 		
 		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerDateModel(new Date(1445914800000L), new Date(1445914800000L), new Date(1445914800000L), Calendar.DAY_OF_YEAR));
+		spinner_1.setModel(new SpinnerDateModel(new Date(1477537200000L), new Date(1445914800000L), new Date(1509073200000L), Calendar.DAY_OF_YEAR));
 		GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
 		gbc_spinner_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinner_1.insets = new Insets(0, 10, 0, 10);
@@ -280,8 +290,15 @@ public class HermesView extends JFrame {
 		comboContext.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
+
             public void itemStateChanged(ItemEvent e){
             	viewInfo.getFilter().setContext(e.getItem().toString());
+/*
+			public void itemStateChanged(ItemEvent e) { 
+                if(e.getStateChange() == ItemEvent.SELECTED){ 
+                  viewInfo.getFilter().setContext(e.getItem().toString());
+                } 
+*/
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -319,10 +336,16 @@ public class HermesView extends JFrame {
 		comboCategory.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
+
             public void itemStateChanged(ItemEvent e) 
-            {viewInfo.getFilter().setCategory(e.getItem().toString());
+            {viewInfo.getFilter().setCategory(e.getItem().toString());}
             
-            }
+            /*
+			public void itemStateChanged(ItemEvent e) { 
+                if(e.getStateChange() == ItemEvent.SELECTED){ 
+                  viewInfo.getFilter().setCategory(e.getItem().toString());
+                } */
+
 
 			public ItemListener init(MonitorInformation viewInfo) {
 				this.viewInfo=viewInfo;
@@ -357,9 +380,16 @@ public class HermesView extends JFrame {
 		comboNino.addItemListener(new ItemListener() 
         { 
 			private MonitorInformation viewInfo;
+/*
             public void itemStateChanged(ItemEvent e){ 
                 viewInfo.getFilter().setChild(e.getItem().toString());
                
+*/
+			public void itemStateChanged(ItemEvent e) { 
+                if(e.getStateChange() == ItemEvent.SELECTED){ 
+                  viewInfo.getFilter().setChild(e.getItem().toString());
+                } 
+
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -383,7 +413,9 @@ public class HermesView extends JFrame {
 		Filtros.add(Etiqueta, gbc_Etiqueta);
 		
 		comboEtiqueta = new JComboBox<String>();
+
 		comboEtiqueta.addItem("Todo");
+
 		for (Tag temp : viewInfo.getTag()) {
 			comboEtiqueta.addItem(temp.getDescription());
 		}
@@ -393,12 +425,18 @@ public class HermesView extends JFrame {
 		gbc_comboBox_4.gridx = 1;
 		gbc_comboBox_4.gridy = 5;
 		Filtros.add(comboEtiqueta, gbc_comboBox_4);
-		comboEtiqueta.addItemListener(new ItemListener() 
-        { 
+		comboEtiqueta.addItemListener(new ItemListener() { 
 			private MonitorInformation viewInfo;
+
             public void itemStateChanged(ItemEvent e){ 
                   viewInfo.getFilter().setTag(e.getItem().toString());
             
+/*
+            public void itemStateChanged(ItemEvent e) { 
+                if(e.getStateChange() == ItemEvent.SELECTED){ 
+                  viewInfo.getFilter().setTag(e.getItem().toString());
+                } 
+*/
             }
 
 			public ItemListener init(MonitorInformation viewInfo) {
@@ -433,8 +471,10 @@ public class HermesView extends JFrame {
 					for (int i = 0;filas>i; i++) {
 						this.modelo.removeRow(0);
 					}
+					
+					SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 					for (Notification temp : n) {
-						String[] row= new String[]{temp.getSent().toString(), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
 						this.modelo.addRow(row);
 					}	
 					
@@ -717,12 +757,6 @@ public class HermesView extends JFrame {
 				gbc_separator.gridy = 2;
 				Etiquetas.add(separator, gbc_separator);
 				
-		
-		
-		
-		
-		
-			
 	}
 
 

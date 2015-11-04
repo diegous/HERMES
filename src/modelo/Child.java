@@ -10,7 +10,7 @@ public class Child{
 	}
 
 	@Override
-	public String toString() {return "Child [id="+id+", name="+name+"]";}
+	public String toString() {return name;}
 
 	public int getId() {return id;}
 

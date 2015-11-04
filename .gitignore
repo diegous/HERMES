@@ -1,1 +1,7 @@
 /hermes.db
+
+# binaries folder
+/bin/
+
+# compiled source
+*.class

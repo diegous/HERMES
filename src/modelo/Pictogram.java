@@ -10,6 +10,11 @@ public class Pictogram {
 		this.content = content;
 	}
 	
+	@Override
+	public String toString() {
+		return content;
+	}
+
 	public Pictogram(String text) {this.content = text;}
 	
 	public int getId() {return id;}

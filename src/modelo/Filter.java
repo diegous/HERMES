@@ -11,6 +11,7 @@ public class Filter {
 	private String pictogram;
 	
 	public Filter(){
+
 		this.child="Todo";
 		this.context="Todo";
 		this.category="Todo";
@@ -18,8 +19,15 @@ public class Filter {
 		this.until="Todo";
 		this.tag="Todo";
 		this.pictogram="Todo";
+
 	}
 	
+	@Override
+	public String toString() {
+		return "Filter [child=" + child + ", context=" + context + ", category=" + category + ", since=" + since
+				+ ", until=" + until + ", tag=" + tag + ", pictogram=" + pictogram + "]";
+	}
+
 	public String getChild() {return child;}
 	
 	public void setChild(String child) {this.child = child;}

@@ -79,16 +79,21 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getUntil() != "Todo" ){query.setString(i, f.getUntil());}
 	        
 	        ResultSet result = query.executeQuery();
-			
+        	
 			//PROCESO RESULTADOS
-	        while(result.next()){resultList.add(new Notification(result.getInt("id_notification"),
-	        													 new Child(result.getInt("id_child"), result.getString("name")),
-	        													 new Context(result.getInt("id_context"), result.getString("Dcontext")),
-	        													 new Category(result.getInt("id_category"), result.getString("Dcategory")),
-	        													 new Tag(result.getInt("id_tag"), result.getString("Dtag")),
-	        													 new Pictogram(result.getInt("id_pictogram"), result.getString("content")),
-	        													 new Date(result.getLong("sent_date")),
-	        													 new Date (result.getLong("received_date"))));}
+	        while(result.next()){
+	        	Notification tmp = new Notification(
+		        			result.getInt("id_notification"),
+		        			new Child(result.getInt("id_child"), result.getString("name")),
+		        			new Context(result.getInt("id_context"), result.getString("Dcontext")),
+		        			new Category(result.getInt("id_category"), result.getString("Dcategory")),
+		        			new Tag(result.getInt("id_tag"), result.getString("Dtag")),
+		        			new Pictogram(result.getInt("id_pictogram"), result.getString("content")),
+		        			new Date(result.getLong("sent_date")),
+		        			new Date (result.getLong("received_date"))
+	        			);
+	        	resultList.add(tmp);
+	        	}
 			query.close();
 			result.close();
 			return resultList;
@@ -128,7 +133,7 @@ public class NotificationDAO implements INotificationDAO {
 	                   +" inner join context as cont on (n.id_context=cont.id_context)" 
 	                   +" inner join pictogram as p on (n.id_pictogram=p.id_pictogram)"
 	                   +" inner join tag as t on (n.id_tag=t.id_tag);";
-	       
+
 		   PreparedStatement query = conector.getConnection().prepareStatement(sql);
 	       ResultSet result = query.executeQuery();
 			
