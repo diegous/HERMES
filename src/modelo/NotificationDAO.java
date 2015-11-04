@@ -50,7 +50,7 @@ public class NotificationDAO implements INotificationDAO {
 		try {
 			
 			//CONSULTA
-			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, t.id_tag, t.description as Dtag, sent_date, received_date" 
+			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, t.id_tag, t.description as Dtag, sent_date, received_date " 
 					+"FROM notification as n inner join category as cat on (n.id_category=cat.id_category)" 
 	                   +"inner join child as c on (n.id_child=c.id_child)" 
 	                   +"inner join context as cont on (n.id_context=cont.id_context)" 
@@ -122,7 +122,7 @@ public class NotificationDAO implements INotificationDAO {
 		conector.connect();
 		List<Notification> resultList = new ArrayList<Notification>();
 		try {
-			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, t.id_tag, t.description as Dtag, sent_date, received_date" 
+			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, t.id_tag, t.description as Dtag, sent_date, received_date " 
 					+"FROM notification as n inner join category as cat on (n.id_category=cat.id_category)" 
 	                   +"inner join child as c on (n.id_child=c.id_child)" 
 	                   +"inner join context as cont on (n.id_context=cont.id_context)" 
