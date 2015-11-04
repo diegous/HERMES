@@ -62,7 +62,7 @@ public class MonitorInformation {
 	
 	public void filtar(){
 		this.setNotification(FactoriaDAO.getNotificationDAO().getList(this.getFilter()));
-		this.filter.reset();
+		//this.filter.reset();
 	}
 
 

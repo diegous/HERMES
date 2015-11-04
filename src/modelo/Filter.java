@@ -9,15 +9,21 @@ public class Filter {
 	private String pictogram;
 	
 	public Filter(){
-		this.child=" ";
-		this.context=" ";
-		this.category=" ";
-		this.since=" "; 
-		this.until=" ";
-		this.tag=" ";
-		this.pictogram=" ";
+		this.child="";
+		this.context="";
+		this.category="";
+		this.since=""; 
+		this.until="";
+		this.tag="";
+		this.pictogram="";
 	}
 	
+	@Override
+	public String toString() {
+		return "Filter [child=" + child + ", context=" + context + ", category=" + category + ", since=" + since
+				+ ", until=" + until + ", tag=" + tag + ", pictogram=" + pictogram + "]";
+	}
+
 	public String getChild() {return child;}
 	
 	public void setChild(String child) {this.child = child;}
