@@ -46,6 +46,8 @@ public class HermesView extends JFrame {
 	private JComboBox<String> comboEtiqueta;
 	private JComboBox<String> comboContenido;
 	private MonitorInformation viewInfo;
+	private JTable table;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 
 	
 	public HermesView(MonitorInformation list) {
@@ -372,6 +374,18 @@ public class HermesView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				this.viewInfo.filtar();
 				
+				DefaultTableModel modelo = new DefaultTableModel();
+				
+				String[] column= new String[]{"Fecha/hora env\u00EDo", "Contenido", "Contexto", "Categor\u00EDa", "Ni\u00F1@", "Etiquetas"};
+				for (int i=0;i<6;i++){modelo.addColumn(column[i]);}
+				if(viewInfo.getNotification()!=null){
+					for (Notification temp : viewInfo.getNotification()) {
+						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+						modelo.addRow(row);
+					}
+				}
+				System.out.println("llega");
+				table.setModel(modelo);
 			}
 			}.init(this.viewInfo));
 		
@@ -692,7 +706,6 @@ public class HermesView extends JFrame {
 	
 		
 		//TABLA
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 		 
 		DefaultTableModel modelo = new DefaultTableModel();
 		
@@ -704,7 +717,7 @@ public class HermesView extends JFrame {
 				modelo.addRow(row);
 			}
 		}
-		JTable table = new JTable(modelo);
+		table = new JTable(modelo);
 			
 			
 			JScrollPane scrollPane = new JScrollPane(table);
