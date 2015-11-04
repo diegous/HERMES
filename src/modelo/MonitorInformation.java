@@ -49,8 +49,7 @@ public class MonitorInformation {
 
 	public void setSelectAsignar(String selectAsignar) {this.selectAsignar = selectAsignar;}
 	
-		public Tag getSelectDelete() {return selectDelete;}
-
+	public Tag getSelectDelete() {return selectDelete;}
 	
 	public void setSelectDelete(Tag selectDelete) {this.selectDelete = selectDelete;}
 

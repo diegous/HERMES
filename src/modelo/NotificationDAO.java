@@ -64,7 +64,7 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getTag() != "Todo"){sql=sql+" and t.description=?";}
 	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
 	        //La fecha "hasta" va siempre
-	        sql=sql+" and sent_date<=?";
+	        sql=sql+" and received_date<=?";
 	        sql=sql+";";
 	       
 	        PreparedStatement query = conector.getConnection().prepareStatement(sql);
@@ -180,3 +180,4 @@ public class NotificationDAO implements INotificationDAO {
 
 
 }
+
