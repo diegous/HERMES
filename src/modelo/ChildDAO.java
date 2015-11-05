@@ -83,5 +83,10 @@ public class ChildDAO implements IDAO<Child> {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public String getByID(int int1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

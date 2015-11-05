@@ -9,10 +9,10 @@ public class Notification {
 	private Context context;
 	private Category category;
 	private Date sent, recieved;
-	private Tag tag;
+	private String tag;
 	private Pictogram pictogram;
 	
-	public Notification(int id, Child child, Context context, Category category, Tag tag, Pictogram pictogram, Date sent, Date recieved){
+	public Notification(int id, Child child, Context context, Category category, String tag, Pictogram pictogram, Date sent, Date recieved){
 		this.id = id;
 		this.child = child;
 		this.context = context;
@@ -57,9 +57,9 @@ public class Notification {
 
 	public void setRecieved(Date recieved) {this.recieved = recieved;}
 
-	public Tag getTag() {return tag;}
+	public String getTag() {return tag;}
 
-	public void setTag(Tag tag) {this.tag = tag;}
+	public void setTag(String tag) {this.tag = tag;}
 
 	public Pictogram getPictogram() {return pictogram;}
 

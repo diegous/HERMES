@@ -87,6 +87,11 @@ public class ContextDAO implements IDAO<Context>{
 				// TODO Auto-generated method stub
 				
 			}
+			@Override
+			public String getByID(int int1) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 			
 	
 

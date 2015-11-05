@@ -1,6 +1,6 @@
-{"child":"pepito", "context":"Pista","category":"Emociones","sent":1111111100011111,  "tag":"infeliz","pictogram":"Triste"}
-{"child":"pepito69","context":"Casa" ,"category":"Emociones","sent":111111111111881111,"tag":"wiii",   "pictogram":"Triste"}
-{"child":"SUPER", "context":"Pista","category":"Emociones","sent":1111111111111111,  "tag":"infeliz","pictogram":"Alegre"}
-{"child":"uuuuu","context":"Casa" ,"category":"Emociones","sent":1111111231111111,  "tag":"infeliz","pictogram":"Alegre"}
-{"child":"petra7777","context":"Pista","category":"Emociones","sent":11111111111112341, "tag":"xxuu",    "pictogram":"Triste"}
-{"child":"S","context":"S","category":"S","sent":66666666666666, "tag":"S",    "pictogram":"S"}
+{"child":"Alex", "context":"Pista","category":"Emociones","sent":1111111100011111,"pictogram":"Entusiasmado"}
+{"child":"Juan","context":"Hogar" ,"category":"Alimentos","sent":111111111111881111,"pictogram":"Alegre"}
+{"child":"Ana", "context":"Pista","category":"Emociones","sent":1111111111111111, "pictogram":"Alegre"}
+{"child":"Diego","context":"Hogar" ,"category":"Actividades y Paseos","sent":1111111231111111,"pictogram":"Entusiasmado"}
+{"child":"Facundo","context":"Pista","category":"Emociones","sent":11111111111112341, "pictogram":"Molesto"}
+{"child":"Noelia","context":"Establo-Terapia","category":"Predeterminada","sent":66666666666666,"pictogram":"Molesto"}

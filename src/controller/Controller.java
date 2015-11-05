@@ -20,7 +20,6 @@ public class Controller {
 				jchild     = (String) jArray.get("child"),
 				jcontext   = (String) jArray.get("context"),
 				jcategory  = (String) jArray.get("category"),
-				jtag       = (String) jArray.get("tag"),
 				jpictogram = (String) jArray.get("pictogram");
 			
 			long
@@ -48,13 +47,6 @@ public class Controller {
 				frame.addCategory(category.getDescription());
 			}
 
-			Tag tag = FactoriaDAO.getTagDAO().getByText(jtag);
-			if (tag == null){
-				FactoriaDAO.getTagDAO().save(new Tag(-1, jtag));
-				tag = FactoriaDAO.getTagDAO().getByText(jtag);
-				frame.addTag(tag);
-			}
-
 			Pictogram pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
 			if (pictogram == null){
 				System.out.println(jpictogram);
@@ -66,7 +58,7 @@ public class Controller {
 			Date sent = new Date(jsent);
 			Date recieved = new Date();
 			
-			Notification notification = new Notification(-1,child,context,category,tag,pictogram,sent,recieved);
+			Notification notification = new Notification(-1,child,context,category, null,pictogram,sent,recieved);
 			
 			FactoriaDAO.getNotificationDAO().save(notification);
 			

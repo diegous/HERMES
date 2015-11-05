@@ -84,6 +84,11 @@ public class CategoryDAO implements IDAO<Category> {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public String getByID(int int1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

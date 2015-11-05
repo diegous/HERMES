@@ -29,7 +29,7 @@ public class NotificationDAO implements INotificationDAO {
 			preparedStatement.setInt(1, n.getCategory().getId());
 			preparedStatement.setInt(2, n.getChild().getId());
 			preparedStatement.setInt(3, n.getContext().getId());
-			preparedStatement.setInt(4, n.getTag().getId());
+			preparedStatement.setInt(4, 0);
 			preparedStatement.setInt(5, n.getPictogram().getId());
 			preparedStatement.setLong(6, n.getSent().getTime());
 			preparedStatement.setLong(7, n.getRecieved().getTime());
@@ -90,7 +90,7 @@ public class NotificationDAO implements INotificationDAO {
 		        			new Child(result.getInt("id_child"), result.getString("name")),
 		        			new Context(result.getInt("id_context"), result.getString("Dcontext")),
 		        			new Category(result.getInt("id_category"), result.getString("Dcategory")),
-		        			new Tag(result.getInt("id_tag"), result.getString("Dtag")),
+		        			FactoriaDAO.getNotificatioTagDAO().getList(result.getInt("id_notification")),
 		        			new Pictogram(result.getInt("id_pictogram"), result.getString("content")),
 		        			new Date(result.getLong("sent_date")),
 		        			new Date (result.getLong("received_date"))
@@ -145,7 +145,7 @@ public class NotificationDAO implements INotificationDAO {
 	        													 new Child(result.getInt("id_child"), result.getString("name")),
 	        													 new Context(result.getInt("id_context"), result.getString("Dcontext")),
 	        													 new Category(result.getInt("id_category"), result.getString("Dcategory")),
-	        													 new Tag(result.getInt("id_tag"), result.getString("Dtag")),
+	        													 FactoriaDAO.getNotificatioTagDAO().getList(result.getInt("id_notification")),
 	        													 new Pictogram(result.getInt("id_pictogram"), result.getString("content")),
 	        													 new Date(result.getLong("sent_date")),
 	        													 new Date (result.getLong("received_date"))));}
