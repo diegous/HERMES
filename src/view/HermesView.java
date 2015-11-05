@@ -581,23 +581,18 @@ public class HermesView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Notification> n = this.viewInfo.getFilter().filtar();
-					int filas=this.modelo.getRowCount();
-					for (int i = 0;filas>i; i++) {
-						this.modelo.removeRow(0);
-					}
-					
-					SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
-					for (Notification temp : n) {
-						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag(),Integer.toString(temp.getId()) };
-						this.modelo.addRow(row);
-					}
-					
-					
-					
-				
-				
+				int filas=this.modelo.getRowCount();
+				for (int i = 0;filas>i; i++) {
+					this.modelo.removeRow(0);
+				}
+				System.out.println(n.size());
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
+				for (Notification temp : n) {
+					String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag(),Integer.toString(temp.getId()) };
+					this.modelo.addRow(row);
+				}
 			}
-			}.init(this.viewInfo, modelo));
+		}.init(this.viewInfo, modelo));
 		
 		
 		
