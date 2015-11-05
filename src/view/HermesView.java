@@ -61,33 +61,16 @@ public class HermesView extends JFrame {
 	
 	
 	public void repaintComboBoxes(){
-		this.comboNino.removeAllItems();
-		comboNino.addItem("Todo");
-		for (Child temp : viewInfo.getChild()) {
-			comboNino.addItem(temp.getName());
-		}
+		this.viewInfo.setTag(FactoriaDAO.getTagDAO().getList());
 		
-		this.comboContext.removeAllItems();
-		comboContext.addItem("Todo");
-		for (Context temp : viewInfo.getContext()) {
-			comboContext.addItem(temp.getDescription());
-		}
 		
-		this.comboCategory.removeAllItems();
-		comboCategory.addItem("Todo");
-		for (Category temp : viewInfo.getCategory()) {
-			comboCategory.addItem(temp.getDescription());
-		}
+		
+		
 		
 		this.comboEtiqueta.removeAllItems();
+		comboNino.addItem("Todo");
 		for (Tag temp : viewInfo.getTag()) {
 			comboEtiqueta.addItem(temp);
-		}
-		
-		this.comboContenido.removeAllItems();
-		comboContenido.addItem("Todo");
-		for (Pictogram temp : viewInfo.getPictogram()) {
-			comboContenido.addItem(temp.getContent());
 		}
 		
 		this.comboRenombrarEtiqueta.removeAllItems();
@@ -743,7 +726,7 @@ public class HermesView extends JFrame {
 		gbc_lblRenombrarEtiqueta.gridy = 7;
 		Etiquetas.add(lblRenombrarEtiqueta, gbc_lblRenombrarEtiqueta);
 		
-		JComboBox<String> comboRenombrarEtiqueta = new JComboBox<String>();
+		comboRenombrarEtiqueta = new JComboBox<String>();
 		
 		for (Tag temp : viewInfo.getTag()) {
 			comboRenombrarEtiqueta.addItem(temp.getDescription());
@@ -803,7 +786,7 @@ public class HermesView extends JFrame {
 			private MonitorInformation viewInfo;
 			private JComboBox<String> comboRenombrarEtiqueta;
 			private JComboBox<String> comboAsignarEtiqueta;
-			private JComboBox<Tag> comboEliminarEtiqueta;
+			//private JComboBox<Tag> comboEliminarEtiqueta;
 			private JComboBox<Tag> comboEtiqueta;
 			private DefaultTableModel modelo;
 			private JTextField input;
@@ -812,7 +795,7 @@ public class HermesView extends JFrame {
 				this.viewInfo=viewInfo;
 				this.comboRenombrarEtiqueta=renombrar;
 				this.comboAsignarEtiqueta=asignar;
-				this.comboEliminarEtiqueta=eliminar;
+				//this.comboEliminarEtiqueta=eliminar;
 				this.comboEtiqueta=comboEtiqueta;
 				this.modelo=modelo;
 				this.input=input;
