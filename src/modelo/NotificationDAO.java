@@ -49,16 +49,18 @@ public class NotificationDAO implements INotificationDAO {
 		try {
 			
 			//CONSULTA
-			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, sent_date, received_date" 
+			String sql="SELECT  n.id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, sent_date, received_date, nt.id_tag " 
 					+" FROM notification as n inner join category as cat on (n.id_category=cat.id_category)" 
 	                   +" inner join child as c on (n.id_child=c.id_child)" 
 	                   +" inner join context as cont on (n.id_context=cont.id_context)" 
 	                   +" inner join pictogram as p on (n.id_pictogram=p.id_pictogram)"
+	                   +" left join notificationtag as nt on (n.id_notification=nt.id_notification)"
 	                   +" WHERE 1=1";
 	        if(f.getCategory() != "Todo"){sql=sql+" and cat.description=?";}
 	        if(f.getChild() != "Todo"){sql=sql+" and name=?";}
 	        if(f.getContext() != "Todo"){sql=sql+" and cont.description=?";}
 	        if(f.getPictogram() != "Todo"){sql=sql+" and p.content=?";}
+	        if(f.getTag() != "Todo"){sql=sql+" and nt.id_tag=?";}
 	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
 	        //La fecha "hasta" va siempre
 	        sql=sql+" and received_date<=?";
@@ -72,6 +74,11 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getChild() != "Todo"){query.setString(i, f.getChild()); i++;}
 	        if(f.getContext() != "Todo"){query.setString(i, f.getContext()); i++;}
 	        if(f.getPictogram() != "Todo"){query.setString(i, f.getPictogram()); i++;}
+	        if(f.getTag() != "Todo"){
+	        	Integer id = FactoriaDAO.getTagDAO().getByText(f.getTag()).getId();
+	        	query.setInt(i, id);
+	        	i++;
+	        }
 	        if(f.getSince() != 0){query.setLong(i, f.getSince()); i++;}
 	        //La fecha "hasta" de búsqueda va siempre
 	        // Hay que sumarle 86400000 (un día en milisegundos) para que la busqueda incluya al dia seleccionado 

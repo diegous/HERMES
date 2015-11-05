@@ -195,11 +195,9 @@ public class HermesView extends JFrame {
 					public void mouseClicked(MouseEvent e) {
 				        int fila = table.rowAtPoint(e.getPoint());
 				        if ((fila > -1))
-				        { System.out.println(fila);
-				        System.out.println(table.getModel().getValueAt(fila,6));
-				        	this.viewInfo.setSelectNotification(
-				        			table.getModel().getValueAt(fila,6).toString());}
-				    }
+				        {this.viewInfo.setSelectNotification(
+				        table.getModel().getValueAt(fila,6).toString());}
+				    	}
 					
 					public MouseAdapter init(MonitorInformation viewInfo) {
 						this.viewInfo=viewInfo;
@@ -564,23 +562,17 @@ public class HermesView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Notification> n = this.viewInfo.getFilter().filtar();
-					int filas=this.modelo.getRowCount();
-					for (int i = 0;filas>i; i++) {
-						this.modelo.removeRow(0);
-					}
-					
-					SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
-					for (Notification temp : n) {
-						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag(),Integer.toString(temp.getId()) };
-						this.modelo.addRow(row);
-					}
-					
-					
-					
-				
-				
+				int filas=this.modelo.getRowCount();
+				for (int i = 0;filas>i; i++) {
+					this.modelo.removeRow(0);
+				}
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
+				for (Notification temp : n) {
+					String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag(),Integer.toString(temp.getId()) };
+					this.modelo.addRow(row);
+				}
 			}
-			}.init(this.viewInfo, modelo));
+		}.init(this.viewInfo, modelo));
 		
 		
 		
@@ -679,7 +671,7 @@ public class HermesView extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(this.viewInfo.getSelectNotification()!=null){
+				if(this.viewInfo.getSelectNotification()!=null && this.viewInfo.getSelectAsignar()!=null){
 					FactoriaDAO.getNotificatioTagDAO().save(Integer.parseInt(this.viewInfo.getSelectNotification()), FactoriaDAO.getTagDAO().getByText(this.viewInfo.getSelectAsignar()).getId());
 				}
 						
@@ -824,7 +816,7 @@ public class HermesView extends JFrame {
 					}
 					
 					/*
-					if(comboEliminarEtiqueta==null) System.out.println();
+					if(comboEliminarEtiqueta==null)
 					this.comboEliminarEtiqueta.removeAllItems();
 					for (Tag temp : viewInfo.getTag()) {
 						comboEliminarEtiqueta.addItem(temp);
