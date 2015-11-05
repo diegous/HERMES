@@ -7,4 +7,5 @@ public interface IDAO<T> {
 	public T getByText(String text);
 	public void save(T t);
 	public void delete(T selectDelete);
+	public void modify(String selectModify, String string);
 }

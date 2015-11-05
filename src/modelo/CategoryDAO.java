@@ -79,5 +79,11 @@ public class CategoryDAO implements IDAO<Category> {
 		
 	}
 	
+	@Override
+	public void modify(String selectModify, String string) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 }

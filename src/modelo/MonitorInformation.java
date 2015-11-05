@@ -17,7 +17,6 @@ public class MonitorInformation {
 	private String selectAsignar;
 	private String selectModify;
 	private String selectNotification;
-	private String selectRename;
 	private Tag selectDelete;
 
 
@@ -27,7 +26,7 @@ public class MonitorInformation {
 	public MonitorInformation(List<Child> child, List<Context> context, List<Category> category, List<Tag> tag, List<Pictogram> content, List<Notification> notification, Filter filter){
 		this.selectDelete=null;
 		this.selectNotification=null;
-		this.selectRename =null;
+		this.selectModify =null;
 		this.selectAsignar="   ";
 		this.child=child;
 		this.context=context;
@@ -39,7 +38,12 @@ public class MonitorInformation {
 	}
 	
 	
+	public String getSelectModify() {return selectModify;}
 
+
+
+
+	public void setSelectModify(String selectModify) {this.selectModify = selectModify;}
 	
 	public String getSelectNotification() {return selectNotification;}
 
@@ -80,13 +84,13 @@ public class MonitorInformation {
 	public void setNotification(List<Notification> notification){this.notification = notification;}
 	
 	public Filter getFilter() {return filter;}
-	
-	public String getSelectRename() {return selectRename;}
-	
-	public void setSelectRename(String selectRename) {this.selectRename = selectRename;}
 
 	public void deleteTag(Tag string) {
 		tag.remove(string);
+	}
+	
+	public void setTag(List<Tag> l){
+		this.tag=l;
 	}
 
 }

@@ -96,5 +96,23 @@ public class TagDAO implements IDAO<Tag> {
 			finally{conector.close();}
 		}
 	}
-
+	@Override
+	public void modify(String modify, String original) {
+		DBConector conector = new DBConector();
+		conector.connect();
+		try {
+				String sql =  "UPDATE tag SET description=? WHERE id_tag=? ";
+				PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
+				preparedStatement.setString(1, modify);
+				preparedStatement.setInt(2, this.getByText(original).getId());
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				
+			} 
+			catch (SQLException e) {e.printStackTrace();}
+			finally{conector.close();}
+		}
+		
 }
+
+

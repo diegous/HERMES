@@ -78,5 +78,11 @@ public class PictogramDAO implements IDAO<Pictogram> {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void modify(String selectModify, String string) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

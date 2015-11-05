@@ -82,6 +82,12 @@ public class ContextDAO implements IDAO<Context>{
 				
 			}
 			
+			@Override
+			public void modify(String selectModify, String string) {
+				// TODO Auto-generated method stub
+				
+			}
+			
 	
 
 }
