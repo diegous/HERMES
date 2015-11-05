@@ -1045,12 +1045,14 @@ public class HermesView extends JFrame {
 				    }
 					public void actionPerformed(ActionEvent e) {
 						if(this.input.getText().length()>0){
-							FactoriaDAO.getTagDAO().save(new Tag(0, this.input.getText()));
-							Tag newTag = FactoriaDAO.getTagDAO().getByText(input.getText());
-							this.comboRenombrarEtiqueta.addItem(this.input.getText());
-							this.comboAsignarEtiqueta.addItem(this.input.getText());
-							this.comboEliminarEtiqueta.addItem(newTag);
-							this.comboEtiqueta.addItem(newTag);
+							if(FactoriaDAO.getTagDAO().getByText(this.input.getText())==null){
+								FactoriaDAO.getTagDAO().save(new Tag(0, this.input.getText()));
+								Tag newTag = FactoriaDAO.getTagDAO().getByText(input.getText());
+								this.comboRenombrarEtiqueta.addItem(this.input.getText());
+								this.comboAsignarEtiqueta.addItem(this.input.getText());
+								this.comboEliminarEtiqueta.addItem(newTag);
+								this.comboEtiqueta.addItem(newTag);
+							}
 							this.input.setText(null);
 						}
 					}
