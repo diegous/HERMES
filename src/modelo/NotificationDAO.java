@@ -24,15 +24,14 @@ public class NotificationDAO implements INotificationDAO {
 		DBConector conector = new DBConector();
 		conector.connect();
 		try {
-			String sql = "INSERT INTO notification (id_category,id_child,id_context, id_tag, id_pictogram,sent_date, received_date) VALUES (?,?,?,?,?,?,?);";
+			String sql = "INSERT INTO notification (id_category,id_child,id_context, id_pictogram,sent_date, received_date) VALUES (?,?,?,?,?,?);";
 			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
 			preparedStatement.setInt(1, n.getCategory().getId());
 			preparedStatement.setInt(2, n.getChild().getId());
 			preparedStatement.setInt(3, n.getContext().getId());
-			preparedStatement.setInt(4, 0);
-			preparedStatement.setInt(5, n.getPictogram().getId());
-			preparedStatement.setLong(6, n.getSent().getTime());
-			preparedStatement.setLong(7, n.getRecieved().getTime());
+			preparedStatement.setInt(4, n.getPictogram().getId());
+			preparedStatement.setLong(5, n.getSent().getTime());
+			preparedStatement.setLong(6, n.getRecieved().getTime());
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		} 
@@ -50,18 +49,16 @@ public class NotificationDAO implements INotificationDAO {
 		try {
 			
 			//CONSULTA
-			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, t.id_tag, t.description as Dtag, sent_date, received_date" 
+			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, sent_date, received_date" 
 					+" FROM notification as n inner join category as cat on (n.id_category=cat.id_category)" 
 	                   +" inner join child as c on (n.id_child=c.id_child)" 
 	                   +" inner join context as cont on (n.id_context=cont.id_context)" 
 	                   +" inner join pictogram as p on (n.id_pictogram=p.id_pictogram)"
-	                   +" inner join tag as t on (n.id_tag=t.id_tag)"
 	                   +" WHERE 1=1";
 	        if(f.getCategory() != "Todo"){sql=sql+" and cat.description=?";}
 	        if(f.getChild() != "Todo"){sql=sql+" and name=?";}
 	        if(f.getContext() != "Todo"){sql=sql+" and cont.description=?";}
 	        if(f.getPictogram() != "Todo"){sql=sql+" and p.content=?";}
-	        if(f.getTag() != "Todo"){sql=sql+" and t.description=?";}
 	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
 	        //La fecha "hasta" va siempre
 	        sql=sql+" and received_date<=?";
@@ -75,7 +72,6 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getChild() != "Todo"){query.setString(i, f.getChild()); i++;}
 	        if(f.getContext() != "Todo"){query.setString(i, f.getContext()); i++;}
 	        if(f.getPictogram() != "Todo"){query.setString(i, f.getPictogram()); i++;}
-	        if(f.getTag() != "Todo"){query.setString(i, f.getTag()); i++;}
 	        if(f.getSince() != 0){query.setLong(i, f.getSince()); i++;}
 	        //La fecha "hasta" de búsqueda va siempre
 	        // Hay que sumarle 86400000 (un día en milisegundos) para que la busqueda incluya al dia seleccionado 
@@ -130,12 +126,12 @@ public class NotificationDAO implements INotificationDAO {
 		conector.connect();
 		List<Notification> resultList = new ArrayList<Notification>();
 		try {
-			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, t.id_tag, t.description as Dtag, sent_date, received_date" 
+			String sql="SELECT  id_notification, cat.id_category, cat.description as Dcategory, c.id_child, name, cont.id_context, cont.description as Dcontext, p.id_pictogram, p.content, sent_date, received_date" 
 					+" FROM notification as n inner join category as cat on (n.id_category=cat.id_category)" 
 	                   +" inner join child as c on (n.id_child=c.id_child)" 
 	                   +" inner join context as cont on (n.id_context=cont.id_context)" 
-	                   +" inner join pictogram as p on (n.id_pictogram=p.id_pictogram)"
-	                   +" inner join tag as t on (n.id_tag=t.id_tag);";
+	                   +" inner join pictogram as p on (n.id_pictogram=p.id_pictogram);";
+	                 
 
 		   PreparedStatement query = conector.getConnection().prepareStatement(sql);
 	       ResultSet result = query.executeQuery();

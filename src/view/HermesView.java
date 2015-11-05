@@ -697,12 +697,8 @@ public class HermesView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(this.viewInfo.getSelectNotification()!=null){
-					if(this.viewInfo.getSelectAsignar().length()==3){
-						FactoriaDAO.getNotificatioTagDAO().save(Integer.parseInt(this.viewInfo.getSelectNotification()), FactoriaDAO.getTagDAO().getByText("   ").getId());
-					}
-					else{
-						FactoriaDAO.getNotificatioTagDAO().save(Integer.parseInt(this.viewInfo.getSelectNotification()), FactoriaDAO.getTagDAO().getByText(this.viewInfo.getSelectAsignar()).getId());
-					}
+					FactoriaDAO.getNotificatioTagDAO().save(Integer.parseInt(this.viewInfo.getSelectNotification()), FactoriaDAO.getTagDAO().getByText(this.viewInfo.getSelectAsignar()).getId());
+				}
 						
 				
 					List<Notification> n = this.viewInfo.getFilter().filtar();
@@ -718,7 +714,7 @@ public class HermesView extends JFrame {
 					}	
 					
 			
-				}						
+									
 			}
 			}.init(this.viewInfo, modelo));
 		
@@ -844,12 +840,12 @@ public class HermesView extends JFrame {
 						comboEtiqueta.addItem(temp);
 					}
 					
-					
-					if(comboEliminarEtiqueta==null) System.out.println("es null");
+					/*
+					if(comboEliminarEtiqueta==null) System.out.println();
 					this.comboEliminarEtiqueta.removeAllItems();
 					for (Tag temp : viewInfo.getTag()) {
 						comboEliminarEtiqueta.addItem(temp);
-					}
+					}*/
 				
 					
 					List<Notification> n = this.viewInfo.getFilter().filtar();
