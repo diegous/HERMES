@@ -692,21 +692,23 @@ public class HermesView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(this.viewInfo.getSelectNotification()!=null){
-					FactoriaDAO.getNotificatioTagDAO().save(Integer.parseInt(this.viewInfo.getSelectNotification()), FactoriaDAO.getTagDAO().getByText(this.viewInfo.getSelectAsignar()).getId());
+					String n = this.viewInfo.getSelectNotification();
+					Tag t = FactoriaDAO.getTagDAO().getByText(this.viewInfo.getSelectAsignar());
+					FactoriaDAO.getNotificatioTagDAO().save(Integer.parseInt(n), t.getId());
 				}
-						
+			
+				List<Notification> n = this.viewInfo.getFilter().filtar();
+				int filas=this.modelo.getRowCount();
+				for (int i = 0;filas>i; i++) {
+					this.modelo.removeRow(0);
+				}
 				
-					List<Notification> n = this.viewInfo.getFilter().filtar();
-					int filas=this.modelo.getRowCount();
-					for (int i = 0;filas>i; i++) {
-						this.modelo.removeRow(0);
-					}
-					
-					SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
-					for (Notification temp : n) {
-						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag(),Integer.toString(temp.getId()) };
-						this.modelo.addRow(row);
-					}	
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
+				for (Notification temp : n) {
+					String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag(),Integer.toString(temp.getId()) };
+					this.modelo.addRow(row);
+					System.out.println(temp);
+				}	
 					
 			
 									

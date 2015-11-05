@@ -64,6 +64,7 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
 	        //La fecha "hasta" va siempre
 	        sql=sql+" and received_date<=?";
+	        sql=sql+" GROUP BY n.id_notification";
 	        sql=sql+";";
 	       
 	        PreparedStatement query = conector.getConnection().prepareStatement(sql);
