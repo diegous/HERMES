@@ -61,46 +61,32 @@ public class HermesView extends JFrame {
 	
 	
 	public void repaintComboBoxes(){
-		this.comboNino.removeAllItems();
-		comboNino.addItem("Todo");
-		for (Child temp : viewInfo.getChild()) {
-			comboNino.addItem(temp.getName());
-		}
+		this.viewInfo.setTag(FactoriaDAO.getTagDAO().getList());
 		
-		this.comboContext.removeAllItems();
-		comboContext.addItem("Todo");
-		for (Context temp : viewInfo.getContext()) {
-			comboContext.addItem(temp.getDescription());
-		}
 		
-		this.comboCategory.removeAllItems();
-		comboCategory.addItem("Todo");
-		for (Category temp : viewInfo.getCategory()) {
-			comboCategory.addItem(temp.getDescription());
-		}
+		
+		
 		
 		this.comboEtiqueta.removeAllItems();
+		comboNino.addItem("Todo");
 		for (Tag temp : viewInfo.getTag()) {
 			comboEtiqueta.addItem(temp);
 		}
 		
-		this.comboContenido.removeAllItems();
-		comboContenido.addItem("Todo");
-		for (Pictogram temp : viewInfo.getPictogram()) {
-			comboContenido.addItem(temp.getContent());
-		}
-		
 		this.comboRenombrarEtiqueta.removeAllItems();
+		comboRenombrarEtiqueta.addItem(null);
 		for (Tag temp : viewInfo.getTag()) {
 			comboRenombrarEtiqueta.addItem(temp.getDescription());
 		}
 		
 		this.comboAsignarEtiqueta.removeAllItems();
+		comboAsignarEtiqueta.addItem(null);
 		for (Tag temp : viewInfo.getTag()) {
 			comboAsignarEtiqueta.addItem(temp.getDescription());
 		}
 		
 		this.comboEliminarEtiqueta.removeAllItems();
+		comboEliminarEtiqueta.addItem(null);
 		for (Tag temp : viewInfo.getTag()) {
 			comboEliminarEtiqueta.addItem(temp);
 		}
@@ -212,11 +198,9 @@ public class HermesView extends JFrame {
 					public void mouseClicked(MouseEvent e) {
 				        int fila = table.rowAtPoint(e.getPoint());
 				        if ((fila > -1))
-				        { System.out.println(fila);
-				        System.out.println(table.getModel().getValueAt(fila,6));
-				        	this.viewInfo.setSelectNotification(
-				        			table.getModel().getValueAt(fila,6).toString());}
-				    }
+				        {this.viewInfo.setSelectNotification(
+				        table.getModel().getValueAt(fila,6).toString());}
+				    	}
 					
 					public MouseAdapter init(MonitorInformation viewInfo) {
 						this.viewInfo=viewInfo;
@@ -585,7 +569,6 @@ public class HermesView extends JFrame {
 				for (int i = 0;filas>i; i++) {
 					this.modelo.removeRow(0);
 				}
-				System.out.println(n.size());
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 				for (Notification temp : n) {
 					String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag(),Integer.toString(temp.getId()) };
@@ -647,6 +630,7 @@ public class HermesView extends JFrame {
 		Etiquetas.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		comboAsignarEtiqueta = new JComboBox<String>();
+		comboAsignarEtiqueta.addItem(null);
 		for (Tag temp : viewInfo.getTag()) {
 			comboAsignarEtiqueta.addItem(temp.getDescription());
 		}
@@ -691,26 +675,28 @@ public class HermesView extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(this.viewInfo.getSelectNotification()!=null){
+
+				if(this.viewInfo.getSelectNotification()!=null && this.viewInfo.getSelectAsignar()!=null){
 					String n = this.viewInfo.getSelectNotification();
 					Tag t = FactoriaDAO.getTagDAO().getByText(this.viewInfo.getSelectAsignar());
 					FactoriaDAO.getNotificatioTagDAO().save(Integer.parseInt(n), t.getId());
+//					this.viewInfo.setSelectAsignar(null);
+//					this.viewInfo.setSelectNotification(null);
+					
 				}
 			
 				List<Notification> n = this.viewInfo.getFilter().filtar();
 				int filas=this.modelo.getRowCount();
 				for (int i = 0;filas>i; i++) {
 					this.modelo.removeRow(0);
+
 				}
 				
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 				for (Notification temp : n) {
 					String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag(),Integer.toString(temp.getId()) };
 					this.modelo.addRow(row);
-					System.out.println(temp);
-				}	
-					
-			
+				}
 									
 			}
 			}.init(this.viewInfo, modelo));
@@ -740,8 +726,8 @@ public class HermesView extends JFrame {
 		gbc_lblRenombrarEtiqueta.gridy = 7;
 		Etiquetas.add(lblRenombrarEtiqueta, gbc_lblRenombrarEtiqueta);
 		
-		JComboBox<String> comboRenombrarEtiqueta = new JComboBox<String>();
-		
+		comboRenombrarEtiqueta = new JComboBox<String>();
+		comboRenombrarEtiqueta.addItem(null);		
 		for (Tag temp : viewInfo.getTag()) {
 			comboRenombrarEtiqueta.addItem(temp.getDescription());
 		}
@@ -800,7 +786,7 @@ public class HermesView extends JFrame {
 			private MonitorInformation viewInfo;
 			private JComboBox<String> comboRenombrarEtiqueta;
 			private JComboBox<String> comboAsignarEtiqueta;
-			private JComboBox<Tag> comboEliminarEtiqueta;
+			//private JComboBox<Tag> comboEliminarEtiqueta;
 			private JComboBox<Tag> comboEtiqueta;
 			private DefaultTableModel modelo;
 			private JTextField input;
@@ -809,23 +795,25 @@ public class HermesView extends JFrame {
 				this.viewInfo=viewInfo;
 				this.comboRenombrarEtiqueta=renombrar;
 				this.comboAsignarEtiqueta=asignar;
-				this.comboEliminarEtiqueta=eliminar;
+				//this.comboEliminarEtiqueta=eliminar;
 				this.comboEtiqueta=comboEtiqueta;
 				this.modelo=modelo;
 				this.input=input;
 		        return this;
 		    }
 			public void actionPerformed(ActionEvent e) {
-				if(this.input.getText().length()>0 && this.viewInfo.getSelectModify()!=null && this.viewInfo.getSelectModify()!="   "){
+				if(this.input.getText().length()>0 && this.viewInfo.getSelectModify()!=null){
 					FactoriaDAO.getTagDAO().modify(this.input.getText() , this.viewInfo.getSelectModify());
 					this.viewInfo.setTag(FactoriaDAO.getTagDAO().getList());
 				
 					this.comboRenombrarEtiqueta.removeAllItems();
+					comboRenombrarEtiqueta.addItem(null);
 					for (Tag temp : viewInfo.getTag()) {
 						comboRenombrarEtiqueta.addItem(temp.getDescription());
 					}
 					
 					this.comboAsignarEtiqueta.removeAllItems();
+					comboAsignarEtiqueta.addItem(null);
 					for (Tag temp : viewInfo.getTag()) {
 						comboAsignarEtiqueta.addItem(temp.getDescription());
 					}
@@ -838,7 +826,7 @@ public class HermesView extends JFrame {
 					}
 					
 					/*
-					if(comboEliminarEtiqueta==null) System.out.println();
+					if(comboEliminarEtiqueta==null)
 					this.comboEliminarEtiqueta.removeAllItems();
 					for (Tag temp : viewInfo.getTag()) {
 						comboEliminarEtiqueta.addItem(temp);
@@ -888,9 +876,11 @@ public class HermesView extends JFrame {
 				Etiquetas.add(lblNewLabel_1, gbc_lblNewLabel_1);
 				
 				comboEliminarEtiqueta = new JComboBox<Tag>();
+				comboEliminarEtiqueta.addItem(null);
 				for (Tag temp : viewInfo.getTag()) {
 					comboEliminarEtiqueta.addItem(temp);
 				}
+				
 				GridBagConstraints gbc_comboBox_5 = new GridBagConstraints();
 				gbc_comboBox_5.fill = GridBagConstraints.HORIZONTAL;
 				gbc_comboBox_5.insets = new Insets(0, 0, 5, 5);
@@ -938,23 +928,26 @@ public class HermesView extends JFrame {
 				        return this;
 				    }
 					public void actionPerformed(ActionEvent e) {
-						if(this.viewInfo.getSelectDelete()!=null && this.viewInfo.getSelectDelete().getDescription()!=" "){
+						if(this.viewInfo.getSelectDelete()!=null){
 							FactoriaDAO.getTagDAO().delete(this.viewInfo.getSelectDelete());
 							this.viewInfo.deleteTag(this.viewInfo.getSelectDelete());
 
 							this.viewInfo.getTag().remove(this.viewInfo.getSelectDelete());
 							
 							this.comboRenombrarEtiqueta.removeAllItems();
+							comboRenombrarEtiqueta.addItem(null);
 							for (Tag temp : viewInfo.getTag()) {
 								comboRenombrarEtiqueta.addItem(temp.getDescription());
 							}
 							
 							this.comboAsignarEtiqueta.removeAllItems();
+							comboAsignarEtiqueta.addItem(null);
 							for (Tag temp : viewInfo.getTag()) {
 								comboAsignarEtiqueta.addItem(temp.getDescription());
 							}
 							
 							this.comboEliminarEtiqueta.removeAllItems();
+							comboEliminarEtiqueta.addItem(null);
 							for (Tag temp : viewInfo.getTag()) {
 								comboEliminarEtiqueta.addItem(temp);
 							}

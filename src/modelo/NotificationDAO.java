@@ -77,7 +77,7 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getPictogram() != "Todo"){query.setString(i, f.getPictogram()); i++;}
 	        if(f.getTag() != "Todo"){
 	        	Integer id = FactoriaDAO.getTagDAO().getByText(f.getTag()).getId();
-	        	query.setString(i, id.toString());
+	        	query.setInt(i, id);
 	        	i++;
 	        }
 	        if(f.getSince() != 0){query.setLong(i, f.getSince()); i++;}

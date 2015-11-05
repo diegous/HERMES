@@ -27,7 +27,7 @@ public class MonitorInformation {
 		this.selectDelete=null;
 		this.selectNotification=null;
 		this.selectModify =null;
-		this.selectAsignar="   ";
+		this.selectAsignar=null;
 		this.child=child;
 		this.context=context;
 		this.category=category;
