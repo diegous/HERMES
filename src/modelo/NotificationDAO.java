@@ -165,6 +165,9 @@ public class NotificationDAO implements INotificationDAO {
 		try {
 			String sql = "UPDATE notification SET id_tag=? WHERE id_notification=? ";
 			PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
+			if(selectAsignar==""){
+				
+			}
 			preparedStatement.setInt(1,FactoriaDAO.getTagDAO().getByText(selectAsignar).getId());
 			preparedStatement.setInt(2, Integer.parseInt(selectNotification));
 			preparedStatement.executeUpdate();

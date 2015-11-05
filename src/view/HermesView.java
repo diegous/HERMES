@@ -588,9 +588,11 @@ public class HermesView extends JFrame {
 					
 					SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
 					for (Notification temp : n) {
-						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription()};
+						String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription(),Integer.toString(temp.getId()) };
 						this.modelo.addRow(row);
-					}	
+					}
+					
+					
 					
 				
 				
@@ -695,7 +697,13 @@ public class HermesView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(this.viewInfo.getSelectNotification()!=null){
-					FactoriaDAO.getNotificationDAO().addTag( this.viewInfo.getSelectNotification(), this.viewInfo.getSelectAsignar());
+					if(this.viewInfo.getSelectAsignar().length()==3){
+						FactoriaDAO.getNotificationDAO().addTag( this.viewInfo.getSelectNotification(), "   ");
+					}
+					else{
+						FactoriaDAO.getNotificationDAO().addTag( this.viewInfo.getSelectNotification(), this.viewInfo.getSelectAsignar());
+					}
+						
 				
 					List<Notification> n = this.viewInfo.getFilter().filtar();
 					int filas=this.modelo.getRowCount();
@@ -805,7 +813,6 @@ public class HermesView extends JFrame {
 				Etiquetas.add(lblNewLabel_1, gbc_lblNewLabel_1);
 				
 				final JComboBox<Tag> comboEliminarEtiqueta = new JComboBox<Tag>();
-				comboEliminarEtiqueta.addItem(null);
 				for (Tag temp : viewInfo.getTag()) {
 					comboEliminarEtiqueta.addItem(temp);
 				}
@@ -843,12 +850,16 @@ public class HermesView extends JFrame {
 					private JComboBox<String> comboRenombrarEtiqueta;
 					private JComboBox<String> comboAsignarEtiqueta;
 					private JComboBox<Tag> comboEliminarEtiqueta;
+					private JComboBox<Tag> comboEtiqueta;
+					private DefaultTableModel modelo;
 								
-					public ActionListener init(MonitorInformation viewInfo,JComboBox<String> renombrar, JComboBox<String> asignar, JComboBox<Tag> eliminar ){
+					public ActionListener init(MonitorInformation viewInfo,DefaultTableModel modelo,JComboBox<Tag> comboEtiqueta,JComboBox<String> renombrar, JComboBox<String> asignar, JComboBox<Tag> eliminar ){
 						this.viewInfo=viewInfo;
 						this.comboRenombrarEtiqueta=renombrar;
 						this.comboAsignarEtiqueta=asignar;
 						this.comboEliminarEtiqueta=eliminar;
+						this.comboEtiqueta=comboEtiqueta;
+						this.modelo=modelo;
 				        return this;
 				    }
 					public void actionPerformed(ActionEvent e) {
@@ -872,12 +883,32 @@ public class HermesView extends JFrame {
 								comboEliminarEtiqueta.addItem(temp);
 							}
 							
+							this.comboEtiqueta.removeAllItems();
+							comboEtiqueta.addItem(new Tag(0,"Todo"));
+							for (Tag temp : viewInfo.getTag()) {
+								comboEtiqueta.addItem(temp);
+							}
+							
+							List<Notification> n = this.viewInfo.getFilter().filtar();
+							int filas=this.modelo.getRowCount();
+							for (int i = 0;filas>i; i++) {
+								this.modelo.removeRow(0);
+							}
+							
+							SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
+							for (Notification temp : n) {
+								String[] row= new String[]{dateFormat.format(temp.getSent()), temp.getPictogram().getContent(), temp.getContext().getDescription(), temp.getCategory().getDescription(), temp.getChild().getName(), temp.getTag().getDescription(),Integer.toString(temp.getId()) };
+								this.modelo.addRow(row);
+							}	
+							
+							
+							
 							this.viewInfo.setSelectDelete(null);
 							
 						}
 						
 					}
-				}.init(this.viewInfo,comboRenombrarEtiqueta,comboAsignarEtiqueta,comboEliminarEtiqueta));	
+				}.init(this.viewInfo,modelo, comboEtiqueta,comboRenombrarEtiqueta,comboAsignarEtiqueta,comboEliminarEtiqueta));	
 				
 				
 				JSeparator separator_1 = new JSeparator();
