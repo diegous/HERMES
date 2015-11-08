@@ -5,6 +5,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import entities.Category;
+import entities.Child;
+import entities.Context;
+import entities.Notification;
+import entities.Pictogram;
 import modelo.*;
 import view.HermesView;
 

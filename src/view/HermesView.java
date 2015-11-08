@@ -39,6 +39,12 @@ import org.freixas.jcalendar.DateEvent;
 import org.freixas.jcalendar.DateListener;
 import org.freixas.jcalendar.JCalendarCombo;
 
+import entities.Category;
+import entities.Child;
+import entities.Context;
+import entities.Notification;
+import entities.Pictogram;
+import entities.Tag;
 import modelo.*;
 
 import javax.swing.JTextField;

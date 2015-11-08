@@ -2,6 +2,13 @@ package modelo;
 
 import java.util.List;
 
+import entities.Category;
+import entities.Child;
+import entities.Context;
+import entities.Notification;
+import entities.Pictogram;
+import entities.Tag;
+
 public class MonitorInformation {
 	
 	private List<Child> child;

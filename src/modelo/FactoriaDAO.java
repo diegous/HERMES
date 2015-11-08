@@ -1,5 +1,11 @@
 package modelo;
 
+import entities.Category;
+import entities.Child;
+import entities.Context;
+import entities.Pictogram;
+import entities.Tag;
+
 public class FactoriaDAO {
 	
 	//SINGLETON 

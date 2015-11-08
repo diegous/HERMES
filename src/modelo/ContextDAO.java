@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.Context;
+
 public class ContextDAO implements IDAO<Context>{
 
 	//SINGLETON 

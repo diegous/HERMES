@@ -1,4 +1,4 @@
-package modelo;
+package entities;
 
 public class Pictogram {
 

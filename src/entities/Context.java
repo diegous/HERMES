@@ -1,11 +1,11 @@
-package modelo;
+package entities;
 
-public class Category {
+public class Context {
 
 	private int id;
 	private String description;
 	
-	public Category(int id, String description){
+	public Context(int id, String description){
 		this.description = description;
 		this.id = id;
 	}
@@ -22,5 +22,4 @@ public class Category {
 	public String getDescription() {return description;}
 	
 	public void setDescription(String description) {this.description = description;}
-
 }

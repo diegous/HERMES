@@ -1,4 +1,4 @@
-package modelo;
+package entities;
 
 public class Child{
 	private int id;

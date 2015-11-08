@@ -3,6 +3,8 @@ package modelo;
 import java.util.Date;
 import java.util.List;
 
+import entities.Notification;
+
 public class Filter {
 	private String child;
 	private String context;
