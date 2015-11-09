@@ -31,7 +31,6 @@ public class MainController {
 
 	
 	public static void main(String[] args){
-		
 		MonitorInformation monitor = FactoriaDAO.getMonitorInformationDAO().getMonitorInformation();
 		
 		HermesView frame = new HermesView(monitor);
@@ -41,11 +40,7 @@ public class MainController {
 
 		for(String json : getJson()){
 			controller.processIncomingJson(json, frame);
-		}					
-					
-		
-		
-		
+		}
 	}
 	
 }

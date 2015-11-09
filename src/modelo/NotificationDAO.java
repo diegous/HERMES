@@ -16,15 +16,16 @@ import entities.Tag;
 
 
 public class NotificationDAO implements INotificationDAO {
+	private String textForAll = "Todos";
 
 	//SINGLETON 
-		private static NotificationDAO notificationDAO = null;
-		private NotificationDAO(){}
-		public static NotificationDAO getNotificationDAO(){
-			if(notificationDAO ==  null){notificationDAO = new NotificationDAO();}
-			return notificationDAO;
-		}
-		
+	private static NotificationDAO notificationDAO = null;
+	private NotificationDAO(){}
+	public static NotificationDAO getNotificationDAO(){
+		if(notificationDAO ==  null)
+			notificationDAO = new NotificationDAO();
+		return notificationDAO;
+	}		
 	
 	//METHODS
 	public void save(Notification n) {
@@ -45,8 +46,7 @@ public class NotificationDAO implements INotificationDAO {
 		catch (SQLException e) {e.printStackTrace();}
 		finally{conector.close();}
 		
-	}
-	
+	}	
 	
 	@Override
 	public List<Notification> getList(Filter f) {
@@ -63,26 +63,28 @@ public class NotificationDAO implements INotificationDAO {
 	                   +" inner join pictogram as p on (n.id_pictogram=p.id_pictogram)"
 	                   +" left join notificationtag as nt on (n.id_notification=nt.id_notification)"
 	                   +" WHERE 1=1";
-	        if(f.getCategory() != "Todo"){sql=sql+" and cat.description=?";}
-	        if(f.getChild() != "Todo"){sql=sql+" and name=?";}
-	        if(f.getContext() != "Todo"){sql=sql+" and cont.description=?";}
-	        if(f.getPictogram() != "Todo"){sql=sql+" and p.content=?";}
-	        if(f.getTag() != "Todo"){sql=sql+" and nt.id_tag=?";}
+	        if(f.getCategory() != textForAll){sql=sql+" and cat.description=?";}
+	        if(f.getChild() != textForAll){sql=sql+" and name=?";}
+	        if(f.getContext() != textForAll){sql=sql+" and cont.description=?";}
+	        if(f.getPictogram() != textForAll){sql=sql+" and p.content=?";}
+	        if(f.getTag() != textForAll){sql=sql+" and nt.id_tag=?";}
 	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
 	        //La fecha "hasta" va siempre
 	        sql=sql+" and received_date<=?";
 	        sql=sql+" GROUP BY n.id_notification";
-	        sql=sql+";";
+	        sql=sql+" ORDER BY n.sent_date DESC;";
+	        
+	        System.out.println(sql);
 	       
 	        PreparedStatement query = conector.getConnection().prepareStatement(sql);
 	        
 	        //PARAMETROS
 	        int i=1;
-	        if(f.getCategory() != "Todo"){query.setString(i, f.getCategory()); i++;}
-	        if(f.getChild() != "Todo"){query.setString(i, f.getChild()); i++;}
-	        if(f.getContext() != "Todo"){query.setString(i, f.getContext()); i++;}
-	        if(f.getPictogram() != "Todo"){query.setString(i, f.getPictogram()); i++;}
-	        if(f.getTag() != "Todo"){
+	        if(f.getCategory() != textForAll){query.setString(i, f.getCategory()); i++;}
+	        if(f.getChild() != textForAll){query.setString(i, f.getChild()); i++;}
+	        if(f.getContext() != textForAll){query.setString(i, f.getContext()); i++;}
+	        if(f.getPictogram() != textForAll){query.setString(i, f.getPictogram()); i++;}
+	        if(f.getTag() != textForAll){
 	        	Integer id = FactoriaDAO.getTagDAO().getByText(f.getTag()).getId();
 	        	query.setInt(i, id);
 	        	i++;
@@ -114,9 +116,8 @@ public class NotificationDAO implements INotificationDAO {
 		} 
 		catch (SQLException e) {e.printStackTrace(); return resultList;}
 		finally{conector.close();}
-		
-		
 	}
+	
 	@Override
 	public void update(Tag selectDelete) {
 		DBConector conector = new DBConector();
@@ -130,10 +131,6 @@ public class NotificationDAO implements INotificationDAO {
 		} 
 		catch (SQLException e) {e.printStackTrace();}
 		finally{conector.close();}
-		
-
-		
-		
 	}
 	
 	public List<Notification> getList() {
@@ -145,7 +142,9 @@ public class NotificationDAO implements INotificationDAO {
 					+" FROM notification as n inner join category as cat on (n.id_category=cat.id_category)" 
 	                   +" inner join child as c on (n.id_child=c.id_child)" 
 	                   +" inner join context as cont on (n.id_context=cont.id_context)" 
-	                   +" inner join pictogram as p on (n.id_pictogram=p.id_pictogram);";
+	                   +" inner join pictogram as p on (n.id_pictogram=p.id_pictogram)"
+	       	           +" ORDER BY n.sent_date DESC;"
+	                   + ";";
 	                 
 
 		   PreparedStatement query = conector.getConnection().prepareStatement(sql);
@@ -166,9 +165,8 @@ public class NotificationDAO implements INotificationDAO {
 		} 
 		catch (SQLException e) {e.printStackTrace(); return resultList;}
 		finally{conector.close();}
-		
-		
 	}
+	
 	@Override
 	public void addTag(String selectNotification, String selectAsignar) {
 		DBConector conector = new DBConector();
@@ -187,11 +185,5 @@ public class NotificationDAO implements INotificationDAO {
 		catch (SQLException e) {e.printStackTrace();}
 		finally{conector.close();}
 	}
-	
-	
-	
-
-
-
 }
 

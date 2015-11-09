@@ -13,15 +13,17 @@ public class Filter {
 	private String tag;
 	private String pictogram;
 	
+	private String textForAll = "Todos";
+	
 	public Filter(){
 
-		this.child="Todo";
-		this.context="Todo";
-		this.category="Todo";
+		this.child=textForAll;
+		this.context=textForAll;
+		this.category=textForAll;
 		this.since=0; 
 		this.until=new Date().getTime();
-		this.tag="Todo";
-		this.pictogram="Todo";
+		this.tag=textForAll;
+		this.pictogram=textForAll;
 
 	}
 	
@@ -59,7 +61,7 @@ public class Filter {
 	
 	public void setPictogram(String pictogram) {this.pictogram = pictogram;}
 	
-	public List<Notification> filtar(){
+	public List<Notification> filter(){
 		List<Notification> n = FactoriaDAO.getNotificationDAO().getList(this);
 		return n;
 	}
