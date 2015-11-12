@@ -48,7 +48,7 @@ public class HermesView extends JFrame {
 	private JComboBox<Tag> comboTagList, comboTagRename, comboTagAssign, comboTagRemove;
 	private DefaultTableModel tableModel;
 	private MonitorInformation viewInfo;
-	private SimpleDateFormat tableDateFormat = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss");
+	private SimpleDateFormat tableDateFormat = new SimpleDateFormat("yyyy.MM.dd   HH:mm:ss");
 
 	public HermesView(MonitorInformation list) {
 //----- MODELs Initialization
@@ -191,7 +191,8 @@ public class HermesView extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int fila = table.rowAtPoint(e.getPoint());
 				if ((fila > -1)) {
-					this.viewInfo.setSelectNotification(table.getModel().getValueAt(fila, 6).toString());
+					int filaReordenada= table.convertRowIndexToModel(fila);
+					this.viewInfo.setSelectNotification(table.getModel().getValueAt(filaReordenada, 6).toString());
 				}
 			}
 
@@ -552,7 +553,7 @@ public class HermesView extends JFrame {
 		gbc_lblNuevoNombre.gridy = 8;
 		Etiquetas.add(lblNuevoNombre, gbc_lblNuevoNombre);
 
-		JTextField txtFldRenameTag = new JTextField();
+		final JTextField txtFldRenameTag = new JTextField();
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.insets = new Insets(0, 0, 0, 5);
@@ -667,7 +668,7 @@ public class HermesView extends JFrame {
 		gbc_lblNewLabel.gridy = 1;
 		Etiquetas.add(lblNewLabel, gbc_lblNewLabel);
 
-		JTextField inputCrear = new JTextField();
+		final JTextField inputCrear = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
