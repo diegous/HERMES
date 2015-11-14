@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -56,7 +57,6 @@ public class Controller {
 
 			Pictogram pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
 			if (pictogram == null){
-				System.out.println(jpictogram);
 				FactoriaDAO.getPictogramDAO().save(new Pictogram(-1, jpictogram));
 				pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
 				frame.addPictogram(pictogram);
@@ -64,12 +64,16 @@ public class Controller {
 			
 			Date sent = new Date(jsent);
 			Date recieved = new Date();
-			
+			try {
+				TimeUnit.SECONDS.sleep(3);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Notification notification = new Notification(-1,child,context,category, null,pictogram,sent,recieved);
+			frame.addNotification(notification);
 			
 			FactoriaDAO.getNotificationDAO().save(notification);
-			
-			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
