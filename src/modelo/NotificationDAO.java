@@ -72,9 +72,8 @@ public class NotificationDAO implements INotificationDAO {
 	        //La fecha "hasta" va siempre
 	        sql=sql+" and received_date<=?";
 	        sql=sql+" GROUP BY n.id_notification";
-	        sql=sql+" ORDER BY n.sent_date DESC;";
-	        
-	        System.out.println(sql);
+	        sql=sql+" ORDER BY n.sent_date DESC";
+	        sql=sql+" ;";
 	       
 	        PreparedStatement query = conector.getConnection().prepareStatement(sql);
 	        

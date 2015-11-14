@@ -19,16 +19,10 @@ public class MonitorInformation {
 	private List<Notification> notification;
 	private Filter filter;
 
-	
-
 	private String selectAsignar;
 	private String selectModify;
 	private String selectNotification;
 	private Tag selectDelete;
-
-
-	
-
 
 	public MonitorInformation(List<Child> child, List<Context> context, List<Category> category, List<Tag> tag, List<Pictogram> content, List<Notification> notification, Filter filter){
 		this.selectDelete=null;
@@ -44,11 +38,7 @@ public class MonitorInformation {
 		this.filter=filter;
 	}
 	
-	
 	public String getSelectModify() {return selectModify;}
-
-
-
 
 	public void setSelectModify(String selectModify) {this.selectModify = selectModify;}
 	

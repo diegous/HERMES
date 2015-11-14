@@ -12,12 +12,12 @@ import entities.Tag;
 public class MonitorInformationDAO implements IMonitorInformationDAO {
 	
 	//SINGLETON 
-			private static MonitorInformationDAO monitorInformationDAO = null;
-			private MonitorInformationDAO(){}
-			public static MonitorInformationDAO getMonitorInformationDAO(){
-				if(monitorInformationDAO ==  null){monitorInformationDAO = new MonitorInformationDAO();}
-				return monitorInformationDAO;
-			}
+	private static MonitorInformationDAO monitorInformationDAO = null;
+	private MonitorInformationDAO(){}
+	public static MonitorInformationDAO getMonitorInformationDAO(){
+		if(monitorInformationDAO ==  null){monitorInformationDAO = new MonitorInformationDAO();}
+		return monitorInformationDAO;
+	}
 			
 	//METHODS
 	@Override
@@ -32,6 +32,4 @@ public class MonitorInformationDAO implements IMonitorInformationDAO {
 		MonitorInformation mi = new MonitorInformation(child, context, category, tag, pictogram, notification,filter);
 		return mi;
 	}
-
-
 }

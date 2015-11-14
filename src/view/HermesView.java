@@ -49,6 +49,9 @@ public class HermesView extends JFrame {
 	private DefaultTableModel tableModel;
 	private MonitorInformation viewInfo;
 	private SimpleDateFormat tableDateFormat = new SimpleDateFormat("yyyy.MM.dd   HH:mm:ss");
+	private Boolean tableIsFiltered = false;
+	JLabel lblNewNotifications;
+	JButton btnViewAllNotifications;
 
 	public HermesView(MonitorInformation list) {
 //----- MODELs Initialization
@@ -137,21 +140,34 @@ public class HermesView extends JFrame {
 		Notificaciones.setLayout(gbl_Notificaciones);
 
 		// TITULO
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_1.setBackground(new Color(51, 102, 153));
+		JPanel panelTableTitle = new JPanel();
+		panelTableTitle.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelTableTitle.setBackground(new Color(51, 102, 153));
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.gridwidth = 3;
 		gbc_panel_1.insets = new Insets(0, 0, 10, 0);
 		gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel_1.gridx = 0;
 		gbc_panel_1.gridy = 0;
-		Notificaciones.add(panel_1, gbc_panel_1);
+		Notificaciones.add(panelTableTitle, gbc_panel_1);
 
 		JLabel lblNotificaciones = new JLabel("NOTIFICACIONES");
 		lblNotificaciones.setForeground(new Color(0, 0, 0));
 		lblNotificaciones.setFont(new Font("Cambria", Font.BOLD, 15));
-		panel_1.add(lblNotificaciones);
+		panelTableTitle.add(lblNotificaciones);
+		
+		btnViewAllNotifications = new JButton("Ver todas");
+		panelTableTitle.add(btnViewAllNotifications);
+		btnViewAllNotifications.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HermesView.this.showFullTable();
+			}
+		});
+		
+		lblNewNotifications = new JLabel("Hay nuevas notificaciones");
+		panelTableTitle.add(lblNewNotifications);
+		lblNewNotifications.setVisible(false);
 
 		// TABLA
 		tableModel = new DefaultTableModel();
@@ -160,15 +176,16 @@ public class HermesView extends JFrame {
 		for (int i = 0; i < 7; i++) {
 			tableModel.addColumn(column[i]);
 		}
-		if (viewInfo.getNotification() != null) {
-			for (Notification temp : viewInfo.getNotification()) {
-				Object[] row = new Object[] { tableDateFormat.format(temp.getSent()), temp.getPictogram(),
-						temp.getContext(), temp.getCategory(),
-						temp.getChild(), temp.getTag(), temp.getId()};
-
-				tableModel.addRow(row);
-			}
-		}
+//		if (viewInfo.getNotification() != null) {
+//			for (Notification temp : viewInfo.getNotification()) {
+//				Object[] row = new Object[] { tableDateFormat.format(temp.getSent()), temp.getPictogram(),
+//						temp.getContext(), temp.getCategory(),
+//						temp.getChild(), temp.getTag(), temp.getId()};
+//
+//				tableModel.addRow(row);
+//			}
+//		}
+		showFullTable();
 
 		final JTable table = new JTable(tableModel);
 		table.removeColumn(table.getColumnModel().getColumn(6));
@@ -419,7 +436,7 @@ public class HermesView extends JFrame {
 		});
 
 		// BOTON DEL FILTRO
-		JButton buttonFilter = new JButton("Ver");
+		JButton buttonFilter = new JButton("Filtrar");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton.gridwidth = 2;
@@ -431,6 +448,8 @@ public class HermesView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				HermesView.this.updateTable();
+				tableIsFiltered = true;
+				btnViewAllNotifications.setVisible(true);
 			}
 		});
 
@@ -587,14 +606,12 @@ public class HermesView extends JFrame {
 					comboTagRename.insertItemAt(tmp, tmpIndex);
 					comboTagAssign.insertItemAt(tmp, tmpIndex);
 					comboTagRemove.insertItemAt(tmp, tmpIndex);
-										
 
 					HermesView.this.updateTable();
 					
 					txtFldRenameTag.setText(null);
 					viewInfo.setSelectModify(null);
 				}
-
 			}
 		});
 
@@ -710,7 +727,6 @@ public class HermesView extends JFrame {
 		gbc_separator.gridx = 0;
 		gbc_separator.gridy = 2;
 		Etiquetas.add(separator, gbc_separator);
-
 	}
 
 	public void addChild(Child t) {
@@ -734,16 +750,43 @@ public class HermesView extends JFrame {
 	}
 
 	private void updateTable() {
-		List<Notification> n = viewInfo.getFilter().filter();
 		int filas = tableModel.getRowCount();
 		for (int i = 0; filas > i; i++)
 			tableModel.removeRow(0);
 
-		for (Notification temp : n) {
+		for (Notification temp : viewInfo.getFilter().filter()) {
 			Object[] row = new Object[] { tableDateFormat.format(temp.getSent()),
 					temp.getPictogram(), temp.getContext(),	temp.getCategory(), 
 					temp.getChild(), temp.getTag(),	temp.getId()};
 			tableModel.addRow(row);
 		}
+	}
+
+	private void showFullTable() {
+		btnViewAllNotifications.setVisible(false);
+		lblNewNotifications.setVisible(false);
+		tableIsFiltered = false;
+
+		int filas = tableModel.getRowCount();
+		for (int i = 0; filas > i; i++)
+			tableModel.removeRow(0);
+		
+		for (Notification temp : viewInfo.getNotification()) {
+			Object[] row = new Object[] { tableDateFormat.format(temp.getSent()), temp.getPictogram(),
+					temp.getContext(), temp.getCategory(),
+					temp.getChild(), temp.getTag(), temp.getId()};
+			tableModel.addRow(row);
+		}
+	}
+
+	public void addNotification(Notification notification) {
+		if (tableIsFiltered) {
+			lblNewNotifications.setVisible(true);
+		} else {
+			Object[] row = new Object[] { tableDateFormat.format(notification.getSent()), notification.getPictogram(),
+					notification.getContext(), notification.getCategory(),
+					notification.getChild(), notification.getTag(), notification.getId()};
+			tableModel.insertRow(0, row);
+		}		
 	}
 }

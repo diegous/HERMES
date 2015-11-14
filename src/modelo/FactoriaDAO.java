@@ -26,5 +26,5 @@ public class FactoriaDAO {
 	public static IDAO<Tag> getTagDAO(){return TagDAO.getTagDAO();}
 	public static IDAO<Pictogram> getPictogramDAO(){return PictogramDAO.getPictogramDAO();}
 	public static IMonitorInformationDAO getMonitorInformationDAO(){return MonitorInformationDAO.getMonitorInformationDAO();};
-	public static INotificatioTagDAO getNotificatioTagDAO(){ return NotificatioTagDAO.getNotificatioTagDAO();};
+	public static INotificatioTagDAO getNotificatioTagDAO(){ return NotificationTagDAO.getNotificatioTagDAO();};
 }

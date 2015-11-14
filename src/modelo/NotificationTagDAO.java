@@ -5,13 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class NotificatioTagDAO implements INotificatioTagDAO {
+public class NotificationTagDAO implements INotificatioTagDAO {
 
 	//SINGLETON 
-			private static NotificatioTagDAO notificatioTagDAO = null;
-			private NotificatioTagDAO(){}
-			public static NotificatioTagDAO getNotificatioTagDAO(){
-				if(notificatioTagDAO ==  null){notificatioTagDAO = new NotificatioTagDAO();}
+			private static NotificationTagDAO notificatioTagDAO = null;
+			private NotificationTagDAO(){}
+			public static NotificationTagDAO getNotificatioTagDAO(){
+				if(notificatioTagDAO ==  null){notificatioTagDAO = new NotificationTagDAO();}
 				return notificatioTagDAO;
 			}
 	
@@ -39,7 +39,6 @@ public class NotificatioTagDAO implements INotificatioTagDAO {
 				catch (SQLException e) {e.printStackTrace(); return tagList;}
 				finally{conector.close();}
 			}
-		
 			
 			@Override
 			public void save(int notification ,int tag ) {
@@ -68,11 +67,8 @@ public class NotificatioTagDAO implements INotificatioTagDAO {
 					} 
 					catch (SQLException e) {e.printStackTrace();}
 					finally{conector.close();}
-					
 				}
-				
 			}
-		
 			
 			private boolean existe(int notification ,int tag){
 				DBConector conector = new DBConector();
@@ -91,7 +87,6 @@ public class NotificatioTagDAO implements INotificatioTagDAO {
 				} 
 				catch (SQLException e) {e.printStackTrace();return b;}
 				finally{conector.close();}
-				
 			} 
 			
 			@Override
@@ -109,9 +104,4 @@ public class NotificatioTagDAO implements INotificatioTagDAO {
 					catch (SQLException e) {e.printStackTrace();}
 					finally{conector.close();}
 				}
-				
 			}
-			
-
-	
-

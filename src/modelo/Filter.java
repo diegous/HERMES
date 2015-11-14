@@ -16,7 +16,6 @@ public class Filter {
 	private String textForAll = "Todos";
 	
 	public Filter(){
-
 		this.child=textForAll;
 		this.context=textForAll;
 		this.category=textForAll;
@@ -24,7 +23,6 @@ public class Filter {
 		this.until=new Date().getTime();
 		this.tag=textForAll;
 		this.pictogram=textForAll;
-
 	}
 	
 	@Override
