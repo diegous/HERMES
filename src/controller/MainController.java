@@ -4,10 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.net.httpserver.HttpServer;
+
 import modelo.*;
+import server.NotificationHandler;
 import view.HermesView;
 
 public class MainController {
@@ -30,12 +34,25 @@ public class MainController {
 	}
 
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException{
+		
+		//VISTA
 		MonitorInformation monitor = FactoriaDAO.getMonitorInformationDAO().getMonitorInformation();
 		
 		HermesView frame = new HermesView(monitor);
 		frame.setVisible(true);
 		
+		//SERVIDOR
+		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+ 	    server.createContext("/", new NotificationHandler());
+    	server.setExecutor(null);
+    	server.start();
+
+		
+		
+		
+		 
+		 
 		Controller controller = new Controller();
 
 		for(String json : getJson()){
