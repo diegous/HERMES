@@ -6,6 +6,8 @@ import java.io.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import controller.Controller;
+
 public class NotificationHandler implements HttpHandler {
 	
 	@Override
@@ -16,12 +18,8 @@ public class NotificationHandler implements HttpHandler {
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
 		String inputLine;
 		StringBuffer stringBuffer = new StringBuffer();
-
 		
-		while ((inputLine = bufferedReader.readLine()) != null) {
-			System.out.println(inputLine);
-			stringBuffer.append(inputLine);
-		}
+		while ((inputLine = bufferedReader.readLine()) != null) {stringBuffer.append(inputLine);}
 		bufferedReader.close();
 
 		
@@ -35,6 +33,14 @@ public class NotificationHandler implements HttpHandler {
 		os.write(response.getBytes());
 		os.close();
 		
+		
+		//AGREGAR NOTIFICACION
+		String[] jsons = stringBuffer.toString().split("  ");
+		Controller controller = new Controller();
+		for(int i=0;i<jsons.length;i++){
+			controller.processIncomingJson(jsons[i]);
+		}
+	
 	}
 
 }
