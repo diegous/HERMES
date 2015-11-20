@@ -44,7 +44,7 @@ public class MainController {
 		
 		//SERVIDOR
 		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
- 	    server.createContext("/", new NotificationHandler());
+ 	    server.createContext("/get", new NotificationHandler());
     	server.setExecutor(null);
     	server.start();
 
