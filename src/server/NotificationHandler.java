@@ -7,14 +7,14 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import controller.Controller;
-import controller.SynchronizedNotification;
+import modelo.SynchronizerNotifications;
 
 public class NotificationHandler implements HttpHandler {
 	
-	private SynchronizedNotification sn;
+	private SynchronizerNotifications sn;
 	
-	public NotificationHandler(SynchronizedNotification sn){
-		this.sn=sn;
+	public NotificationHandler(SynchronizerNotifications sn2){
+		this.sn=sn2;
 	}
 	
 	@Override

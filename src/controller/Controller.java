@@ -12,7 +12,7 @@ import entities.Pictogram;
 import modelo.*;
 
 public class Controller {
-	public void processIncomingJson(String json, SynchronizedNotification sn){
+	public void processIncomingJson(String json, SynchronizerNotifications sn){
 		JSONParser parser = new JSONParser();
 		
 		try {
@@ -33,6 +33,7 @@ public class Controller {
 			if (child == null){
 				FactoriaDAO.getChildDAO().save(new Child(-1, jchild));
 				child = FactoriaDAO.getChildDAO().getByText(jchild);
+				sn.getChild().addElement(child);
 				
 			}
 
@@ -40,6 +41,7 @@ public class Controller {
 			if (context == null){
 				FactoriaDAO.getContextDAO().save(new Context(-1, jcontext));
 				context = FactoriaDAO.getContextDAO().getByText(jcontext);
+				sn.getContext().addElement(context);
 				
 			}
 
@@ -47,6 +49,7 @@ public class Controller {
 			if (category == null){
 				FactoriaDAO.getCategoryDAO().save(new Category(-1, jcategory));
 				category = FactoriaDAO.getCategoryDAO().getByText(jcategory);
+				sn.getCategory().addElement(category);
 				
 			}
 
@@ -54,6 +57,7 @@ public class Controller {
 			if (pictogram == null){
 				FactoriaDAO.getPictogramDAO().save(new Pictogram(-1, jpictogram));
 				pictogram = FactoriaDAO.getPictogramDAO().getByText(jpictogram);
+				sn.getPictogram().addElement(pictogram);
 				
 			}
 			
@@ -61,7 +65,7 @@ public class Controller {
 			Date recieved = new Date();
 			Notification notification = new Notification(-1,child,context,category, null,pictogram,sent,recieved);
 			FactoriaDAO.getNotificationDAO().save(notification);
-			sn.addNotification(notification);
+			sn.getNotification().addElement(notification);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
