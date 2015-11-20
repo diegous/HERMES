@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -13,7 +12,7 @@ import entities.Pictogram;
 import modelo.*;
 
 public class Controller {
-	public void processIncomingJson(String json){
+	public void processIncomingJson(String json, SynchronizedNotification sn){
 		JSONParser parser = new JSONParser();
 		
 		try {
@@ -60,13 +59,9 @@ public class Controller {
 			
 			Date sent = new Date(jsent);
 			Date recieved = new Date();
-			try {
-				TimeUnit.SECONDS.sleep(3);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			Notification notification = new Notification(-1,child,context,category, null,pictogram,sent,recieved);
 			FactoriaDAO.getNotificationDAO().save(notification);
+			sn.addNotification(notification);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

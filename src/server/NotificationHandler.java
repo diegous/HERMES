@@ -7,8 +7,15 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import controller.Controller;
+import controller.SynchronizedNotification;
 
 public class NotificationHandler implements HttpHandler {
+	
+	private SynchronizedNotification sn;
+	
+	public NotificationHandler(SynchronizedNotification sn){
+		this.sn=sn;
+	}
 	
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
@@ -38,7 +45,7 @@ public class NotificationHandler implements HttpHandler {
 		String[] jsons = stringBuffer.toString().split("  ");
 		Controller controller = new Controller();
 		for(int i=0;i<jsons.length;i++){
-			controller.processIncomingJson(jsons[i]);
+			controller.processIncomingJson(jsons[i], sn);
 		}
 	
 	}
