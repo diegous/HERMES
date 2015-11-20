@@ -56,7 +56,7 @@ public class HermesView extends JFrame {
 //----- MODELs Initialization
 		viewInfo = list;
 		String textForAll = "Todos";
-		String textForNone = "-";
+		final String textForNone = "-";
 		
 		// Child
 		comboChild = new JComboBox<Child>();
@@ -175,15 +175,6 @@ public class HermesView extends JFrame {
 		for (int i = 0; i < 7; i++) {
 			tableModel.addColumn(column[i]);
 		}
-//		if (viewInfo.getNotification() != null) {
-//			for (Notification temp : viewInfo.getNotification()) {
-//				Object[] row = new Object[] { tableDateFormat.format(temp.getSent()), temp.getPictogram(),
-//						temp.getContext(), temp.getCategory(),
-//						temp.getChild(), temp.getTag(), temp.getId()};
-//
-//				tableModel.addRow(row);
-//			}
-//		}
 		showFullTable();
 
 		final JTable table = new JTable(tableModel);
@@ -520,7 +511,7 @@ public class HermesView extends JFrame {
 		btnAsignardesasignar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (viewInfo.getSelectNotification() != null && viewInfo.getSelectAsignar() != null) {
+				if (viewInfo.getSelectNotification() != null && viewInfo.getSelectAsignar() != null && viewInfo.getSelectAsignar() != textForNone ) {
 					String n = viewInfo.getSelectNotification();
 					Tag t = FactoriaDAO.getTagDAO().getByText(viewInfo.getSelectAsignar());
 					FactoriaDAO.getNotificatioTagDAO().save(Integer.parseInt(n), t.getId());
@@ -591,7 +582,7 @@ public class HermesView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int tmpIndex = comboTagRename.getSelectedIndex();
 				
-				if (viewInfo.getSelectModify() != null && txtFldRenameTag.getText().length() > 0) {
+				if (viewInfo.getSelectModify() != null && viewInfo.getSelectModify() != textForNone && txtFldRenameTag.getText().length() > 0 && FactoriaDAO.getTagDAO().getByText(txtFldRenameTag.getText())==null) {
 					FactoriaDAO.getTagDAO().modify(txtFldRenameTag.getText(), comboTagRename.getSelectedItem().toString());
 					viewInfo.setTag(FactoriaDAO.getTagDAO().getList());
 
