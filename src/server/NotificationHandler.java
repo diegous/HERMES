@@ -11,7 +11,7 @@ public class NotificationHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		
-		/*
+		
 		InputStream is = exchange.getRequestBody();
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
 		String inputLine;
@@ -19,13 +19,16 @@ public class NotificationHandler implements HttpHandler {
 
 		
 		while ((inputLine = bufferedReader.readLine()) != null) {
+			System.out.println(inputLine);
 			stringBuffer.append(inputLine);
 		}
 		bufferedReader.close();
-*/
-		System.out.println("oooo");
+
 		
 		
+		
+		
+		//RESPUESTA
 		String response = "OK";
 		exchange.sendResponseHeaders(200, (long)response.length());
 		OutputStream os = exchange.getResponseBody();
