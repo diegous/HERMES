@@ -23,7 +23,7 @@ public class TagDAO implements IDAO<Tag> {
 
 	@Override
 	public List<Tag> getList() {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		List<Tag> resultList = new ArrayList<Tag>();
 		try {
@@ -41,7 +41,7 @@ public class TagDAO implements IDAO<Tag> {
 
 	@Override
 	public Tag getByText(String text) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		Tag tag =null;
 		try {
@@ -62,7 +62,7 @@ public class TagDAO implements IDAO<Tag> {
 
 	@Override
 	public void save(Tag t) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		try {
 			String sql = "INSERT INTO tag (description) VALUES (?);";
@@ -82,7 +82,7 @@ public class TagDAO implements IDAO<Tag> {
 	}
 	
 	public void delete(Tag selectDelete) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		if(selectDelete.getId() != 0){
 			try {
@@ -100,7 +100,7 @@ public class TagDAO implements IDAO<Tag> {
 	}
 	@Override
 	public void modify(String newText, String original) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		try {
 				String sql =  "UPDATE tag SET description=? WHERE id_tag=? ";
@@ -115,7 +115,7 @@ public class TagDAO implements IDAO<Tag> {
 	}
 	@Override
 	public String getByID(int int1) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		String tag ="";
 		try {

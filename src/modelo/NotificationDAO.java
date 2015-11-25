@@ -29,7 +29,7 @@ public class NotificationDAO implements INotificationDAO {
 	
 	//METHODS
 	public void save(Notification n) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		try {
 			String sql = "INSERT INTO notification (id_category,id_child,id_context, id_pictogram,sent_date, received_date) VALUES (?,?,?,?,?,?);";
@@ -50,7 +50,7 @@ public class NotificationDAO implements INotificationDAO {
 	
 	@Override
 	public List<Notification> getList(Filter f) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		List<Notification> resultList = new ArrayList<Notification>();
 		try {
@@ -121,7 +121,7 @@ public class NotificationDAO implements INotificationDAO {
 	
 	@Override
 	public void update(Tag selectDelete) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		try {
 			String sql = "UPDATE notification SET id_tag=0 WHERE id_tag=? ";
@@ -135,7 +135,7 @@ public class NotificationDAO implements INotificationDAO {
 	}
 	
 	public List<Notification> getList() {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		List<Notification> resultList = new ArrayList<Notification>();
 		try {
@@ -170,7 +170,7 @@ public class NotificationDAO implements INotificationDAO {
 	
 	@Override
 	public void addTag(String selectNotification, String selectAsignar) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		try {
 			String sql = "UPDATE notification SET id_tag=? WHERE id_notification=? ";

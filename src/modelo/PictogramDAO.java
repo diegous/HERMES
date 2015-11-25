@@ -22,7 +22,7 @@ public class PictogramDAO implements IDAO<Pictogram> {
 	//METHODS
 	@Override
 	public List<Pictogram> getList() {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		List<Pictogram> resultList = new ArrayList<Pictogram>();
 		try {
@@ -41,7 +41,7 @@ public class PictogramDAO implements IDAO<Pictogram> {
 
 	@Override
 	public Pictogram getByText(String text) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		Pictogram pictogram =null;
 		try {
@@ -62,7 +62,7 @@ public class PictogramDAO implements IDAO<Pictogram> {
 
 	@Override
 	public void save(Pictogram p) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		try {
 			String sql = "INSERT INTO pictogram (content) VALUES (?);";

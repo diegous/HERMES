@@ -22,7 +22,7 @@ public class ContextDAO implements IDAO<Context>{
 	//METHODS
 			@Override
 			public List<Context> getList() {
-				DBConector conector = new DBConector();
+				DBConector conector = DBConector.getDBConector();
 				conector.connect();
 				List<Context> resultList = new ArrayList<Context>();
 				try {
@@ -43,7 +43,7 @@ public class ContextDAO implements IDAO<Context>{
 			
 			@Override
 			public Context getByText(String text) {
-				DBConector conector = new DBConector();
+				DBConector conector = DBConector.getDBConector();
 				conector.connect();
 				Context context =null;
 				try {
@@ -65,7 +65,7 @@ public class ContextDAO implements IDAO<Context>{
 			
 			@Override
 			public void save(Context c) {
-				DBConector conector = new DBConector();
+				DBConector conector = DBConector.getDBConector();
 				conector.connect();
 				try {
 					String sql = "INSERT INTO context (description) VALUES (?);";

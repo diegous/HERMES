@@ -5,6 +5,14 @@ import java.sql.*;
 public class DBConector {
 	private String url = "hermes.db";
 	private Connection connection;
+	private static DBConector dbconector;
+	
+	public static DBConector getDBConector() {
+		if (null == dbconector){
+			dbconector = new DBConector();
+		}
+		return dbconector;
+	}
 
 	public void connect() {
 		try {
@@ -23,7 +31,7 @@ public class DBConector {
 		catch (SQLException ex) {System.err.println(ex);}
 	}
 
-	public Connection getConnection() {return this.connection;}
+	public synchronized Connection getConnection() {return this.connection;}
 
 	public void setConnection(Connection connection) {this.connection = connection;}
 }

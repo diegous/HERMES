@@ -18,7 +18,7 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 	//METHODS	@Override
 			@Override
 			public String getList(int id_notification) {
-				DBConector conector = new DBConector();
+				DBConector conector = DBConector.getDBConector();
 				conector.connect();
 				String tagList = "";
 				try {
@@ -42,7 +42,7 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 			
 			@Override
 			public void save(int notification ,int tag ) {
-				DBConector conector = new DBConector();
+				DBConector conector = DBConector.getDBConector();
 				conector.connect();
 				if(! this.existe(notification, tag)){
 					try {
@@ -71,7 +71,7 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 			}
 			
 			private boolean existe(int notification ,int tag){
-				DBConector conector = new DBConector();
+				DBConector conector = DBConector.getDBConector();
 				conector.connect();
 				boolean b=false;
 				try {
@@ -91,7 +91,7 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 			
 			@Override
 			public void delete(int tag) {
-				DBConector conector = new DBConector();
+				DBConector conector = DBConector.getDBConector();
 				conector.connect();
 				try {
 						String sql = "DELETE FROM notificationtag WHERE id_tag=?;";

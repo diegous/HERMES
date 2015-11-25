@@ -21,7 +21,7 @@ public class CategoryDAO implements IDAO<Category> {
 	//METHODS
 	@Override
 	public List<Category> getList() {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		List<Category> resultList = new ArrayList<Category>();
 		try {
@@ -41,7 +41,7 @@ public class CategoryDAO implements IDAO<Category> {
 	
 	@Override
 	public Category getByText(String text) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		Category category =null;
 		try {
@@ -61,7 +61,7 @@ public class CategoryDAO implements IDAO<Category> {
 	}
 	@Override
 	public void save(Category c) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		try {
 			String sql = "INSERT INTO category (description) VALUES (?);";

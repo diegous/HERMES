@@ -70,11 +70,6 @@ public class MainController {
     			Pictogram pictogram=sn.getPictogram().removeElement();
     			if(pictogram!=null){frame.addPictogram(pictogram);}
     		}
-    		try {
-				TimeUnit.SECONDS.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
     	}
 		
 	}

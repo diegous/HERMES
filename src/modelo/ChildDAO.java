@@ -22,7 +22,7 @@ public class ChildDAO implements IDAO<Child> {
 	
 	@Override
 	public List<Child> getList() {
-			DBConector conector = new DBConector();
+			DBConector conector = DBConector.getDBConector();
 			conector.connect();
 			List<Child> resultList = new ArrayList<Child>();
 			try {
@@ -39,7 +39,7 @@ public class ChildDAO implements IDAO<Child> {
 	}
 	
 	public void save(Child c) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		try {
 			String sql = "INSERT INTO child (name) VALUES (?);";
@@ -53,7 +53,7 @@ public class ChildDAO implements IDAO<Child> {
 	}
 
 	public Child getByText(String text) {
-		DBConector conector = new DBConector();
+		DBConector conector = DBConector.getDBConector();
 		conector.connect();
 		Child child =null;
 		try {

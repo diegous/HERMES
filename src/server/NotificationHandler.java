@@ -42,11 +42,9 @@ public class NotificationHandler implements HttpHandler {
 		
 		
 		//AGREGAR NOTIFICACION
-		String[] jsons = stringBuffer.toString().split("  ");
 		Controller controller = new Controller();
-		for(int i=0;i<jsons.length;i++){
-			controller.processIncomingJson(jsons[i], sn);
-		}
+		controller.processIncomingJson(stringBuffer.toString(), sn);
+		
 	
 	}
 

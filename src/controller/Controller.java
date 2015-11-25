@@ -13,10 +13,13 @@ import entities.Pictogram;
 import modelo.*;
 
 public class Controller {
+	
+	
 	public void processIncomingJson(String json, SynchronizerNotifications sn){
 		JSONArray jArray = (JSONArray) JSONValue.parse(json);
 		
 		for(int i = 0; i<jArray.size(); i++){
+			System.out.println("nueva notificacion "+ i +" "+ this);
 			JSONObject jObject = (JSONObject) jArray.get(i);
 			
 			String
