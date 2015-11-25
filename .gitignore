@@ -1,5 +1,9 @@
 /hermes.db
 
+# eclipse preferences 
+.settings/
+.settings/org.eclipse.core.resources.prefs
+
 # binaries folder
 /bin/
 

@@ -1,10 +1,13 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
 
-import com.sun.net.httpserver.HttpServer;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
 
 import entities.Category;
 import entities.Child;
@@ -12,12 +15,33 @@ import entities.Context;
 import entities.Notification;
 import entities.Pictogram;
 import modelo.*;
-import server.NotificationHandler;
+import server.ServerHandlerThread;
 import view.HermesView;
 
 public class MainController {
+	static int serverPortNumber;
+
+	public static Document getConfigFile(){
+		try {
+			File fXmlFile = new File("config.xml");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
+						
+			doc.getDocumentElement().normalize();
+			
+			return doc;
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public static void main(String[] args) throws IOException{
+		
+		// CARGAR CONFIGURACIONES
+		Document configs = getConfigFile();
+		serverPortNumber = Integer.parseInt(configs.getElementsByTagName("serverport").item(0).getTextContent());
 		
 		//VISTA
 		MonitorInformation monitor = FactoriaDAO.getMonitorInformationDAO().getMonitorInformation();
@@ -25,13 +49,11 @@ public class MainController {
 		HermesView frame = new HermesView(monitor);
 		frame.setVisible(true);
 		
-		SynchronizerNotifications sn=new SynchronizerNotifications();
+		SynchronizerNotifications sn = new SynchronizerNotifications();
 		
 		//SERVIDOR
-		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
- 	    server.createContext("/get", new NotificationHandler(sn));
-    	server.setExecutor(null);
-    	server.start();
+		ServerHandlerThread server = new ServerHandlerThread(sn, serverPortNumber); 
+		server.run();
     	
     	
     	//CONSULTA POR NOTIFICACIONES
