@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -57,6 +58,7 @@ public class MainController {
     	
     	
     	//CONSULTA POR NOTIFICACIONES
+		String ultimaFecha=monitor.getFechas().get(monitor.getFechas().size()-1).toString();
     	while(true){
     		Notification n=sn.getNotification().removeElement();
     		if(n!=null){
@@ -69,6 +71,10 @@ public class MainController {
     			if(category!=null){frame.addCategory(category);}
     			Pictogram pictogram=sn.getPictogram().removeElement();
     			if(pictogram!=null){frame.addPictogram(pictogram);}
+    			Date fecha=sn.getFecha().removeElement();
+    			if(fecha!=null && !ultimaFecha.equals(fecha.toString())){
+    				ultimaFecha=fecha.toString();
+    				frame.addFecha(fecha);}
     		}
     	}
 		

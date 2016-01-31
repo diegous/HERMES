@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -11,26 +12,28 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.Color;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
+
 import java.util.Date;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
-import org.freixas.jcalendar.DateEvent;
-import org.freixas.jcalendar.DateListener;
-import org.freixas.jcalendar.JCalendarCombo;
 
 import entities.*;
 import modelo.*;
@@ -44,6 +47,8 @@ public class HermesView extends JFrame {
 	private JComboBox<Context> comboContext;
 	private JComboBox<Category> comboCategory;
 	private JComboBox<Pictogram> comboPictogram;
+	private JComboBox<String> comboDesde;
+	private JComboBox<String> comboHasta;
 	private JComboBox<Tag> comboTagList, comboTagRename, comboTagAssign, comboTagRemove;
 	private DefaultTableModel tableModel;
 	private MonitorInformation viewInfo;
@@ -58,6 +63,23 @@ public class HermesView extends JFrame {
 		String textForAll = "Todos";
 		final String textForNone = "-";
 		
+		
+		//FECHAyHORA
+		
+				// Desde
+				comboDesde = new JComboBox<String>();
+				comboDesde.addItem(textForNone);
+				for (Date temp : viewInfo.getFechas())
+					comboDesde.addItem(tableDateFormat.format(temp));
+				// Hasta
+				comboHasta = new JComboBox<String>();
+				comboHasta.addItem(textForNone);
+				for (Date temp : viewInfo.getFechas())
+					comboHasta.addItem(tableDateFormat.format(temp));
+		
+				
+				
+				
 		// Child
 		comboChild = new JComboBox<Child>();
 		comboChild.addItem(new Child(0, textForAll));
@@ -158,7 +180,7 @@ public class HermesView extends JFrame {
 		btnViewAllNotifications = new JButton("Ver todas");
 		panelTableTitle.add(btnViewAllNotifications);
 		btnViewAllNotifications.addActionListener(new ActionListener() {
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
 				HermesView.this.showFullTable();
 			}
@@ -289,20 +311,6 @@ public class HermesView extends JFrame {
 		gbc_desde.gridy = 2;
 		Filtros.add(desde, gbc_desde);
 
-		JCalendarCombo calDesde = new JCalendarCombo();
-		calDesde.setDate(new Date(1420081200000L));
-		calDesde.setDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.insets = new Insets(0, 10, 0, 10);
-		gbc_spinner.gridx = 2;
-		gbc_spinner.gridy = 3;
-		Filtros.add(calDesde, gbc_spinner);
-		calDesde.addDateListener(new DateListener() {
-			public void dateChanged(DateEvent e) {
-				viewInfo.getFilter().setSince(e.getSelectedDate().getTimeInMillis());
-			}
-		});
-
 		JLabel hasta = new JLabel("Hasta:");
 		GridBagConstraints gbc_hasta = new GridBagConstraints();
 		gbc_hasta.fill = GridBagConstraints.HORIZONTAL;
@@ -310,22 +318,44 @@ public class HermesView extends JFrame {
 		gbc_hasta.gridx = 2;
 		gbc_hasta.gridy = 4;
 		Filtros.add(hasta, gbc_hasta);
-
-		JCalendarCombo calHasta = new JCalendarCombo();
-		calHasta.setDate(new Date());
-		calHasta.setDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
-		GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
-		gbc_spinner_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinner_1.insets = new Insets(0, 10, 0, 10);
-		gbc_spinner_1.gridx = 2;
-		gbc_spinner_1.gridy = 5;
-		Filtros.add(calHasta, gbc_spinner_1);
-		calHasta.addDateListener(new DateListener() {
-			public void dateChanged(DateEvent e) {
-				viewInfo.getFilter().setUntil(e.getSelectedDate().getTimeInMillis());
+		
+		
+		GridBagConstraints gbc_comboDesde = new GridBagConstraints();
+		gbc_comboDesde.insets = new Insets(0, 10, 0, 10);
+		gbc_comboDesde.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboDesde.gridx = 2;
+		gbc_comboDesde.gridy = 3;
+		Filtros.add(comboDesde, gbc_comboDesde);
+		comboDesde.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED)
+					if(e.getItem().toString().equals("-")){viewInfo.getFilter().setSince(0);}
+					else{
+						try {viewInfo.getFilter().setSince(tableDateFormat.parse(e.getItem().toString()).getTime());}
+						catch (ParseException e1) {e1.printStackTrace();}
+					}
+				}
+			});
+		
+		
+		
+		GridBagConstraints gbc_comboHasta = new GridBagConstraints();
+		gbc_comboHasta.insets = new Insets(0, 10, 0, 10);
+		gbc_comboHasta.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboHasta.gridx = 2;
+		gbc_comboHasta.gridy = 5;
+		Filtros.add(comboHasta, gbc_comboHasta);
+		comboHasta.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED)
+					if(e.getItem().toString().equals("-")){viewInfo.getFilter().setUntil(0);}
+					else{
+						try {viewInfo.getFilter().setUntil(tableDateFormat.parse(e.getItem().toString()).getTime());} 
+						catch (ParseException e1) {e1.printStackTrace();}
+					}
 			}
 		});
-
+		
 		// CONTEXTO
 		JLabel contexto = new JLabel("Contexto:");
 		contexto.setHorizontalAlignment(SwingConstants.LEFT);
@@ -435,7 +465,7 @@ public class HermesView extends JFrame {
 		gbc_btnNewButton.gridy = 6;
 		Filtros.add(buttonFilter, gbc_btnNewButton);
 		buttonFilter.addActionListener(new ActionListener() {
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
 				HermesView.this.updateTable();
 				tableIsFiltered = true;
@@ -509,7 +539,7 @@ public class HermesView extends JFrame {
 		gbc_btnAsignardesasignar.gridy = 5;
 		Etiquetas.add(btnAsignardesasignar, gbc_btnAsignardesasignar);
 		btnAsignardesasignar.addActionListener(new ActionListener() {
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
 				if (viewInfo.getSelectNotification() != null && viewInfo.getSelectAsignar() != null && viewInfo.getSelectAsignar() != textForNone ) {
 					String n = viewInfo.getSelectNotification();
@@ -737,6 +767,11 @@ public class HermesView extends JFrame {
 
 	public void addPictogram(Pictogram t) {
 		this.comboPictogram.addItem(t);
+	}
+	
+	public void addFecha(Date d) {
+		this.comboHasta.addItem(tableDateFormat.format(d));
+		this.comboDesde.addItem(tableDateFormat.format(d));
 	}
 
 	private void updateTable() {

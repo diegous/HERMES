@@ -48,7 +48,7 @@ public class NotificationDAO implements INotificationDAO {
 		
 	}	
 	
-	@Override
+	
 	public List<Notification> getList(Filter f) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -70,8 +70,9 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getTag() != textForAll){sql=sql+" and nt.id_tag=?";}
 	      
 	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
+	        if(f.getUntil() != 0){sql=sql+" and sent_date<=?";}
 	        //La fecha "hasta" va siempre
-	        sql=sql+" and sent_date<=?";
+	        //sql=sql+" and sent_date<=?";
 	        
 	        sql=sql+" GROUP BY n.id_notification";
 	        sql=sql+" ORDER BY n.sent_date DESC";
@@ -91,9 +92,10 @@ public class NotificationDAO implements INotificationDAO {
 	        	i++;
 	        }
 	        if(f.getSince() != 0){query.setLong(i, f.getSince()); i++;}
+	        if(f.getUntil() != 0){query.setLong(i, f.getUntil()+86400000);}
 	        //La fecha "hasta" de búsqueda va siempre
 	        // Hay que sumarle 86400000 (un día en milisegundos) para que la busqueda incluya al dia seleccionado 
-	        query.setLong(i, f.getUntil()+86400000);
+	        
 	        
 	        ResultSet result = query.executeQuery();
         	
@@ -119,7 +121,7 @@ public class NotificationDAO implements INotificationDAO {
 		finally{conector.close();}
 	}
 	
-	@Override
+	
 	public void update(Tag selectDelete) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -168,7 +170,7 @@ public class NotificationDAO implements INotificationDAO {
 		finally{conector.close();}
 	}
 	
-	@Override
+	
 	public void addTag(String selectNotification, String selectAsignar) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();

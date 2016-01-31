@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import entities.Category;
@@ -20,7 +22,7 @@ public class MonitorInformationDAO implements IMonitorInformationDAO {
 	}
 			
 	//METHODS
-	@Override
+	
 	public MonitorInformation getMonitorInformation() {
 		List<Child> child= FactoriaDAO.getChildDAO().getList();
 		List<Context> context= FactoriaDAO.getContextDAO().getList();
@@ -29,7 +31,25 @@ public class MonitorInformationDAO implements IMonitorInformationDAO {
 		List<Pictogram> pictogram= FactoriaDAO.getPictogramDAO().getList();
 		Filter filter=new Filter();
 		List<Notification> notification= FactoriaDAO.getNotificationDAO().getList();
-		MonitorInformation mi = new MonitorInformation(child, context, category, tag, pictogram, notification,filter);
+		
+		List<Date> fechas=FactoriaDAO.getNotificatioTagDAO().getListFechas();
+		if((fechas!=null)){
+			List<Date> f = new ArrayList<Date>();
+			f.add(fechas.get(0));
+			String fechaActual=fechas.get(0).toString();
+			String fecha;
+			for(int i=1; i<fechas.size();i++){
+				fecha=fechas.get(i).toString();
+				if(!fechaActual.equals(fecha)){
+					f.add(fechas.get(i));
+					fechaActual=fecha;
+				}
+			}
+			fechas=f;
+		}
+			
+		MonitorInformation mi = new MonitorInformation(child, context, category, tag, pictogram, notification,filter, fechas);
+		
 		return mi;
 	}
 }

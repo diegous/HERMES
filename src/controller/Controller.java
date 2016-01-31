@@ -19,7 +19,7 @@ public class Controller {
 		JSONArray jArray = (JSONArray) JSONValue.parse(json);
 		
 		for(int i = 0; i<jArray.size(); i++){
-			System.out.println("nueva notificacion "+ i +" "+ this);
+			//System.out.println("nueva notificacion "+ i +" "+ this);
 			JSONObject jObject = (JSONObject) jArray.get(i);
 			
 			String
@@ -30,6 +30,9 @@ public class Controller {
 			
 			long
 				jsent      = (Long) jObject.get("sent");
+			
+			Date sent = new Date(jsent);
+			Date recieved = new Date();
 
 			Child child = FactoriaDAO.getChildDAO().getByText(jchild);
 			if (child == null){
@@ -59,8 +62,15 @@ public class Controller {
 				sn.getPictogram().addElement(pictogram);
 			}
 			
-			Date sent = new Date(jsent);
-			Date recieved = new Date();
+			
+			Date fecha = FactoriaDAO.getNotificatioTagDAO().getFecha(sent);
+			if (fecha == null){
+				sn.getFecha().addElement(sent);
+				
+				
+			}
+			
+			
 			Notification notification = new Notification(-1,child,context,category, null,pictogram,sent,recieved);
 			FactoriaDAO.getNotificationDAO().save(notification);
 			sn.getNotification().addElement(notification);

@@ -19,7 +19,8 @@ public class CategoryDAO implements IDAO<Category> {
 	}
 	
 	//METHODS
-	@Override
+
+
 	public List<Category> getList() {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -39,7 +40,8 @@ public class CategoryDAO implements IDAO<Category> {
 	
 	
 	
-	@Override
+
+
 	public Category getByText(String text) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -59,7 +61,8 @@ public class CategoryDAO implements IDAO<Category> {
 			return category;}
 		finally {conector.close();}
 	}
-	@Override
+
+
 	public void save(Category c) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -75,18 +78,21 @@ public class CategoryDAO implements IDAO<Category> {
 		
 		
 	}
-	@Override
+
+
 	public void delete(Category selectDelete) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	@Override
+
+
 	public void modify(String selectModify, String string) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+
+	
 	public String getByID(int int1) {
 		// TODO Auto-generated method stub
 		return null;

@@ -21,7 +21,7 @@ public class TagDAO implements IDAO<Tag> {
 		
 	//METHODS
 
-	@Override
+	
 	public List<Tag> getList() {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -39,7 +39,7 @@ public class TagDAO implements IDAO<Tag> {
 		finally{conector.close();}
 	}
 
-	@Override
+
 	public Tag getByText(String text) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -60,7 +60,7 @@ public class TagDAO implements IDAO<Tag> {
 		finally {conector.close();}
 	}
 
-	@Override
+	
 	public void save(Tag t) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -98,7 +98,7 @@ public class TagDAO implements IDAO<Tag> {
 			finally{conector.close();}
 		}
 	}
-	@Override
+	
 	public void modify(String newText, String original) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -113,7 +113,7 @@ public class TagDAO implements IDAO<Tag> {
 		catch (SQLException e) {e.printStackTrace();}
 		finally{conector.close();}
 	}
-	@Override
+	
 	public String getByID(int int1) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();

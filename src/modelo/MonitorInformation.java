@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import entities.Category;
@@ -18,13 +20,14 @@ public class MonitorInformation {
 	private List<Pictogram> pictogram;
 	private List<Notification> notification;
 	private Filter filter;
+	private List<Date> fechas;
 
 	private String selectAsignar;
 	private String selectModify;
 	private String selectNotification;
 	private Tag selectDelete;
 
-	public MonitorInformation(List<Child> child, List<Context> context, List<Category> category, List<Tag> tag, List<Pictogram> content, List<Notification> notification, Filter filter){
+	public MonitorInformation(List<Child> child, List<Context> context, List<Category> category, List<Tag> tag, List<Pictogram> content, List<Notification> notification, Filter filter, List<Date> fechas){
 		this.selectDelete=null;
 		this.selectNotification=null;
 		this.selectModify =null;
@@ -36,6 +39,7 @@ public class MonitorInformation {
 		this.pictogram=content;
 		this.notification=notification;
 		this.filter=filter;
+		this.fechas=fechas;
 	}
 	
 	public String getSelectModify() {return selectModify;}
@@ -82,12 +86,15 @@ public class MonitorInformation {
 	
 	public Filter getFilter() {return filter;}
 
-	public void deleteTag(Tag string) {
-		tag.remove(string);
+	public void deleteTag(Tag string) {tag.remove(string);}
+	
+	public void setTag(List<Tag> l){this.tag=l;}
+	
+	
+	public List<Date> getFechas() {return fechas;}
+	
+	public void addFechas(List<Date> fechas) {
+		this.fechas=null;
 	}
 	
-	public void setTag(List<Tag> l){
-		this.tag=l;
-	}
-
 }

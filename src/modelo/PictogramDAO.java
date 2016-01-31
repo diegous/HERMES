@@ -20,7 +20,7 @@ public class PictogramDAO implements IDAO<Pictogram> {
 			
 		
 	//METHODS
-	@Override
+	
 	public List<Pictogram> getList() {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -39,7 +39,7 @@ public class PictogramDAO implements IDAO<Pictogram> {
 		finally{conector.close();}
 	}
 
-	@Override
+	
 	public Pictogram getByText(String text) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -60,7 +60,7 @@ public class PictogramDAO implements IDAO<Pictogram> {
 		finally {conector.close();}
 	}
 
-	@Override
+	
 	public void save(Pictogram p) {
 		DBConector conector = DBConector.getDBConector();
 		conector.connect();
@@ -75,18 +75,18 @@ public class PictogramDAO implements IDAO<Pictogram> {
 		finally{conector.close();}
 		
 	}
-	@Override
+	
 	public void delete(Pictogram selectDelete) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	@Override
+	
 	public void modify(String selectModify, String string) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+	
 	public String getByID(int int1) {
 		// TODO Auto-generated method stub
 		return null;
