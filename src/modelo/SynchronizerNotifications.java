@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.Date;
-
 import entities.Category;
 import entities.Child;
 import entities.Context;
@@ -17,7 +15,6 @@ public class SynchronizerNotifications {
 	private Synchronized<Category> category= new Synchronized<Category>();
 	private Synchronized<Pictogram> pictogram= new Synchronized<Pictogram>();
 	private Synchronized<Notification> notification= new Synchronized<Notification>();
-	private Synchronized<Date> fechas= new Synchronized<Date>();
 	
 	
 	public Synchronized<Child> getChild() {return child;}
@@ -25,7 +22,5 @@ public class SynchronizerNotifications {
 	public Synchronized<Category> getCategory() {return category;}
 	public Synchronized<Pictogram> getPictogram() {return pictogram;}
 	public Synchronized<Notification> getNotification() {return notification;}
-	public Synchronized<Date> getFecha() {return fechas;}
-	
 	
 }

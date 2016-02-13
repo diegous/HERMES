@@ -3,15 +3,6 @@ package modelo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import entities.Category;
-import entities.Child;
-import entities.Context;
-import entities.Notification;
-import entities.Pictogram;
 
 
 public class NotificationTagDAO implements INotificatioTagDAO {
@@ -25,7 +16,7 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 			}
 	
 	//METHODS	@Override
-			
+			@Override
 			public String getList(int id_notification) {
 				DBConector conector = DBConector.getDBConector();
 				conector.connect();
@@ -49,7 +40,7 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 				finally{conector.close();}
 			}
 			
-		
+			@Override
 			public void save(int notification ,int tag ) {
 				DBConector conector = DBConector.getDBConector();
 				conector.connect();
@@ -98,7 +89,7 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 				finally{conector.close();}
 			} 
 			
-			
+			@Override
 			public void delete(int tag) {
 				DBConector conector = DBConector.getDBConector();
 				conector.connect();
@@ -113,59 +104,4 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 					catch (SQLException e) {e.printStackTrace();}
 					finally{conector.close();}
 				}
-			
-			
-			
-			
-			
-			
-			
-			
-			public List<Date> getListFechas() {
-				DBConector conector = DBConector.getDBConector();
-				conector.connect();
-				List<Date> resultList = new ArrayList<Date>();
-				try {
-					String sql="SELECT distinct(sent_date) FROM notification ORDER BY  sent_date;";
-			        PreparedStatement query = conector.getConnection().prepareStatement(sql);
-			        ResultSet result = query.executeQuery();
-		        	while(result.next()){resultList.add(new Date(result.getLong("sent_date")));}
-					query.close();
-					result.close();
-					return resultList;
-				} 
-				catch (SQLException e) {e.printStackTrace(); return resultList;}
-				finally{conector.close();}
-				
-				
-				
-			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			public Date getFecha(Date sent) {
-				DBConector conector = DBConector.getDBConector();
-				conector.connect();
-				Date resultDate=null;
-				try {
-					String sql="SELECT sent_date FROM notification WHERE  sent_date=?;";
-			        PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
-			        preparedStatement.setLong(1, sent.getTime());
-			        ResultSet result = preparedStatement.executeQuery();
-			       	if(result.next()){resultDate = new Date(result.getLong("sent_date"));}
-			       	preparedStatement.close();
-					result.close();
-					return resultDate;
-				} 
-				catch (SQLException e) {e.printStackTrace(); return resultDate;}
-				finally{conector.close();}
-			}
 			}

@@ -20,7 +20,7 @@ public class ChildDAO implements IDAO<Child> {
 		
 	//METHODS
 	
-	
+	@Override
 	public List<Child> getList() {
 			DBConector conector = DBConector.getDBConector();
 			conector.connect();
@@ -72,20 +72,20 @@ public class ChildDAO implements IDAO<Child> {
 		finally {conector.close();}
 		
 	}
-
-
+	@Override
 	public void delete(Child selectDelete) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	
+	
+	@Override
 	public void modify(String selectModify, String string) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
+	@Override
 	public String getByID(int int1) {
 		// TODO Auto-generated method stub
 		return null;

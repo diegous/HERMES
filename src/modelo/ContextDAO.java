@@ -20,7 +20,7 @@ public class ContextDAO implements IDAO<Context>{
 			
 
 	//METHODS
-			
+			@Override
 			public List<Context> getList() {
 				DBConector conector = DBConector.getDBConector();
 				conector.connect();
@@ -41,7 +41,7 @@ public class ContextDAO implements IDAO<Context>{
 			
 			
 			
-			
+			@Override
 			public Context getByText(String text) {
 				DBConector conector = DBConector.getDBConector();
 				conector.connect();
@@ -63,6 +63,7 @@ public class ContextDAO implements IDAO<Context>{
 			}
 			
 			
+			@Override
 			public void save(Context c) {
 				DBConector conector = DBConector.getDBConector();
 				conector.connect();
@@ -77,19 +78,18 @@ public class ContextDAO implements IDAO<Context>{
 				finally{conector.close();}
 				
 			}
-			
+			@Override
 			public void delete(Context selectDelete) {
 				// TODO Auto-generated method stub
 				
 			}
 			
-		
+			@Override
 			public void modify(String selectModify, String string) {
 				// TODO Auto-generated method stub
 				
 			}
-
-
+			@Override
 			public String getByID(int int1) {
 				// TODO Auto-generated method stub
 				return null;

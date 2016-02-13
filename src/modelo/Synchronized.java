@@ -20,10 +20,6 @@ public class Synchronized<T> {
 		else return null;
 	}
 	
-	public int cantElementos(){
-		return list.size();
-	}
-	
 
 	
 }
