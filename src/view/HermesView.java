@@ -274,9 +274,10 @@ public class HermesView extends JFrame {
 		});
 
 		// FECHA
-		JCalendarCombo calDesde = new JCalendarCombo();
-		JCalendarCombo calHasta = new JCalendarCombo();
+		final JCalendarCombo calDesde = new JCalendarCombo();
+		final JCalendarCombo calHasta = new JCalendarCombo();
 		JCheckBox Fechahora = new JCheckBox("Habilitar filtro de Fecha", false);
+		Fechahora.setBackground(new Color(153, 204, 51));
 		
 		Fechahora.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_Fechahora = new GridBagConstraints();
@@ -310,6 +311,7 @@ public class HermesView extends JFrame {
 		calDesde.setDate(new Date(1420081200000L));
 		calDesde.setDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
+		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinner.insets = new Insets(0, 10, 0, 10);
 		gbc_spinner.gridx = 2;
 		gbc_spinner.gridy = 3;
