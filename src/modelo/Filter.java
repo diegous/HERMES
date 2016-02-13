@@ -10,6 +10,7 @@ public class Filter {
 	private String context;
 	private String category;
 	private long since, until;
+	private boolean buscarPorFechas;
 	private String tag;
 	private String pictogram;
 	
@@ -50,6 +51,10 @@ public class Filter {
 	public long getUntil() {return until;}
 	
 	public void setUntil(long until) {this.until = until;}
+	
+	public boolean getBuscarPorFecha() {return buscarPorFechas;}
+	
+	public void setBuscarPorFecha(boolean b) {this.buscarPorFechas = b;}
 	
 	public String getTag() {return tag;}
 	

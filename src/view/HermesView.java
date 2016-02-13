@@ -20,6 +20,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JSeparator;
 import java.util.Date;
 import javax.swing.JScrollPane;
@@ -273,13 +274,29 @@ public class HermesView extends JFrame {
 		});
 
 		// FECHA
-		JLabel Fechahora = new JLabel("Fecha/Hora");
+		JCalendarCombo calDesde = new JCalendarCombo();
+		JCalendarCombo calHasta = new JCalendarCombo();
+		JCheckBox Fechahora = new JCheckBox("Habilitar filtro de Fecha", false);
+		
 		Fechahora.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_Fechahora = new GridBagConstraints();
 		gbc_Fechahora.insets = new Insets(0, 10, 0, 10);
 		gbc_Fechahora.gridx = 2;
 		gbc_Fechahora.gridy = 1;
 		Filtros.add(Fechahora, gbc_Fechahora);
+		Fechahora.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED){
+					calDesde.setEnabled(true);
+					calHasta.setEnabled(true);
+					viewInfo.getFilter().setBuscarPorFecha(true);
+				} else if (e.getStateChange() == ItemEvent.DESELECTED){
+					calDesde.setEnabled(false);
+					calHasta.setEnabled(false);
+					viewInfo.getFilter().setBuscarPorFecha(false);
+				}  
+			}
+		});
 
 		JLabel desde = new JLabel("Desde:");
 		GridBagConstraints gbc_desde = new GridBagConstraints();
@@ -289,7 +306,7 @@ public class HermesView extends JFrame {
 		gbc_desde.gridy = 2;
 		Filtros.add(desde, gbc_desde);
 
-		JCalendarCombo calDesde = new JCalendarCombo();
+		calDesde.setEnabled(false);
 		calDesde.setDate(new Date(1420081200000L));
 		calDesde.setDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
@@ -311,7 +328,7 @@ public class HermesView extends JFrame {
 		gbc_hasta.gridy = 4;
 		Filtros.add(hasta, gbc_hasta);
 
-		JCalendarCombo calHasta = new JCalendarCombo();
+		calHasta.setEnabled(false);
 		calHasta.setDate(new Date());
 		calHasta.setDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
 		GridBagConstraints gbc_spinner_1 = new GridBagConstraints();

@@ -69,9 +69,11 @@ public class NotificationDAO implements INotificationDAO {
 	        if(f.getPictogram() != textForAll){sql=sql+" and p.content=?";}
 	        if(f.getTag() != textForAll){sql=sql+" and nt.id_tag=?";}
 	      
-	        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
-	        //La fecha "hasta" va siempre
-	        sql=sql+" and sent_date<=?";
+	        if(f.getBuscarPorFecha()){
+		        if(f.getSince() != 0){sql=sql+" and sent_date>=?";}
+		        //La fecha "hasta" va siempre
+		        sql=sql+" and sent_date<=?";
+	        }
 	        
 	        sql=sql+" GROUP BY n.id_notification";
 	        sql=sql+" ORDER BY n.sent_date DESC";
@@ -90,10 +92,13 @@ public class NotificationDAO implements INotificationDAO {
 	        	query.setInt(i, id);
 	        	i++;
 	        }
-	        if(f.getSince() != 0){query.setLong(i, f.getSince()); i++;}
-	        //La fecha "hasta" de búsqueda va siempre
-	        // Hay que sumarle 86400000 (un día en milisegundos) para que la busqueda incluya al dia seleccionado 
-	        query.setLong(i, f.getUntil()+86400000);
+	        
+	        if(f.getBuscarPorFecha()){
+		        if(f.getSince() != 0){query.setLong(i, f.getSince()); i++;}
+		        //La fecha "hasta" de búsqueda va siempre
+		        // Hay que sumarle 86400000 (un día en milisegundos) para que la busqueda incluya al dia seleccionado 
+		        query.setLong(i, f.getUntil()+86400000);
+	        }
 	        
 	        ResultSet result = query.executeQuery();
         	
@@ -110,7 +115,8 @@ public class NotificationDAO implements INotificationDAO {
 		        			new Date (result.getLong("received_date"))
 	        			);
 	        	resultList.add(tmp);
-	        	}
+	        }
+	        
 			query.close();
 			result.close();
 			return resultList;
