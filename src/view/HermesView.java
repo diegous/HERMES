@@ -775,7 +775,6 @@ public class HermesView extends JFrame {
 		btnViewAllNotifications.setVisible(false);
 		lblNewNotifications.setVisible(false);
 		tableIsFiltered = false;
-		System.out.println("adentro de show full table");
 
 		int filas = tableModel.getRowCount();
 		for (int i = 0; filas > i; i++)

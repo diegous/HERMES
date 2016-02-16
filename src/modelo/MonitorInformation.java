@@ -74,7 +74,10 @@ public class MonitorInformation {
 	
 	public void addPictogram(Pictogram pictogram) {this.pictogram.add(pictogram);}
 	
-	public List<Notification> getNotification() {return notification;}
+	public List<Notification> getNotification() {
+		Filter tmpFilter = new Filter();
+		return tmpFilter.filter();
+	}
 	
 	public void addNotification(Notification notification) {this.notification.add(notification);}
 	
