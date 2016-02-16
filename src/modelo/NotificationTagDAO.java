@@ -43,9 +43,9 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 			@Override
 			public void save(int notification ,int tag ) {
 				DBConector conector = DBConector.getDBConector();
-				conector.connect();
 				if(! this.existe(notification, tag)){
 					try {
+						conector.connect();
 						String sql = "INSERT INTO notificationtag (id_tag, id_notification) VALUES (?,?);";
 						PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
 						preparedStatement.setInt(1, tag);
@@ -58,6 +58,7 @@ public class NotificationTagDAO implements INotificatioTagDAO {
 				}
 				else{
 					try {
+						conector.connect();
 						String sql = "DELETE FROM notificationtag WHERE id_notification=? and id_tag=?;";
 						PreparedStatement preparedStatement = conector.getConnection().prepareStatement(sql);
 						preparedStatement.setInt(1, notification);
